@@ -57,7 +57,7 @@ export function getAllDocsMeta(): Doc[] {
   return allSlugs().map(readDoc);
 }
 
-const STATIC_ROUTES = new Set(["/", "/playground"]);
+const STATIC_ROUTES = new Set(["/", "/editor"]);
 
 /**
  * Throws at build time if a nav entry points at a route that doesn't exist,
@@ -74,7 +74,7 @@ export function validateNav(groups: NavGroup[] = nav): void {
     for (const item of group.items) {
       if (!knownHrefs.has(item.href)) {
         throw new Error(
-          `nav.config.ts: "${item.title}" points to "${item.href}", which doesn't match "/", "/playground", or any file in content/docs/.`
+          `nav.config.ts: "${item.title}" points to "${item.href}", which doesn't match "/", "/editor", or any file in content/docs/.`
         );
       }
     }
@@ -108,9 +108,9 @@ export function buildSearchEntries(): SearchEntry[] {
   }));
 
   entries.push({
-    title: "Playground",
+    title: "Editor",
     description: "Write Markdown and see it rendered live.",
-    href: "/playground",
+    href: "/editor",
     excerpt: "Interactive Markdown editor with instant preview.",
   });
 

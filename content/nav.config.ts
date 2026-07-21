@@ -25,6 +25,6 @@ export const nav: NavGroup[] = [
   },
   {
     title: "Tools",
-    items: [{ title: "Playground", href: "/playground" }],
+    items: [{ title: "Editor", href: "/editor" }],
   },
 ];

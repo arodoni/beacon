@@ -10,7 +10,7 @@ Beacon is a self-contained static-site generator for docs, tutorials, and produc
 - **Syntax highlighting** - code blocks are highlighted at build time with Shiki (`rehype-pretty-code`), so highlighting doesn't depend on client-side JavaScript, and it follows the site's theme toggle rather than the OS setting.
 - **Dark mode** - a toggle in the top bar, persisted to `localStorage`.
 - **Plain static output** - `npm run build` produces a static `out/` directory: host it on Vercel, Netlify, GitHub Pages, or any static file host.
-- **Playground** - a live Markdown editor with instant preview, included as one of the site's pages.
+- **Editor** - a live Markdown editor with instant preview, included as one of the site's pages.
 
 ## Getting started
 
@@ -44,10 +44,10 @@ The page is picked up by the catch-all route, included in search, and added to t
 - `content/docs/` - MDX content pages.
 - `content/nav.config.ts` - sidebar structure.
 - `src/lib/content.ts` - content loading, nav validation, and search-index generation, shared by the pages and the search route.
-- `src/app/(site)/` - the docs shell (layout, sidebar, top bar) and routes: `page.tsx` (home/introduction), `[...slug]/page.tsx` (catch-all for other docs), `playground/page.tsx` (the live editor), `not-found.tsx`.
+- `src/app/(site)/` - the docs shell (layout, sidebar, top bar) and routes: `page.tsx` (home/introduction), `[...slug]/page.tsx` (catch-all for other docs), `editor/page.tsx` (the live editor), `not-found.tsx`.
 - `src/app/search-index.json/route.ts` - static route handler serving the search index.
 - `src/components/docs/` - `Sidebar`, `TopBar`, `SearchDialog`, `ThemeToggle`, `Mdx` (the MDX compiler/renderer).
-- `src/components/MarkdownWorkspace.tsx` - the Playground's editor + live preview.
+- `src/components/MarkdownWorkspace.tsx` - the Editor's live preview component.
 
 ## Build
 
