@@ -1,0 +1,38 @@
+---
+title: Code & Content
+description: Syntax highlighting and GFM formatting reference.
+---
+
+# Code & Content
+
+Code blocks are highlighted at build time with Shiki, so highlighting works even with JavaScript disabled, and it follows the site's dark-mode toggle rather than your OS preference.
+
+```ts
+export function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet("Beacon"));
+```
+
+```bash
+npm install
+npm run build
+npm run start
+```
+
+## GFM formatting
+
+Tables, task lists, and strikethrough all work via `remark-gfm`:
+
+| Feature       | Supported |
+| ------------- | --------- |
+| Tables        | ✅        |
+| Task lists    | ✅        |
+| Strikethrough | ✅        |
+
+- [x] Tables
+- [x] Task lists
+- [ ] ~~Anything else~~ not needed
+
+Inline code like `useState` and `next.config.mjs` renders with a subtle background.

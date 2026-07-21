@@ -1,0 +1,53 @@
+---
+title: Quickstart
+description: Install, run, build, and add your first page.
+---
+
+# Quickstart
+
+## Run it locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Build the static site
+
+```bash
+npm run build
+```
+
+This produces a fully static `out/` directory. Preview it exactly as it will be hosted, with no Next.js server involved:
+
+```bash
+npm run start
+```
+
+## Add a new page
+
+1. Create a file under `content/docs/`, for example `content/docs/deployment.mdx`.
+2. Give it frontmatter:
+
+```md
+---
+title: Deployment
+description: How to ship Beacon to production.
+---
+
+Your content here.
+```
+
+3. Add an entry to `content/nav.config.ts` pointing at it:
+
+```ts
+{ title: "Deployment", href: "/deployment" }
+```
+
+That's it — the page is picked up automatically by the catch-all route, included in the client-side search index, and added to the sitemap on the next build.
+
+- [x] Install dependencies
+- [x] Start the dev server
+- [ ] Write your first page

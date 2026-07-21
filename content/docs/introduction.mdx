@@ -1,0 +1,23 @@
+---
+title: Beacon
+description: An open-source, self-hosted static docs-site generator built on Next.js.
+---
+
+# Beacon
+
+Beacon is an open-source static-site generator for docs, tutorials, and product content. Write pages in Markdown/MDX, define your sidebar in one config file, and `npm run build` produces plain static HTML/CSS/JS you can host anywhere.
+
+## What you get
+
+- **Markdown/MDX content** — every page lives in `content/docs/*.mdx` with simple frontmatter.
+- **Config-driven sidebar** — nav structure, ordering, and grouping all come from `content/nav.config.ts`.
+- **Client-side search** — press <kbd>⌘</kbd> <kbd>K</kbd> (or <kbd>Ctrl</kbd> <kbd>K</kbd>) anywhere on the site to fuzzy-search every page, no external search service involved.
+- **Syntax highlighting** — code blocks are highlighted at build time, no client-side JavaScript required to render them correctly.
+- **Dark mode** — a theme toggle in the top bar, persisted across visits.
+- **Zero server** — the build output is static files. No Node process, no database, no vendor lock-in. Deploy to Vercel, Netlify, GitHub Pages, or any static host.
+
+## Try it out
+
+This demo ships with a few sample pages, grouped under **Get Started** and **Reference** in the sidebar. There's also a **Playground** page with a live Markdown editor if you want to experiment with formatting before committing it to a real page.
+
+Head to [Quickstart](/quickstart) to see how to add your own content.

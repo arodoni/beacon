@@ -1,0 +1,41 @@
+---
+title: Configuration
+description: Frontmatter fields and the nav.config.ts shape.
+---
+
+# Configuration
+
+## Page frontmatter
+
+Every file in `content/docs/` supports the following frontmatter fields:
+
+| Field         | Type   | Required | Description                                  |
+| ------------- | ------ | -------- | --------------------------------------------- |
+| `title`       | string | yes      | Used as the page `<title>` and page heading.  |
+| `description` | string | yes      | Used for the meta description and search.     |
+
+## Sidebar navigation
+
+`content/nav.config.ts` is the single source of truth for the sidebar. It exports a list of groups, each with a title and an ordered list of items:
+
+```ts
+export const nav: NavGroup[] = [
+  {
+    title: "Get Started",
+    items: [
+      { title: "Introduction", href: "/" },
+      { title: "Quickstart", href: "/quickstart" },
+    ],
+  },
+];
+```
+
+Every `href` must resolve to either `/`, `/playground`, or a slug that matches a file in `content/docs/`. The build checks this and fails loudly if a nav entry points nowhere, rather than shipping a broken link.
+
+## Base path (GitHub Pages)
+
+If you deploy under a subpath (`username.github.io/repo-name`), set `NEXT_PUBLIC_BASE_PATH` at build time:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/repo-name npm run build
+```
