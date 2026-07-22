@@ -60,17 +60,41 @@ code {
   background: rgba(59, 130, 246, 0.24);
 }
 
-/* Code blocks (rehype-pretty-code / Shiki, "github-dark") stay a fixed navy
-   editor-style background regardless of the site's own light/dark toggle. */
+/* Code blocks (rehype-pretty-code / Shiki, dual "github-light"/"github-dark"
+   theme) get a fixed light editor-style background in light mode. In dark
+   mode they switch to the same slate-900/90 background as the Editor's
+   textarea pane. Token colors switch alongside the background (see below)
+   so text stays readable against each. */
 .prose pre {
   padding: 1rem;
   border-radius: 1rem;
   overflow-x: auto;
   border: 1px solid rgba(59, 130, 246, 0.15);
+  background: #f0f3f7;
+}
+
+.dark .prose pre {
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.prose pre code[data-theme] span {
+  color: var(--shiki-light);
+}
+
+.dark .prose pre code[data-theme] span {
+  color: var(--shiki-dark);
 }
 
 .prose :not(pre) > code {
   background: rgba(148, 163, 184, 0.12);
   padding: 0.15rem 0.4rem;
   border-radius: 0.35rem;
+}
+
+/* rehype-autolink-headings wraps heading text in an <a>, which otherwise
+   inherits Tailwind Typography's link styling (underline, lighter weight). */
+.prose :where(h1, h2, h3, h4, h5, h6) > a {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
 }
