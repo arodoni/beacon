@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { Mdx } from "../../components/docs/Mdx";
 import { getIntroductionDoc } from "../../lib/content";
+import { buildDocMetadata } from "../../lib/seo";
 
 export function generateMetadata(): Metadata {
-  const doc = getIntroductionDoc();
-  return {
-    title: doc.frontmatter.title,
-    description: doc.frontmatter.description,
-  };
+  return buildDocMetadata(getIntroductionDoc());
 }
 
 export default async function Home() {

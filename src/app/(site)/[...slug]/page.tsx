@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mdx } from "../../../components/docs/Mdx";
 import { getAllDocSlugs, getDocBySlug } from "../../../lib/content";
+import { buildDocMetadata } from "../../../lib/seo";
 
 export const dynamicParams = false;
 
@@ -14,11 +15,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const doc = getDocBySlug(slug.join("/"));
-  return {
-    title: doc.frontmatter.title,
-    description: doc.frontmatter.description,
-  };
+  return buildDocMetadata(getDocBySlug(slug.join("/")));
 }
 
 export default async function DocPage({
