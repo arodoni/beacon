@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function EditorPage() {
   return (
-    <div className="not-prose">
+    <div>
       <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">
         Editor
       </h1>

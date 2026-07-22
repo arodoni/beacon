@@ -77,7 +77,10 @@ export function MarkdownWorkspace() {
           </span>
         </div>
 
-        <div className="prose prose-slate max-w-none overflow-hidden rounded-[1.75rem] border border-slate-900/10 bg-white p-6 shadow-inner dark:prose-invert dark:border-white/10 dark:bg-slate-900/95 dark:shadow-black/20">
+        <div
+          data-testid="markdown-preview"
+          className="prose prose-slate max-w-none overflow-hidden rounded-[1.75rem] border border-slate-900/10 bg-white p-6 shadow-inner dark:prose-invert dark:border-white/10 dark:bg-slate-900/95 dark:shadow-black/20"
+        >
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{preview}</ReactMarkdown>
         </div>
       </div>

@@ -48,6 +48,16 @@ The page is picked up by the catch-all route, included in search, and added to t
 - `src/app/search-index.json/route.ts` - static route handler serving the search index.
 - `src/components/docs/` - `Sidebar`, `TopBar`, `SearchDialog`, `ThemeToggle`, `Mdx` (the MDX compiler/renderer).
 - `src/components/MarkdownWorkspace.tsx` - the Editor's live preview component.
+- `e2e/` - Playwright end-to-end tests.
+
+## Testing
+
+```bash
+npx playwright install chromium   # one-time browser download
+npm run test:e2e
+```
+
+Runs the Playwright suite in `e2e/` against a dev server it starts automatically.
 
 ## Build
 
