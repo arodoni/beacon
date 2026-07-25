@@ -1,0 +1,93 @@
+---
+title: Deployment
+description: End-to-end steps for building Beacon and shipping it to Vercel, Netlify, GitHub Pages, or any static host.
+---
+
+# Deployment
+
+Beacon builds to a plain static site. There's no server-side runtime to provision: `npm run build` produces an `out/` directory of HTML, CSS, and JS that any static host can serve.
+
+## 1. Set environment variables
+
+Set these before running a production build, not after:
+
+| Variable                 | Required           | Purpose                                                                 |
+| ------------------------ | ------------------- | ------------------------------------------------------------------------ |
+| `NEXT_PUBLIC_SITE_URL`   | Recommended         | Full public URL of the deployed site. Used for canonical links, Open Graph tags, `sitemap.xml`, `robots.txt`, and `/llms.txt`. Falls back to `https://example.com` if unset. |
+| `NEXT_PUBLIC_BASE_PATH`  | Only for subpaths   | Subpath the site is served from, e.g. `/repo-name` for GitHub Pages project sites. Leave unset for root-domain hosts like Vercel and Netlify. |
+
+Set `NEXT_PUBLIC_SITE_URL` in each host's dashboard (or the GitHub Actions workflow, for GitHub Pages) rather than committing production URLs to `.env.local`.
+
+## 2. Build and verify locally
+
+```bash
+npm install
+npm run build
+```
+
+Preview the exact static output before pushing:
+
+```bash
+npm run start
+```
+
+This serves the `out/` directory as-is with no Next.js server involved, so it's the closest local approximation of production.
+
+Optionally run the Playwright suite against the app first:
+
+```bash
+npx playwright install chromium   # one-time browser download
+npm run test:e2e
+```
+
+## 3. Deploy
+
+### Vercel
+
+1. Import the repository in the Vercel dashboard.
+2. Leave the build settings at their defaults; Vercel detects the Next.js static export automatically.
+3. Add `NEXT_PUBLIC_SITE_URL` under Project Settings → Environment Variables, set to the assigned or custom domain.
+4. Deploy. Every push to `main` triggers a new production deployment; other branches get preview deployments.
+
+### Netlify
+
+`netlify.toml` is already committed at the repo root:
+
+```toml
+[build]
+  command = "npm run build"
+  publish = "out"
+```
+
+1. Connect the repository in the Netlify dashboard.
+2. Add `NEXT_PUBLIC_SITE_URL` under Site configuration → Environment variables.
+3. Deploy. Netlify picks up `netlify.toml` automatically, so no manual build configuration is needed.
+
+### GitHub Pages
+
+A ready-to-use workflow already exists at `.github/workflows/deploy-gh-pages.yml`. It builds on every push to `main` and sets `NEXT_PUBLIC_BASE_PATH` and `NEXT_PUBLIC_SITE_URL` automatically from the repository name and owner.
+
+1. In the repository, go to Settings → Pages and set the source to "GitHub Actions".
+2. Push to `main`, or trigger the workflow manually from the Actions tab (`workflow_dispatch`).
+3. The workflow builds with:
+   ```bash
+   NEXT_PUBLIC_BASE_PATH=/<repo-name>
+   NEXT_PUBLIC_SITE_URL=https://<owner>.github.io/<repo-name>
+   ```
+4. `public/.nojekyll` is already included so GitHub Pages serves the `_next/` asset directory correctly instead of ignoring it.
+
+If deploying to a custom domain on GitHub Pages instead of the default `github.io` subpath, unset `NEXT_PUBLIC_BASE_PATH` (the site is then served from the root) and update `NEXT_PUBLIC_SITE_URL` to match.
+
+### Any other static host
+
+1. Run `npm run build`.
+2. Upload the contents of `out/` to the host (S3 + CloudFront, Cloudflare Pages, an Nginx box, etc.). It's plain HTML/CSS/JS with no server-side requirements.
+3. Make sure the host serves `out/index.html` for the root and preserves the directory structure for nested routes, since the site uses `trailingSlash: true`.
+
+## 4. Verify after deploy
+
+- Load the deployed URL and confirm the sidebar, search (`Cmd/Ctrl+K`), and dark mode toggle work.
+- Check `/sitemap.xml`, `/robots.txt`, and `/llms.txt` resolve and reference the correct production domain, not `example.com`.
+- If the site is served from a subpath, click through a few internal links to confirm `NEXT_PUBLIC_BASE_PATH` was applied consistently to both pages and static assets.
+
+See [Troubleshooting](/troubleshoot) for fixes to common build and deployment issues.

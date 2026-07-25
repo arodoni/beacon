@@ -17,10 +17,17 @@ export const nav: NavGroup[] = [
     ],
   },
   {
+    title: "User Guide",
+    items: [
+      { title: "Configure", href: "/configure" },
+      { title: "Deploy", href: "/deploy" },
+      { title: "Troubleshoot", href: "/troubleshoot" },
+    ],
+  },
+  {
     title: "Reference",
     items: [
-      { title: "Configuration", href: "/configuration" },
-      { title: "Code & Content", href: "/code-blocks" },
+      { title: "Code and Content", href: "/code-blocks" },
     ],
   },
   {

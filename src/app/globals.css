@@ -91,6 +91,11 @@ code {
   border-radius: 0.35rem;
 }
 
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
+}
+
 /* rehype-autolink-headings wraps heading text in an <a>, which otherwise
    inherits Tailwind Typography's link styling (underline, lighter weight). */
 .prose :where(h1, h2, h3, h4, h5, h6) > a {

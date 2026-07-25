@@ -25,6 +25,12 @@
 - Add new UI components under `src/components/`.
 - Avoid changing the repository layout unless you also update the app entrypoint and README.
 
+## Git / PR workflow
+
+- Always create a branch for changes. Never commit directly to the `main` branch.
+- Never push commits directly to GitHub. Always open a pull request instead.
+- Never merge a pull request.
+
 ## AI retrieval optimization
 
 Every page under `content/docs/` is statically prerendered and exposed through `/sitemap.xml`, `/robots.txt`, and `/llms.txt` (the last one is a plain-text index of all docs for LLM/AI crawlers, generated at build time in `src/app/llms.txt/route.ts`). Nothing about this requires a manual step for new pages, but it does depend on frontmatter being meaningful:
