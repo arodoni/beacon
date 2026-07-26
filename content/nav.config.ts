@@ -12,7 +12,7 @@ export const nav: NavGroup[] = [
   {
     title: "Get Started",
     items: [
-      { title: "Introduction", href: "/" },
+      { title: "Overview", href: "/" },
       { title: "Quickstart", href: "/quickstart" },
     ],
   },

@@ -12,6 +12,7 @@
 - Preserve the existing Next.js App Router layout and the client-side Markdown editing experience.
 - Use `react-markdown` with `remark-gfm` for rendering Markdown.
 - Follow the [Google developer documentation style guide](https://developers.google.com/style) for prose written in docs content or UI copy.
+- Always ask and get explicit acceptance before applying a suggested fix or change. Don't implement it as part of surfacing the suggestion.
 
 ## Run commands
 
