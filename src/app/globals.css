@@ -89,6 +89,7 @@ code {
   background: rgba(148, 163, 184, 0.12);
   padding: 0.15rem 0.4rem;
   border-radius: 0.35rem;
+  font-weight: 400;
 }
 
 .prose :not(pre) > code::before,
