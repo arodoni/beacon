@@ -10,3 +10,7 @@ Every page under `content/docs/` is statically prerendered and exposed through `
 - New docs are picked up automatically by `getAllDocSlugs`/`getAllDocsMeta` (`src/lib/content.ts`) as soon as the `.mdx` file exists and has frontmatter, so `/llms.txt` and the sitemap stay in sync without edits.
 - Keep one H1 per page and a real H2/H3 hierarchy underneath it. Headings get slugged IDs and anchor links automatically (`rehype-slug` + `rehype-autolink-headings` in `src/components/docs/Mdx.tsx`), so each section should read as a self-contained chunk, since retrieval systems may quote a single section rather than the whole page.
 - The canonical site URL comes from the `NEXT_PUBLIC_SITE_URL` env var (`src/lib/site.ts`); set it at build/deploy time so canonical links, OG tags, the sitemap, and `/llms.txt` don't fall back to `https://example.com`.
+
+## Formatting conventions
+
+- Always put a blank line between two list items (`-` or numbered) so Markdown renders them as a loose list with spacing between entries, rather than a tight list.
