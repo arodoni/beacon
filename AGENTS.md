@@ -19,6 +19,7 @@
 - Keep the live editor and preview tightly integrated in `src/components/MarkdownWorkspace.tsx`.
 - Add new UI components under `src/components/`.
 - Avoid changing the repository layout unless you also update the app entrypoint and README.
+- When you implement a new feature, add a dated entry to `content/docs/release-notes.mdx` describing it.
 
 ## Git / PR workflow
 

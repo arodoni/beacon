@@ -22,6 +22,7 @@ export const nav: NavGroup[] = [
       { title: "Configure", href: "/configure" },
       { title: "Deploy", href: "/deploy" },
       { title: "Troubleshoot", href: "/troubleshoot" },
+      { title: "Release Notes", href: "/release-notes" },
     ],
   },
   {
