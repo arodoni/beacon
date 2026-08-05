@@ -22,7 +22,7 @@
 
 ## Git / PR workflow
 
-- Always create a branch for changes. Never commit directly to the `main` branch.
+- Always pull the latest `main` branch, then create a feature branch for changes. Never commit directly to the `main` branch.
 - Never push commits directly to GitHub. Always open a pull request instead.
 - Never merge a pull request.
 
