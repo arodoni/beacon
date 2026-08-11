@@ -1,11 +1,11 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { loadConfig, isWatchedPath } from "./_lib/config";
-import { verifySignature } from "./_lib/verify-signature";
-import { createGithubClient, getChangedFiles, getFileContent, listMdxFiles } from "./_lib/github";
-import { buildSystemPrompt, buildUserContent } from "./_lib/prompt";
-import { proposeDocUpdates } from "./_lib/claude";
-import { suggestionAlreadyExists, writeSuggestion } from "./_lib/blob";
-import type { PullRequestWebhookPayload, StoredSuggestion } from "./_lib/types";
+import { loadConfig, isWatchedPath } from "./_lib/config.js";
+import { verifySignature } from "./_lib/verify-signature.js";
+import { createGithubClient, getChangedFiles, getFileContent, listMdxFiles } from "./_lib/github.js";
+import { buildSystemPrompt, buildUserContent } from "./_lib/prompt.js";
+import { proposeDocUpdates } from "./_lib/claude.js";
+import { suggestionAlreadyExists, writeSuggestion } from "./_lib/blob.js";
+import type { PullRequestWebhookPayload, StoredSuggestion } from "./_lib/types.js";
 
 async function readRawBody(req: IncomingMessage): Promise<Buffer> {
   const chunks: Buffer[] = [];

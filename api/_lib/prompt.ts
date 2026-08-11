@@ -1,4 +1,4 @@
-import type { WatchConfig } from "./config";
+import type { WatchConfig } from "./config.js";
 
 const STYLE_GUIDE_SUMMARY = `Follow the Google developer documentation style guide (https://developers.google.com/style)
 for any prose you write: prefer second person and active voice, use present tense, write short

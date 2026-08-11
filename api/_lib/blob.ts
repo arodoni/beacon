@@ -1,5 +1,5 @@
 import { put, head } from "@vercel/blob";
-import type { StoredSuggestion } from "./types";
+import type { StoredSuggestion } from "./types.js";
 
 function suggestionPath(prNumber: number): string {
   return `doc-suggestions/pr-${prNumber}.json`;

@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import type { ProposeDocUpdatesResult } from "./types";
+import type { ProposeDocUpdatesResult } from "./types.js";
 
 const TOOL_NAME = "propose_doc_updates";
 const MODEL = "claude-sonnet-5";
