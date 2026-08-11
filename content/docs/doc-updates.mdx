@@ -1,0 +1,63 @@
+---
+title: Doc Update Automation
+description: How Beacon's GitHub webhook flags doc pages that go stale when another doc page changes, and where to find its suggestions.
+---
+
+# Doc Update Automation
+
+When a pull request merges into `main` and touches a doc page under `content/docs/**/*.mdx` or `content/nav.config.ts`, a GitHub webhook checks whether the change makes any *other* doc page stale - a broken cross-reference, terminology that no longer matches, or a described behavior that now conflicts - and writes a suggested fix for a person to review. It never edits, commits, or opens a pull request itself.
+
+## What it checks for
+
+- Cross-references that break, such as a link to a heading anchor that was renamed
+- Terminology or option names that changed in one page but are still used elsewhere
+- Described behavior or examples that now conflict with the change
+- A `nav.config.ts` restructure that a page's own content no longer reflects
+
+It only ever proposes edits to pages that weren't already changed in the triggering pull request.
+
+## How it works
+
+1. A GitHub webhook (registered on the `beacon` repository, subscribed to Pull request events) calls a Vercel serverless function at `/api/github-webhook` whenever a pull request merges.
+2. The function verifies the request's signature, then checks whether the merge actually touched a watched path. Anything else is a no-op.
+3. It reads the diff and every other current doc page using a **read-only** GitHub token - it has no permission to write anything back to the repository.
+4. It asks Claude whether any other page is now stale, using a forced structured response so the output is always well-formed.
+5. If a fix is warranted, it writes a JSON suggestion (a summary plus full proposed file contents) to Vercel Blob storage and logs the URL. If nothing needs to change, it does nothing further.
+
+## Where to find a suggestion
+
+There's no notification - checking is pull-based. After merging a change that touches a watched path:
+
+- **Vercel Runtime Logs** (Observability tab) - look for a line like `[doc-update] PR #<N>: suggestion written to <url>`, plus a one-line summary.
+- **The Blob store's file browser** (Storage tab → the connected store → Browser) - every suggestion lands at a predictable path, `doc-suggestions/pr-<PR number>.json`, so you can look one up by PR number directly.
+
+A suggestion is a plain JSON file - a public URL you can open directly, containing the proposed full file contents for you to copy into a normal branch/commit/PR if you agree with it.
+
+## Configuration
+
+The watched repository and folder are read from environment variables, all defaulting to Beacon's own layout:
+
+| Variable                    | Default                    |
+| ---------------------------- | --------------------------- |
+| `GITHUB_REPO_OWNER`          | `arodoni`                   |
+| `GITHUB_REPO_NAME`           | `beacon`                    |
+| `WATCHED_DOCS_FOLDER`        | `content/docs`               |
+| `WATCHED_NAV_CONFIG_PATH`    | `content/nav.config.ts`      |
+
+None of these need to be set for this repository - only override them if the target repo or folder layout ever changes.
+
+Three secrets are required as Vercel environment variables:
+
+| Variable               | Purpose                                                                 |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `ANTHROPIC_API_KEY`     | Calls the Claude API to judge staleness and draft a fix.                |
+| `GITHUB_WEBHOOK_SECRET` | Verifies incoming webhook requests actually came from GitHub.           |
+| `GITHUB_READ_TOKEN`     | A fine-grained GitHub PAT scoped to Contents: Read-only on this repo alone - no write access of any kind. |
+
+A connected Vercel Blob store provides the remaining credential automatically (via short-lived OIDC tokens), with no manual token to configure.
+
+## Why it never writes to GitHub
+
+An earlier design had the automation open its own pull request, which needed a GitHub token with write access to contents, pull requests, and issues. The current design needs none of that: the read-only token can't push a commit, open a PR, or touch anything else in the repository even if it were compromised. The tradeoff is that suggestions are pull-based rather than showing up as a ready-to-merge PR - see [Where to find a suggestion](#where-to-find-a-suggestion) above.
+
+See [Configuration](/configure) for the `content/nav.config.ts` shape the automation reads, and [Troubleshooting](/troubleshoot) for common build and deployment issues unrelated to this feature.
