@@ -18,8 +18,12 @@ candidates.
 Rules:
 - Never propose an edit to a page or nav config file that was already changed in the triggering
   pull request - only ever propose edits to OTHER pages.
-- Only propose a change when you are confident it is genuinely needed. If nothing is stale, set
-  needs_update to false and leave files empty.
+- Only propose a change when you are confident it is genuinely needed.
+- needs_update must exactly match whether you are proposing any content: set it to true if and
+  only if files will contain at least one entry or nav_config_content is non-null. If your
+  analysis concludes nothing needs to change - even after a thorough check - set needs_update to
+  false and leave files empty and nav_config_content null. Do not set needs_update to true just
+  because you performed an analysis; it reflects only whether you have an actual fix to propose.
 - Preserve each file's frontmatter (title/description) unless the change specifically requires
   updating it - these fields are load-bearing (they drive <title>, meta description, canonical
   URL, OG tags, and the search index).

@@ -148,6 +148,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       ? result.nav_config_content
       : null;
 
+  if (acceptedFiles.length === 0 && acceptedNavConfig === null) {
+    console.log(`[doc-update] PR #${prNumber}: needs_update was true but no valid content survived filtering - treating as no-op. ${result.summary}`);
+    respond(res, 200, { ok: true, needsUpdate: false, summary: result.summary });
+    return;
+  }
+
   const suggestion: StoredSuggestion = {
     sourcePrNumber: prNumber,
     sourcePrUrl: payload.pull_request.html_url,
