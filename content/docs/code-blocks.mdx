@@ -1,38 +1,56 @@
 ---
-title: Code & Content
+title: Code and Content
 description: Syntax highlighting and GFM formatting reference.
 ---
 
-# Code & Content
+# Code and Content
 
-Code blocks are highlighted at build time with Shiki, so highlighting works even with JavaScript disabled, and it follows the site's dark-mode toggle rather than your OS preference.
+## Code syntax highlighting
 
-```ts
-export function greet(name: string): string {
-  return `Hello, ${name}!`;
-}
-
-console.log(greet("Beacon"));
-```
-
-```bash
-npm install
-npm run build
-npm run start
-```
+Code blocks are highlighted at build time with Shiki, so highlighting works even with JavaScript disabled, and it follows the site's dark-mode toggle rather than your OS preference. 
 
 ## GFM formatting
 
-Tables, task lists, and strikethrough all work via `remark-gfm`:
+Tables, task lists, and strikethrough all work via `remark-gfm`. The task list below renders checked and unchecked items, and combines a checkbox with strikethrough text on the same line:
 
-| Feature       | Supported |
-| ------------- | --------- |
-| Tables        | ✅        |
-| Task lists    | ✅        |
-| Strikethrough | ✅        |
+```markdown
+- [x] Tables
+- [x] Task lists
+- [ ] ~~Anything else~~ not needed
+```
+
+The above renders as:
 
 - [x] Tables
 - [x] Task lists
 - [ ] ~~Anything else~~ not needed
 
 Inline code like `useState` and `next.config.mjs` renders with a subtle background.
+
+## Callouts
+
+Use the `Callout` component to highlight notes, tips, important information, and warnings without an import statement.
+
+```markdown
+<Callout type="note">
+  This is a note callout.
+</Callout>
+```
+
+Sample renderings: 
+
+<Callout type="note">
+  This is a note callout.
+</Callout>
+
+<Callout type="tip">
+  This is a tip callout.
+</Callout>
+
+<Callout type="important">
+  This is an important callout.
+</Callout>
+
+<Callout type="warning">
+  Always keep your API keys private. Do not share them in public repositories.
+</Callout>

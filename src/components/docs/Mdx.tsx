@@ -3,10 +3,12 @@ import remarkGfm from "remark-gfm";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
+import { Callout } from "./Callout";
 
 export async function Mdx({ source }: { source: string }) {
   const { content } = await compileMDX({
     source,
+    components: { Callout },
     options: {
       mdxOptions: {
         remarkPlugins: [remarkGfm],

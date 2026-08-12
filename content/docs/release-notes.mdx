@@ -9,6 +9,8 @@ This page tracks notable features and changes as they ship, newest first.
 
 ## 2026-08-12
 
+- Added a `Callout` component (`src/components/docs/Callout.tsx`) for note, tip, important, and warning admonitions in docs content. It's registered as a global MDX component, so any `.mdx` file can use `<Callout type="warning">...</Callout>` directly without an import statement.
+
 - Added a `DOC_UPDATE_AUTOMATION_ENABLED` environment variable to gate the doc update automation webhook. It's disabled by default; set it to `true` to turn the automation on. See [Doc Update Automation](/doc-updates) for details.
 
 ## 2026-08-05
