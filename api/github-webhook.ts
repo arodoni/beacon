@@ -22,6 +22,12 @@ function respond(res: ServerResponse, statusCode: number, body: Record<string, u
 }
 
 export default async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
+  const config = loadConfig();
+  if (!config.automationEnabled) {
+    respond(res, 200, { ok: true, skipped: "doc update automation disabled" });
+    return;
+  }
+
   const rawBody = await readRawBody(req);
 
   const webhookSecret = process.env.GITHUB_WEBHOOK_SECRET;
@@ -58,8 +64,6 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     respond(res, 400, { error: "invalid JSON body" });
     return;
   }
-
-  const config = loadConfig();
 
   if (payload.action !== "closed" || !payload.pull_request.merged || payload.pull_request.base.ref !== "main") {
     respond(res, 200, { ok: true, skipped: "not a merge to main" });
