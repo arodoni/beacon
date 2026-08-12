@@ -12,9 +12,12 @@ When a pull request merges into `main` and touches a doc page under `content/doc
 - Cross-references that break, such as a link to a heading anchor that was renamed
 - Terminology or option names that changed in one page but are still used elsewhere
 - Described behavior or examples that now conflict with the change
+
 - A `nav.config.ts` restructure that a page's own content no longer reflects
 
-It only ever proposes edits to pages that weren't already changed in the triggering pull request.
+<Callout type="note">
+  The automation only proposes edits to pages that weren't already changed in the triggering pull request.
+</Callout>
 
 ## How it works
 
