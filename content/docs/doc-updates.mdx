@@ -35,16 +35,16 @@ A suggestion is a plain JSON file - a public URL you can open directly, containi
 
 ## Configuration
 
-The watched repository and folder are read from environment variables, all defaulting to Beacon's own layout:
+The watched repository and folder are read from environment variables:
 
 | Variable                    | Default                    |
 | ---------------------------- | --------------------------- |
-| `GITHUB_REPO_OWNER`          | `arodoni`                   |
+| `GITHUB_REPO_OWNER`          | none - required              |
 | `GITHUB_REPO_NAME`           | `beacon`                    |
 | `WATCHED_DOCS_FOLDER`        | `content/docs`               |
 | `WATCHED_NAV_CONFIG_PATH`    | `content/nav.config.ts`      |
 
-None of these need to be set for this repository - only override them if the target repo or folder layout ever changes.
+`GITHUB_REPO_OWNER` must always be set explicitly. The rest default to Beacon's own layout - only override them if the target repo or folder layout ever changes.
 
 Three secrets are required as Vercel environment variables:
 
