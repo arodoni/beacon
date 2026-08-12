@@ -40,11 +40,11 @@ The watched repository and folder are read from environment variables:
 | Variable                    | Default                    |
 | ---------------------------- | --------------------------- |
 | `GITHUB_REPO_OWNER`          | none - required              |
-| `GITHUB_REPO_NAME`           | `beacon`                    |
+| `GITHUB_REPO_NAME`           | none - required              |
 | `WATCHED_DOCS_FOLDER`        | `content/docs`               |
 | `WATCHED_NAV_CONFIG_PATH`    | `content/nav.config.ts`      |
 
-`GITHUB_REPO_OWNER` must always be set explicitly. The rest default to Beacon's own layout - only override them if the target repo or folder layout ever changes.
+`GITHUB_REPO_OWNER` and `GITHUB_REPO_NAME` must always be set explicitly - they have no default. `WATCHED_DOCS_FOLDER` and `WATCHED_NAV_CONFIG_PATH` are optional and can be overridden if the target repo's folder layout ever differs from Beacon's own.
 
 Three secrets are required as Vercel environment variables:
 
