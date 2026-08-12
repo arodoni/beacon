@@ -9,6 +9,7 @@ test("loadConfig falls back to Beacon's current defaults when env vars are unset
     githubRepoName: "beacon",
     watchedDocsFolder: "content/docs",
     watchedNavConfigPath: "content/nav.config.ts",
+    automationEnabled: false,
   });
 });
 
@@ -18,13 +19,20 @@ test("loadConfig honors overrides for every field", () => {
     GITHUB_REPO_NAME: "other-repo",
     WATCHED_DOCS_FOLDER: "docs",
     WATCHED_NAV_CONFIG_PATH: "docs/nav.ts",
+    DOC_UPDATE_AUTOMATION_ENABLED: "true",
   });
   assert.deepEqual(config, {
     githubRepoOwner: "someone-else",
     githubRepoName: "other-repo",
     watchedDocsFolder: "docs",
     watchedNavConfigPath: "docs/nav.ts",
+    automationEnabled: true,
   });
+});
+
+test("loadConfig treats any value other than the literal string 'true' as disabled", () => {
+  const config = loadConfig({ DOC_UPDATE_AUTOMATION_ENABLED: "1" });
+  assert.equal(config.automationEnabled, false);
 });
 
 const defaultConfig = loadConfig({});
