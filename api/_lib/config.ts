@@ -3,6 +3,7 @@ export interface WatchConfig {
   githubRepoName: string;
   watchedDocsFolder: string;
   watchedNavConfigPath: string;
+  automationEnabled: boolean;
 }
 
 const DEFAULTS: WatchConfig = {
@@ -10,6 +11,7 @@ const DEFAULTS: WatchConfig = {
   githubRepoName: "beacon",
   watchedDocsFolder: "content/docs",
   watchedNavConfigPath: "content/nav.config.ts",
+  automationEnabled: false,
 };
 
 export function loadConfig(env: Record<string, string | undefined> = process.env): WatchConfig {
@@ -18,6 +20,7 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     githubRepoName: env.GITHUB_REPO_NAME || DEFAULTS.githubRepoName,
     watchedDocsFolder: env.WATCHED_DOCS_FOLDER || DEFAULTS.watchedDocsFolder,
     watchedNavConfigPath: env.WATCHED_NAV_CONFIG_PATH || DEFAULTS.watchedNavConfigPath,
+    automationEnabled: env.DOC_UPDATE_AUTOMATION_ENABLED === "true",
   };
 }
 
