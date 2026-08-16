@@ -1,8 +1,10 @@
-import { put, head } from "@vercel/blob";
+import { put, head, list } from "@vercel/blob";
 import type { StoredSuggestion } from "./types.js";
 
+const SUGGESTIONS_PREFIX = "doc-suggestions/";
+
 function suggestionPath(prNumber: number): string {
-  return `doc-suggestions/pr-${prNumber}.json`;
+  return `${SUGGESTIONS_PREFIX}pr-${prNumber}.json`;
 }
 
 /**
@@ -26,4 +28,18 @@ export async function writeSuggestion(prNumber: number, suggestion: StoredSugges
     allowOverwrite: true,
   });
   return blob.url;
+}
+
+/** Every stored doc-update suggestion, most recently generated first. */
+export async function listSuggestions(): Promise<StoredSuggestion[]> {
+  const { blobs } = await list({ prefix: SUGGESTIONS_PREFIX });
+
+  const suggestions = await Promise.all(
+    blobs.map(async (blob) => {
+      const response = await fetch(blob.url);
+      return (await response.json()) as StoredSuggestion;
+    }),
+  );
+
+  return suggestions.sort((a, b) => b.generatedAt.localeCompare(a.generatedAt));
 }

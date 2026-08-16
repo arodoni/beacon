@@ -32,8 +32,4 @@ export const nav: NavGroup[] = [
       { title: "Code and Content", href: "/code-blocks" },
     ],
   },
-  {
-    title: "Tools",
-    items: [{ title: "Editor", href: "/editor" }],
-  },
 ];

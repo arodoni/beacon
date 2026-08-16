@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MarkdownWorkspace } from "../../../components/MarkdownWorkspace";
+import { MarkdownWorkspace } from "../../../../components/MarkdownWorkspace";
 
 export const metadata: Metadata = {
   title: "Editor",

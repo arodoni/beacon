@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { AreaSwitcher } from "../AreaSwitcher";
-import { SearchDialog } from "./SearchDialog";
 import { ThemeToggle } from "../ThemeToggle";
 
-export function TopBar() {
+export function DashboardTopBar() {
   return (
     <header className="flex items-center justify-between gap-4 border-b border-slate-900/10 px-6 py-4 dark:border-white/10">
       <div className="flex items-center gap-6">
@@ -28,10 +27,7 @@ export function TopBar() {
         </Link>
         <AreaSwitcher />
       </div>
-      <div className="flex items-center gap-3">
-        <SearchDialog />
-        <ThemeToggle />
-      </div>
+      <ThemeToggle />
     </header>
   );
 }

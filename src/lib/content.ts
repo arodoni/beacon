@@ -57,7 +57,7 @@ export function getAllDocsMeta(): Doc[] {
   return allSlugs().map(readDoc);
 }
 
-const STATIC_ROUTES = new Set(["/", "/editor"]);
+const STATIC_ROUTES = new Set(["/", "/dashboard", "/dashboard/editor", "/dashboard/observability"]);
 
 /**
  * Throws at build time if a nav entry points at a route that doesn't exist,
@@ -110,7 +110,7 @@ export function buildSearchEntries(): SearchEntry[] {
   entries.push({
     title: "Editor",
     description: "Write Markdown and see it rendered live.",
-    href: "/editor",
+    href: "/dashboard/editor",
     excerpt: "Interactive Markdown editor with instant preview.",
   });
 
