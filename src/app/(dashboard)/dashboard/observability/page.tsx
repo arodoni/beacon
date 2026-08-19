@@ -78,9 +78,7 @@ export default function ObservabilityPage() {
 
     setState({
       status: "loaded",
-      suggestions: previousSuggestions.map((s) =>
-        s.sourcePrNumber === prNumber ? { ...s, status } : s,
-      ),
+      suggestions: previousSuggestions.filter((s) => s.sourcePrNumber !== prNumber),
     });
 
     fetch("/api/doc-suggestion-status", {
