@@ -21,7 +21,7 @@ export const nav: NavGroup[] = [
     items: [
       { title: "Configure", href: "/configure" },
       { title: "Deploy", href: "/deploy" },
-      { title: "Notify Updates", href: "/doc-updates" },
+      { title: "Automate Updates", href: "/doc-updates" },
       { title: "Troubleshoot", href: "/troubleshoot" },
       { title: "Release Notes", href: "/release-notes" },
     ],
