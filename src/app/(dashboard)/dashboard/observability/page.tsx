@@ -158,7 +158,7 @@ export default function ObservabilityPage() {
                     </time>
                   </div>
                 </div>
-                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                <p className="mt-2 whitespace-pre-line text-sm text-slate-600 dark:text-slate-300">
                   {suggestion.summary}
                 </p>
                 {suggestion.files.length > 0 && (

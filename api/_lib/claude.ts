@@ -47,7 +47,8 @@ export async function proposeDocUpdates(params: {
             needs_update: { type: "boolean" },
             summary: {
               type: "string",
-              description: "Human-readable explanation, stored alongside the suggestion for a person to review.",
+              description:
+                "Human-readable explanation, stored alongside the suggestion for a person to review. Format as one Markdown bullet (\"- \") per distinct finding or reasoning step, each on its own line - never a single dense paragraph.",
             },
             files: {
               type: "array",

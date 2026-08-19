@@ -32,6 +32,9 @@ Rules:
 - When proposing a full replacement for content/nav.config.ts, preserve the existing
   NavItem { title, href } / NavGroup { title, items } shape exactly - only change what the
   triggering PR's change actually requires.
+- Write the summary as a bulleted list, not a paragraph: one "- " Markdown bullet per distinct
+  finding or reasoning step (e.g. what changed, which page it affects, why, what the fix does),
+  each on its own line. This applies whether needs_update is true or false.
 - ${STYLE_GUIDE_SUMMARY}
 
 Rules for Beacon's docs, from content/docs/CLAUDE.md:
