@@ -73,8 +73,9 @@ export function validateNav(groups: NavGroup[] = nav): void {
   for (const group of groups) {
     for (const item of group.items) {
       if (!knownHrefs.has(item.href)) {
+        const staticRouteList = [...STATIC_ROUTES].map((route) => `"${route}"`).join(", ");
         throw new Error(
-          `nav.config.ts: "${item.title}" points to "${item.href}", which doesn't match "/", "/editor", or any file in content/docs/.`
+          `nav.config.ts: "${item.title}" points to "${item.href}", which doesn't match ${staticRouteList}, or any file in content/docs/.`
         );
       }
     }

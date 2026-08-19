@@ -5,6 +5,6 @@ description: Fixes for common build and deployment issues in Beacon.
 
 # Troubleshooting
 
-- **Broken nav link fails the build**: `content/nav.config.ts` entries are validated at build time. A `href` that doesn't match `/`, `/editor`, or a file in `content/docs/` fails the build rather than shipping a 404. Fix the nav entry or add the missing `.mdx` file.
+- **Broken nav link fails the build**: `content/nav.config.ts` entries are validated at build time. A `href` that doesn't match `/`, `/dashboard`, `/dashboard/editor`, `/dashboard/observability`, or a file in `content/docs/` fails the build rather than shipping a 404. Fix the nav entry or add the missing `.mdx` file.
 - **Assets 404 under a subpath**: usually means `NEXT_PUBLIC_BASE_PATH` was set for the app but not consistently across `assetPrefix`; both are derived from the same env var in `next.config.mjs`, so re-check the variable is set at build time, not runtime.
 - **Canonical URLs still show `example.com`**: `NEXT_PUBLIC_SITE_URL` wasn't set at build time. Re-run the build with it exported.
