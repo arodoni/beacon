@@ -46,7 +46,11 @@ export async function writeSuggestion(prNumber: number, suggestion: StoredSugges
   return blob.url;
 }
 
-/** Every stored doc-update suggestion, most recently generated first. */
+/**
+ * Every stored doc-update suggestion worth reviewing, most recently generated first.
+ * Dismissed suggestions are excluded permanently, not just for the current browser
+ * session - once dismissed, a suggestion is done and shouldn't resurface on reload.
+ */
 export async function listSuggestions(): Promise<StoredSuggestion[]> {
   const { blobs } = await list({ prefix: SUGGESTIONS_PREFIX });
 
@@ -57,5 +61,7 @@ export async function listSuggestions(): Promise<StoredSuggestion[]> {
     }),
   );
 
-  return suggestions.sort((a, b) => b.generatedAt.localeCompare(a.generatedAt));
+  return suggestions
+    .filter((s) => s.status !== "dismissed")
+    .sort((a, b) => b.generatedAt.localeCompare(a.generatedAt));
 }
