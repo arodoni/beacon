@@ -29,6 +29,8 @@ export interface ProposeDocUpdatesResult {
   nav_config_content: string | null;
 }
 
+export type SuggestionStatus = "pending" | "accepted" | "dismissed";
+
 export interface StoredSuggestion {
   sourcePrNumber: number;
   sourcePrUrl: string;
@@ -37,4 +39,5 @@ export interface StoredSuggestion {
   files: ProposedFile[];
   navConfigContent: string | null;
   generatedAt: string;
+  status: SuggestionStatus;
 }

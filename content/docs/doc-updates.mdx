@@ -31,10 +31,17 @@ When a pull request merges into `main` and touches a doc page under `content/doc
 
 There's no notification - checking is pull-based. After merging a change that touches a watched path:
 
+- **The in-app dashboard** at `/dashboard/observability` - lists every suggestion with its summary, touched files, and status, newest first. This is the easiest way to review suggestions day to day.
 - **Vercel Runtime Logs** (Observability tab) - look for a line like `[doc-update] PR #<N>: suggestion written to <url>`, plus a one-line summary.
 - **The Blob store's file browser** (Storage tab → the connected store → Browser) - every suggestion lands at a predictable path, `doc-suggestions/pr-<PR number>.json`, so you can look one up by PR number directly.
 
 A suggestion is a plain JSON file - a public URL you can open directly, containing the proposed full file contents for you to copy into a normal branch/commit/PR if you agree with it.
+
+## Reviewing a suggestion
+
+Every suggestion has a `status`: `pending` (the default), `accepted`, or `dismissed`. On the dashboard, a pending suggestion shows **Accept** and **Dismiss** buttons; clicking either calls `PATCH /api/doc-suggestion-status` with the PR number and new status, which updates the `status` field on the same blob and re-renders it as a badge. Marking a status doesn't apply the suggested file changes anywhere - it's just a record that someone reviewed it, so you still copy the proposed content into a normal branch/commit/PR yourself if you agree with it.
+
+The dashboard itself has no login, so this endpoint is protected by a separate shared secret instead: the first time you click Accept or Dismiss in a browser tab, it prompts for the secret and reuses it for the rest of that tab's session. A wrong or missing secret returns `401` and clears the cached value so the next click re-prompts.
 
 ## Configuration
 
@@ -52,13 +59,14 @@ The watched repository and folder are read from environment variables:
 
 The automation is **disabled by default**. Set `DOC_UPDATE_AUTOMATION_ENABLED` to the literal string `true` to turn it on. When disabled, the webhook handler responds immediately without verifying the signature, reading the diff, or calling Claude.
 
-Three secrets are required as Vercel environment variables:
+Four secrets are required as Vercel environment variables:
 
 | Variable               | Purpose                                                                 |
 | ----------------------- | ------------------------------------------------------------------------ |
 | `ANTHROPIC_API_KEY`     | Calls the Claude API to judge staleness and draft a fix.                |
 | `GITHUB_WEBHOOK_SECRET` | Verifies incoming webhook requests actually came from GitHub.           |
 | `GITHUB_READ_TOKEN`     | A fine-grained GitHub PAT scoped to Contents: Read-only on this repo alone - no write access of any kind. |
+| `DASHBOARD_API_SECRET`  | A shared secret guarding `PATCH /api/doc-suggestion-status`, since the dashboard itself has no login. Any value works; generate one with `openssl rand -hex 32`. |
 
 A connected Vercel Blob store provides the remaining credential automatically (via short-lived OIDC tokens), with no manual token to configure.
 

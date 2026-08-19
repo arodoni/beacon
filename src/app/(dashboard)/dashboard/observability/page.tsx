@@ -7,6 +7,8 @@ type ProposedFile = {
   content: string;
 };
 
+type SuggestionStatus = "pending" | "accepted" | "dismissed";
+
 type StoredSuggestion = {
   sourcePrNumber: number;
   sourcePrUrl: string;
@@ -15,6 +17,19 @@ type StoredSuggestion = {
   files: ProposedFile[];
   navConfigContent: string | null;
   generatedAt: string;
+  status: SuggestionStatus;
+};
+
+const STATUS_BADGE_STYLES: Record<SuggestionStatus, string> = {
+  pending: "bg-amber-100 text-amber-800 dark:bg-amber-400/10 dark:text-amber-400",
+  accepted: "bg-emerald-100 text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-400",
+  dismissed: "bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-400",
+};
+
+const STATUS_LABELS: Record<SuggestionStatus, string> = {
+  pending: "Pending",
+  accepted: "Accepted",
+  dismissed: "Dismissed",
 };
 
 type LoadState =
@@ -44,6 +59,46 @@ export default function ObservabilityPage() {
       cancelled = true;
     };
   }, []);
+
+  function getDashboardSecret(): string | null {
+    let secret = sessionStorage.getItem("dashboardApiSecret");
+    if (!secret) {
+      secret = window.prompt("Enter the dashboard API secret to accept/dismiss suggestions:");
+      if (secret) sessionStorage.setItem("dashboardApiSecret", secret);
+    }
+    return secret;
+  }
+
+  function updateStatus(prNumber: number, status: SuggestionStatus) {
+    if (state.status !== "loaded") return;
+    const previousSuggestions = state.suggestions;
+
+    const secret = getDashboardSecret();
+    if (!secret) return;
+
+    setState({
+      status: "loaded",
+      suggestions: previousSuggestions.map((s) =>
+        s.sourcePrNumber === prNumber ? { ...s, status } : s,
+      ),
+    });
+
+    fetch("/api/doc-suggestion-status", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${secret}`,
+      },
+      body: JSON.stringify({ prNumber, status }),
+    }).then((res) => {
+      if (!res.ok) {
+        if (res.status === 401) sessionStorage.removeItem("dashboardApiSecret");
+        throw new Error(`request failed with status ${res.status}`);
+      }
+    }).catch(() => {
+      setState({ status: "loaded", suggestions: previousSuggestions });
+    });
+  }
 
   return (
     <div>
@@ -89,12 +144,19 @@ export default function ObservabilityPage() {
                   >
                     #{suggestion.sourcePrNumber} {suggestion.sourcePrTitle}
                   </a>
-                  <time
-                    dateTime={suggestion.generatedAt}
-                    className="shrink-0 text-xs text-slate-500 dark:text-slate-400"
-                  >
-                    {new Date(suggestion.generatedAt).toLocaleString()}
-                  </time>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_BADGE_STYLES[suggestion.status]}`}
+                    >
+                      {STATUS_LABELS[suggestion.status]}
+                    </span>
+                    <time
+                      dateTime={suggestion.generatedAt}
+                      className="text-xs text-slate-500 dark:text-slate-400"
+                    >
+                      {new Date(suggestion.generatedAt).toLocaleString()}
+                    </time>
+                  </div>
                 </div>
                 <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
                   {suggestion.summary}
@@ -110,6 +172,24 @@ export default function ObservabilityPage() {
                       </li>
                     ))}
                   </ul>
+                )}
+                {suggestion.status === "pending" && (
+                  <div className="mt-3 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => updateStatus(suggestion.sourcePrNumber, "accepted")}
+                      className="rounded-md bg-emerald-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-emerald-500"
+                    >
+                      Accept
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateStatus(suggestion.sourcePrNumber, "dismissed")}
+                      className="rounded-md bg-slate-900/5 px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-900/10 dark:bg-white/10 dark:text-slate-200 dark:hover:bg-white/20"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
                 )}
               </li>
             ))}

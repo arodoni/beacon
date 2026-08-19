@@ -7,6 +7,11 @@ function suggestionPath(prNumber: number): string {
   return `${SUGGESTIONS_PREFIX}pr-${prNumber}.json`;
 }
 
+/** Suggestions written before the `status` field existed have none stored - treat those as pending. */
+function withStatusDefault(suggestion: StoredSuggestion): StoredSuggestion {
+  return { ...suggestion, status: suggestion.status ?? "pending" };
+}
+
 /**
  * Deterministic-path existence check, used to avoid regenerating (and re-billing
  * Anthropic for) a suggestion GitHub already redelivered a webhook event for.
@@ -17,6 +22,17 @@ export async function suggestionAlreadyExists(prNumber: number): Promise<boolean
     return true;
   } catch {
     return false;
+  }
+}
+
+/** Reads a single stored suggestion by PR number, or null if none exists yet. */
+export async function getSuggestion(prNumber: number): Promise<StoredSuggestion | null> {
+  try {
+    const meta = await head(suggestionPath(prNumber));
+    const response = await fetch(meta.url);
+    return withStatusDefault((await response.json()) as StoredSuggestion);
+  } catch {
+    return null;
   }
 }
 
@@ -37,7 +53,7 @@ export async function listSuggestions(): Promise<StoredSuggestion[]> {
   const suggestions = await Promise.all(
     blobs.map(async (blob) => {
       const response = await fetch(blob.url);
-      return (await response.json()) as StoredSuggestion;
+      return withStatusDefault((await response.json()) as StoredSuggestion);
     }),
   );
 
