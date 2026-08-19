@@ -166,6 +166,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     files: acceptedFiles,
     navConfigContent: acceptedNavConfig,
     generatedAt: new Date().toISOString(),
+    status: "pending",
   };
 
   const blobUrl = await writeSuggestion(prNumber, suggestion);
