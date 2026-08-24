@@ -111,10 +111,10 @@ export function UpdateMonitoringPane() {
           className="h-5 w-5 text-blue-800 dark:text-blue-300"
           aria-hidden="true"
         >
-          <path d="M12 3a9 9 0 1 0 9 9" />
-          <path d="M12 3v4" />
-          <path d="M12 12l4-4" />
-          <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" />
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="5" />
+          <path d="M12 12 L18 6" />
+          <circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none" />
         </svg>
         Update Monitoring
       </h2>

@@ -70,10 +70,16 @@ export function validateNav(groups: NavGroup[] = nav): void {
     ...getAllDocSlugs().map((slug) => `/${slug}`),
   ]);
 
+  const staticRouteList = [...STATIC_ROUTES].map((route) => `"${route}"`).join(", ");
+
   for (const group of groups) {
+    if (!knownHrefs.has(group.href)) {
+      throw new Error(
+        `nav.config.ts: "${group.title}" points to "${group.href}", which doesn't match ${staticRouteList}, or any file in content/docs/.`
+      );
+    }
     for (const item of group.items) {
       if (!knownHrefs.has(item.href)) {
-        const staticRouteList = [...STATIC_ROUTES].map((route) => `"${route}"`).join(", ");
         throw new Error(
           `nav.config.ts: "${item.title}" points to "${item.href}", which doesn't match ${staticRouteList}, or any file in content/docs/.`
         );

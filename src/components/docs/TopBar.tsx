@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { AreaSwitcher } from "../AreaSwitcher";
 import { SearchDialog } from "./SearchDialog";
 import { ThemeToggle } from "../ThemeToggle";
+import { TopNav } from "./TopNav";
 
 export function TopBar() {
   return (
     <header className="flex items-center justify-between gap-4 border-b border-slate-900/10 px-6 py-4 dark:border-white/10">
       <div className="flex items-center gap-6">
-        <Link href="/dashboard" className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+        <Link href="/" className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
           <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#0d1117] text-white">
             <svg
               viewBox="0 0 24 24"
@@ -26,7 +26,7 @@ export function TopBar() {
           </span>
           Beacon
         </Link>
-        <AreaSwitcher />
+        <TopNav />
       </div>
       <div className="flex items-center gap-3">
         <SearchDialog />
