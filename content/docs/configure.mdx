@@ -24,13 +24,21 @@ Every file in `content/docs/` supports the following frontmatter fields:
 export const nav: NavGroup[] = [
   {
     title: "Get Started",
+    href: "/",
     items: [
       { title: "Introduction", href: "/" },
       { title: "Quickstart", href: "/quickstart" },
     ],
   },
+  {
+    title: "Release Notes",
+    href: "/release-notes",
+    items: [],
+  },
 ];
 ```
+
+Every group requires a `href` in addition to its `items` list. A group's `items` can be empty when the group's `href` alone should serve as its landing page, as with Release Notes above.
 
 Every `href` must resolve to either `/`, `/dashboard`, `/dashboard/editor`, or a slug that matches a file in `content/docs/`. The build checks this and fails loudly if a nav entry points nowhere, rather than shipping a broken link.
 
