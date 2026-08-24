@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { isNavActive } from "../../lib/nav";
 
 const items = [
-  { title: "Overview", href: "/dashboard" },
+  { title: "Monitor", href: "/dashboard" },
   { title: "Editor", href: "/dashboard/editor" },
-  { title: "Observability", href: "/dashboard/observability" },
 ];
 
 export function DashboardNav() {
@@ -15,7 +15,7 @@ export function DashboardNav() {
   return (
     <nav className="w-64 shrink-0 space-y-0.5 text-sm">
       {items.map((item) => {
-        const isActive = pathname === item.href;
+        const isActive = isNavActive(pathname, item.href);
         return (
           <Link
             key={item.href}
