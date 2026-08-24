@@ -11,9 +11,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <TopBar />
       <div className="mx-auto flex max-w-6xl gap-10 px-6 py-10">
         <Sidebar />
-        <article className="prose prose-slate max-w-none flex-1 dark:prose-invert">
-          {children}
-        </article>
+        {children}
       </div>
     </div>
   );

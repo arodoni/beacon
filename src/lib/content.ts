@@ -57,7 +57,7 @@ export function getAllDocsMeta(): Doc[] {
   return allSlugs().map(readDoc);
 }
 
-const STATIC_ROUTES = new Set(["/", "/dashboard", "/dashboard/editor", "/dashboard/observability"]);
+const STATIC_ROUTES = new Set(["/", "/dashboard", "/dashboard/editor"]);
 
 /**
  * Throws at build time if a nav entry points at a route that doesn't exist,

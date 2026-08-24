@@ -31,7 +31,7 @@ When a pull request merges into `main` and touches a doc page under `content/doc
 
 There's no notification - checking is pull-based. After merging a change that touches a watched path:
 
-- **The in-app dashboard** at `/dashboard/observability` - lists every suggestion with its summary, touched files, and status, newest first. This is the easiest way to review suggestions day to day.
+- **The in-app dashboard** at `/dashboard` - lists every suggestion with its summary, touched files, and status, newest first. This is the easiest way to review suggestions day to day.
 - **Vercel Runtime Logs** (Observability tab) - look for a line like `[doc-update] PR #<N>: suggestion written to <url>`, plus a one-line summary.
 - **The Blob store's file browser** (Storage tab → the connected store → Browser) - every suggestion lands at a predictable path, `doc-suggestions/pr-<PR number>.json`, so you can look one up by PR number directly.
 

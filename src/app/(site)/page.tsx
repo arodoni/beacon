@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mdx } from "../../components/docs/Mdx";
+import { DocArticle } from "../../components/docs/DocArticle";
 import { getIntroductionDoc } from "../../lib/content";
 import { buildDocMetadata } from "../../lib/seo";
 
@@ -9,5 +9,5 @@ export function generateMetadata(): Metadata {
 
 export default async function Home() {
   const doc = getIntroductionDoc();
-  return <Mdx source={doc.content} />;
+  return <DocArticle content={doc.content} />;
 }

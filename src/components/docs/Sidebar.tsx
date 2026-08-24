@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { nav } from "../../../content/nav.config";
+import { isNavActive } from "../../lib/nav";
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className="w-64 shrink-0 space-y-6 text-sm">
+    <nav className="sticky top-10 w-64 shrink-0 self-start space-y-6 text-sm">
       {nav.map((group) => (
         <div key={group.title}>
           <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
@@ -16,7 +17,7 @@ export function Sidebar() {
           </p>
           <ul className="space-y-0.5">
             {group.items.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = isNavActive(pathname, item.href);
               return (
                 <li key={item.href}>
                   <Link

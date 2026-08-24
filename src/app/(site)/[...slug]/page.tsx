@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mdx } from "../../../components/docs/Mdx";
+import { DocArticle } from "../../../components/docs/DocArticle";
 import { getAllDocSlugs, getDocBySlug } from "../../../lib/content";
 import { buildDocMetadata } from "../../../lib/seo";
 
@@ -25,5 +25,5 @@ export default async function DocPage({
 }) {
   const { slug } = await params;
   const doc = getDocBySlug(slug.join("/"));
-  return <Mdx source={doc.content} />;
+  return <DocArticle content={doc.content} />;
 }
