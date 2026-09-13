@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { siteUrl } from "../lib/site";
@@ -43,7 +44,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <Script id="beacon-theme-init" strategy="beforeInteractive">{themeInitScript}</Script>
       </head>
       <body className="min-h-full">{children}</body>
     </html>

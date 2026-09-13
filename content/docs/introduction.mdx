@@ -1,23 +1,45 @@
 ---
 title: Beacon
-description: An open-source, self-hosted static docs-site generator.
+description: An open-source, self-hosted static site generator for documentation, tutorials, and product content.
 ---
 
 # Beacon
 
-Beacon is an open-source, self-hosted static-site generator for docs, tutorials, and product content. Write pages in Markdown and MDX, define your sidebar in one config file, and `npm run build` produces plain static HTML, CSS, and JS you can host anywhere.
+Beacon is an open-source, self-hosted static site generator for documentation, tutorials, and product content. Write pages in Markdown and MDX, define your content structure, and Beacon produces plain static HTML, CSS, and JavaScript you can host anywhere.
 
 ## What you get
 
-- **Markdown/MDX content**: every page lives in `content/docs/*.mdx` with simple frontmatter.
-- **Config-driven sidebar**: nav structure, ordering, and grouping all come from `content/nav.config.ts`.
-- **Client-side search**: press <kbd>⌘</kbd> <kbd>K</kbd> (or <kbd>Ctrl</kbd> <kbd>K</kbd>) anywhere on the site to fuzzy-search every page, no external search service involved.
-- **Syntax highlighting**: code blocks are highlighted at build time, no client-side JavaScript required to render them correctly.
-- **Dark mode**: a theme toggle in the top bar, persisted across visits.
-- **Zero server**: the build output is static files. No Node process, no database, no vendor lock-in. Deploy to Vercel, Netlify, GitHub Pages, or any static host.
+- **Markdown/MDX content**: Every page lives in `content/docs/*.mdx` with simple
+  frontmatter.
+
+- **Config-driven navigation**: Navigation structure, ordering, and grouping all
+  come from `content/nav.config.ts`.
+
+- **Client-side search**: Press <kbd>⌘</kbd> <kbd>K</kbd> (or <kbd>Ctrl</kbd>
+  <kbd>K</kbd>) anywhere on the site to fuzzy-search every page, with no external
+  search service involved.
+
+- **Syntax highlighting**: Code blocks are highlighted at build time, so no
+  client-side JavaScript is required to render them correctly.
+
+- **Dark mode**: A theme toggle in the top bar persists your choice across
+  visits.
+
+- **Zero server**: The build output is static files. No Node process, no
+  database, no vendor lock-in. Deploy to Vercel, Netlify, GitHub Pages, or any
+  static host.
+
+- **Editor**: A live Markdown editor under Tools (`/dashboard/editor`) for
+  drafting and previewing formatting before publishing a page.
+
+- **Monitor**: A Tools pane that tracks doc-update suggestions, with status
+  badges so you can review, accept, or dismiss each one.
 
 ## Try it out
 
-The Beacon package ships with a few documentation pages that you can use as sample pages. There is also a Dashboard section at `/dashboard`, which includes an **Editor** page (`/dashboard/editor`) with a live Markdown editor if you want to experiment with formatting before committing it to a real page.
+The Beacon package ships with a few documentation pages. There is also a
+Tools section, which includes an **Editor** page (`/dashboard/editor`) with
+a live Markdown editor, if you want to experiment with formatting before
+you add it to a real page.
 
 Head to [Quickstart](/quickstart) to see how to add your own content.
