@@ -5,19 +5,19 @@ description: An open-source, self-hosted static site generator for documentation
 
 # Beacon
 
-Beacon is an open-source, self-hosted static site generator for documentation, tutorials, and product content. Write pages in Markdown and MDX, define your content structure, and Beacon produces plain static HTML, CSS, and JavaScript you can host anywhere.
+Beacon is an open-source, self-hosted static site generator for documentation, tutorials, and product content. Write pages in MDX (`.mdx`), which is Markdown with support for JSX components, define your content structure, and Beacon produces plain static HTML, CSS, and JavaScript you can host anywhere.
 
 ## What you get
 
-- **Markdown/MDX content**: Every page lives in `content/docs/*.mdx` with simple
+- **Markdown content**: Every page lives in `content/docs/*.mdx` with simple
   frontmatter.
 
 - **Config-driven navigation**: Navigation structure, ordering, and grouping all
   come from `content/nav.config.ts`.
 
 - **Client-side search**: Press <kbd>⌘</kbd> <kbd>K</kbd> (or <kbd>Ctrl</kbd>
-  <kbd>K</kbd>) anywhere on the site to fuzzy-search every page, with no external
-  search service involved.
+  <kbd>K</kbd>) anywhere on the site to fuzzy-search every page, with no
+  external search service involved.
 
 - **Syntax highlighting**: Code blocks are highlighted at build time, so no
   client-side JavaScript is required to render them correctly.
@@ -34,12 +34,3 @@ Beacon is an open-source, self-hosted static site generator for documentation, t
 
 - **Monitor**: A Tools pane that tracks doc-update suggestions, with status
   badges so you can review, accept, or dismiss each one.
-
-## Try it out
-
-The Beacon package ships with a few documentation pages. There is also a
-Tools section, which includes an **Editor** page (`/dashboard/editor`) with
-a live Markdown editor, if you want to experiment with formatting before
-you add it to a real page.
-
-Head to [Quickstart](/quickstart) to see how to add your own content.

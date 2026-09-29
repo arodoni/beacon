@@ -1,58 +1,99 @@
 ---
 title: Quickstart
-description: Install, run, build, and add your first page.
+description: Install Beacon, run the development server, write your first docs page, and build the static site.
 ---
 
 # Quickstart
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) 20.9.0 or later (Next.js 16's minimum supported version)
-- npm (bundled with Node.js)
+Before you begin, install the following:
 
-## Run it locally
+- [Node.js](https://nodejs.org/) 20.9.0 or later, the minimum version that
+  Next.js 16 supports
 
-```bash
-npm install
-npm run dev
-```
+- `npm` (bundled with Node.js)
 
-Open [http://localhost:3000](http://localhost:3000).
+## Install and run Beacon locally for live preview
 
-## Build the static site
+1. From the root of your project, install the project dependencies:
 
-```bash
-npm run build
-```
+   ```bash
+   npm install
+   ```
 
-This produces a fully static `out/` directory. Preview it exactly as it will be hosted, with no server involved:
+1. Start a local development server to preview your changes as you edit the
+   content:
 
-```bash
-npm run start
-```
+   ```bash
+   npm run dev
+   ```
 
-## Add a new page
+   The development server runs at
+   [http://localhost:3000](http://localhost:3000) and renders each page when
+   you request it. It doesn't write the site to the `out/` directory. Changes
+   to `content/nav.config.ts` reload automatically. To see changes to `.mdx`
+   files, refresh the browser.
 
-1. Create a file under `content/docs/`, for example `content/docs/deployment.mdx`.
-2. Give it frontmatter:
+## Add a documentation page
 
-```md
----
-title: Deployment
-description: How to ship Beacon to production.
----
+1. Create a file under `content/docs/` for the new page, for example
+   `content/docs/my-page.mdx`.
 
-Your content here.
-```
+1. Add a frontmatter block to the file with a title and description:
 
-3. Add an entry to `content/nav.config.ts` pointing at it:
+   ```md
+   ---
+   title: My Page
+   description: A short, specific summary of what this page covers.
+   ---
 
-```ts
-{ title: "Deployment", href: "/deployment" }
-```
+   # My Page
 
-That's it — the page is picked up automatically by the catch-all route, included in the client-side search index, and added to the sitemap on the next build.
+   This is the content for my page.
+   ```
 
-- [x] Install dependencies
-- [x] Start the dev server
-- [ ] Write your first page
+   Beacon picks up the file automatically through the catch-all route and adds
+   it to the client-side search index. The build also adds it to the sitemap.
+
+1. To add a link to the page in the navigation, add an entry for the new file
+   to a group's `items` array in `content/nav.config.ts`, for example the
+   **User Guide** group:
+
+   ```ts
+   { title: "My Page", href: "/my-page" }
+   ```
+
+1. With the development server running, open
+   [http://localhost:3000/my-page](http://localhost:3000/my-page) to view the
+   new page.
+
+## Build and preview the static site
+
+Build the site to check it as it will be hosted. Unlike the development
+server, a build writes every page to disk as static HTML.
+
+1. Stop the development server with <kbd>Ctrl</kbd>+<kbd>C</kbd>.
+
+1. Build the static site into the `out/` directory:
+
+   ```bash
+   npm run build
+   ```
+
+   The build pre-renders every page to HTML and writes it, along with minified
+   JavaScript, CSS, and static assets, to `out/`. When the build finishes, it
+   lists each route it generated.
+
+1. Preview the static output locally:
+
+   ```bash
+   npm run start
+   ```
+
+   This command serves the files in `out/` as they are, with no development
+   server. It doesn't pick up your edits, so run `npm run build` again after
+   each change.
+
+1. Open [http://localhost:3000/my-page](http://localhost:3000/my-page) to view
+   the static output.
