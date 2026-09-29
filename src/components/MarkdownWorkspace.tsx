@@ -79,7 +79,7 @@ export function MarkdownWorkspace() {
 
         <div
           data-testid="markdown-preview"
-          className="prose prose-slate max-w-none overflow-hidden rounded-[1.75rem] border border-slate-900/10 bg-white p-6 shadow-inner dark:prose-invert dark:border-white/10 dark:bg-slate-900/95 dark:shadow-black/20"
+          className="prose prose-slate max-w-none overflow-hidden rounded-[1.75rem] border border-slate-900/10 bg-white p-6 shadow-inner dark:prose-invert dark:border-white/10 dark:bg-slate-900/95 dark:shadow-black/20 prose-a:font-normal prose-a:no-underline prose-a:text-blue-600 dark:prose-a:text-blue-400"
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{preview}</ReactMarkdown>
         </div>
