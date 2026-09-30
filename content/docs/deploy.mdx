@@ -1,6 +1,6 @@
 ---
 title: Deployment
-description: End-to-end steps for building Beacon and shipping it to Vercel, Netlify, GitHub Pages, or any static host.
+description: End-to-end steps for building Beacon and shipping it to Vercel, GitHub Pages, or any static host.
 ---
 
 # Deployment
@@ -14,7 +14,7 @@ Set these before running a production build, not after:
 | Variable                 | Required           | Purpose                                                                 |
 | ------------------------ | ------------------- | ------------------------------------------------------------------------ |
 | `NEXT_PUBLIC_SITE_URL`   | Recommended         | Full public URL of the deployed site. Used for canonical links, Open Graph tags, `sitemap.xml`, `robots.txt`, and `/llms.txt`. Falls back to `https://example.com` if unset. |
-| `NEXT_PUBLIC_BASE_PATH`  | Only for subpaths   | Subpath the site is served from, e.g. `/repo-name` for GitHub Pages project sites. Leave unset for root-domain hosts like Vercel and Netlify. |
+| `NEXT_PUBLIC_BASE_PATH`  | Only for subpaths   | Subpath the site is served from, e.g. `/repo-name` for GitHub Pages project sites. Leave unset for root-domain hosts like Vercel. |
 
 Set `NEXT_PUBLIC_SITE_URL` in each host's dashboard (or the GitHub Actions workflow, for GitHub Pages) rather than committing production URLs to `.env.local`.
 
@@ -48,20 +48,6 @@ npm run test:e2e
 2. Leave the build settings at their defaults; Vercel detects the Next.js static export automatically.
 3. Add `NEXT_PUBLIC_SITE_URL` under Project Settings → Environment Variables, set to the assigned or custom domain.
 4. Deploy. Every push to `main` triggers a new production deployment; other branches get preview deployments.
-
-### Netlify
-
-`netlify.toml` is already committed at the repo root:
-
-```toml
-[build]
-  command = "npm run build"
-  publish = "out"
-```
-
-1. Connect the repository in the Netlify dashboard.
-2. Add `NEXT_PUBLIC_SITE_URL` under Site configuration → Environment variables.
-3. Deploy. Netlify picks up `netlify.toml` automatically, so no manual build configuration is needed.
 
 ### GitHub Pages
 

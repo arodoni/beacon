@@ -9,7 +9,7 @@ Beacon is a self-contained static-site generator for docs, tutorials, and produc
 - **Client-side search** - `Cmd/Ctrl+K` opens a fuzzy search (via `fuse.js`) over a search index generated at build/request time. No external search service.
 - **Syntax highlighting** - code blocks are highlighted at build time with Shiki (`rehype-pretty-code`), so highlighting doesn't depend on client-side JavaScript, and it follows the site's theme toggle rather than the OS setting.
 - **Dark mode** - a toggle in the top bar, persisted to `localStorage`.
-- **Plain static output** - `npm run build` produces a static `out/` directory: host it on Vercel, Netlify, GitHub Pages, or any static file host.
+- **Plain static output** - `npm run build` produces a static `out/` directory: host it on Vercel, GitHub Pages, or any static file host.
 - **Editor** - a live Markdown editor with instant preview, included as one of the site's pages.
 
 ## Getting started
@@ -77,10 +77,6 @@ npm run start
 
 Connect the repository and deploy with the default settings - Vercel detects the static export automatically.
 
-### Netlify
-
-`netlify.toml` is already set up (`command = "npm run build"`, `publish = "out"`). Connect the repository and deploy.
-
 ### GitHub Pages
 
 1. Set the base path at build time if deploying under a subpath (`username.github.io/repo-name`):
@@ -96,5 +92,5 @@ Upload the contents of `out/` - it's plain HTML/CSS/JS with no server-side requi
 
 ## Optional environment variables
 
-- `NEXT_PUBLIC_BASE_PATH` - subpath the site is served from (e.g. `/repo-name` for GitHub Pages). Leave unset for root-domain hosts like Vercel/Netlify.
+- `NEXT_PUBLIC_BASE_PATH` - subpath the site is served from (e.g. `/repo-name` for GitHub Pages). Leave unset for root-domain hosts like Vercel.
 - `NEXT_PUBLIC_SITE_URL` - the site's full public URL, used in `sitemap.xml` and `robots.txt`.
