@@ -9,7 +9,7 @@ Beacon is a self-contained static-site generator for docs, tutorials, and produc
 - **Client-side search** - `Cmd/Ctrl+K` opens a fuzzy search (via `fuse.js`) over a search index generated at build/request time. No external search service.
 - **Syntax highlighting** - code blocks are highlighted at build time with Shiki (`rehype-pretty-code`), so highlighting doesn't depend on client-side JavaScript, and it follows the site's theme toggle rather than the OS setting.
 - **Dark mode** - a toggle in the top bar, persisted to `localStorage`.
-- **Plain static output** - `npm run build` produces a static `out/` directory: host it on Vercel, GitHub Pages, or any static file host.
+- **Plain static output** - `npm run build` produces a static `out/` directory: host it on Vercel.
 - **Editor** - a live Markdown editor with instant preview, included as one of the site's pages.
 
 ## Getting started
@@ -77,20 +77,7 @@ npm run start
 
 Connect the repository and deploy with the default settings - Vercel detects the static export automatically.
 
-### GitHub Pages
-
-1. Set the base path at build time if deploying under a subpath (`username.github.io/repo-name`):
-   ```bash
-   NEXT_PUBLIC_BASE_PATH=/repo-name npm run build
-   ```
-2. `public/.nojekyll` is already included so GitHub Pages serves the `_next/` asset directory correctly.
-3. A ready-to-use workflow is included at `.github/workflows/deploy-gh-pages.yml` - it builds and deploys `out/` on every push to `main`. Enable it by setting the repository's Pages source to "GitHub Actions" (Settings → Pages).
-
-### Any other static host
-
-Upload the contents of `out/` - it's plain HTML/CSS/JS with no server-side requirements.
-
 ## Optional environment variables
 
-- `NEXT_PUBLIC_BASE_PATH` - subpath the site is served from (e.g. `/repo-name` for GitHub Pages). Leave unset for root-domain hosts like Vercel.
+- `NEXT_PUBLIC_BASE_PATH` - subpath the site is served from (e.g. `/repo-name`). Leave unset for root-domain hosts like Vercel.
 - `NEXT_PUBLIC_SITE_URL` - the site's full public URL, used in `sitemap.xml` and `robots.txt`.
