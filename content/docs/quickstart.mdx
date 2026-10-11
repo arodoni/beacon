@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-description: Install Beacon, run the development server, write your first docs page, and build the static site.
+description: Install Beacon, run the development server, write your first docs page, and deploy the site to Vercel.
 ---
 
 # Quickstart
@@ -16,7 +16,14 @@ Before you begin, install the following:
 
 ## Install and run Beacon locally for live preview
 
-1. From the root of your project, install the project dependencies:
+1. Clone the Beacon repository and change to the project directory:
+
+   ```bash
+   git clone https://github.com/arodoni/beacon.git
+   cd beacon
+   ```
+
+1. Install the project dependencies:
 
    ```bash
    npm install
@@ -68,32 +75,40 @@ Before you begin, install the following:
    [http://localhost:3000/my-page](http://localhost:3000/my-page) to view the
    new page.
 
-## Build and preview the static site
+## Deploy to Vercel
 
-Build the site to check it as it will be hosted. Unlike the development
-server, a build writes every page to disk as static HTML.
+Deploy the site to Vercel to publish it. Vercel builds the site from a GitHub
+repository, so you first push your copy of Beacon to a repository that you
+own.
 
-1. Stop the development server with <kbd>Ctrl</kbd>+<kbd>C</kbd>.
+1. On GitHub, [create a new repository](https://github.com/new). Leave it
+   empty: don't add a README, `.gitignore`, or license.
 
-1. Build the static site into the `out/` directory:
-
-   ```bash
-   npm run build
-   ```
-
-   The build pre-renders every page to HTML and writes it, along with minified
-   JavaScript, CSS, and static assets, to `out/`. When the build finishes, it
-   lists each route it generated.
-
-1. Preview the static output locally:
+1. Commit the page that you added, point your local clone at the new
+   repository, and push it:
 
    ```bash
-   npm run start
+   git add .
+   git commit -m "Add my page"
+   git remote set-url origin https://github.com/<your-username>/<your-repo>.git
+   git push -u origin main
    ```
 
-   This command serves the files in `out/` as they are, with no development
-   server. It doesn't pick up your edits, so run `npm run build` again after
-   each change.
+   Replace `<your-username>` and `<your-repo>` with your GitHub username and
+   the name of the repository that you created.
 
-1. Open [http://localhost:3000/my-page](http://localhost:3000/my-page) to view
-   the static output.
+1. In the Vercel dashboard, [import the repository](https://vercel.com/new).
+   Leave the build settings at their defaults. Vercel detects the Next.js
+   static export automatically.
+
+1. Under **Environment Variables**, add `NEXT_PUBLIC_SITE_URL` and set it to
+   your site's URL, for example `https://my-docs.vercel.app`.
+
+1. Click **Deploy**. After the first deployment, every push to `main`
+   triggers a new production deployment, and pushes to other branches create
+   preview deployments.
+
+1. Open `https://<your-project>.vercel.app/my-page` to view the new page.
+
+To preview the static build locally, see
+[Deployment](/deploy).

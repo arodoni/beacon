@@ -20,8 +20,9 @@ export const nav: NavGroup[] = [
   },
   {
     title: "User Guide",
-    href: "/configure",
+    href: "/prepare",
     items: [
+      { title: "Prepare", href: "/prepare" },
       { title: "Configure", href: "/configure" },
       { title: "Deploy", href: "/deploy" },
       { title: "Automate Updates", href: "/doc-updates" },

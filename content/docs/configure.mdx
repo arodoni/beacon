@@ -42,9 +42,9 @@ Every group requires a `href` in addition to its `items` list. A group's `items`
 
 Every `href` must resolve to either `/`, `/dashboard`, `/dashboard/editor`, or a slug that matches a file in `content/docs/`. The build checks this and fails loudly if a nav entry points nowhere, rather than shipping a broken link.
 
-## Base path (GitHub Pages)
+## Base path
 
-If you deploy under a subpath (`username.github.io/repo-name`), set `NEXT_PUBLIC_BASE_PATH` at build time:
+If you deploy under a subpath (for example, `https://example.com/repo-name`), set `NEXT_PUBLIC_BASE_PATH` at build time:
 
 ```bash
 NEXT_PUBLIC_BASE_PATH=/repo-name npm run build
