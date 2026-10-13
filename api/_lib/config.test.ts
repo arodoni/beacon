@@ -2,11 +2,11 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { loadConfig, isWatchedPath } from "./config.ts";
 
-test("loadConfig falls back to Beacon's current defaults when env vars are unset", () => {
+test("loadConfig leaves the repo owner and name empty and uses defaults for the rest when env vars are unset", () => {
   const config = loadConfig({});
   assert.deepEqual(config, {
-    githubRepoOwner: "arodoni",
-    githubRepoName: "beacon",
+    githubRepoOwner: "",
+    githubRepoName: "",
     watchedDocsFolder: "content/docs",
     watchedNavConfigPath: "content/nav.config.ts",
     automationEnabled: false,

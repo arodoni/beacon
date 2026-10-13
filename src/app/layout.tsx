@@ -1,7 +1,7 @@
 import Script from "next/script";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { productName, siteUrl } from "../lib/site";
+import { beaconName, productName, siteUrl } from "../lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: `%s - ${productName}`,
   },
   description:
-    `${productName} is an open-source static-site generator for docs, tutorials, and product content.`,
+    `${beaconName} is an open-source static-site generator for docs, tutorials, and product content.`,
 };
 
 const themeInitScript = `

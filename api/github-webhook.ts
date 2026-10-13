@@ -28,6 +28,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     return;
   }
 
+  if (!config.githubRepoOwner || !config.githubRepoName) {
+    console.error("GITHUB_REPO_OWNER or GITHUB_REPO_NAME is not configured");
+    respond(res, 500, { error: "server misconfigured" });
+    return;
+  }
+
   const rawBody = await readRawBody(req);
 
   const webhookSecret = process.env.GITHUB_WEBHOOK_SECRET;

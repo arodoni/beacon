@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { productName } from "../src/lib/site";
+import { beaconName } from "../src/lib/site";
 
 test.describe("Editor page", () => {
   test("renders the default document with typography styling", async ({ page }) => {
@@ -9,7 +9,7 @@ test.describe("Editor page", () => {
     const heading = preview.locator("h1");
     const paragraph = preview.locator("p").first();
 
-    await expect(heading).toHaveText(productName);
+    await expect(heading).toHaveText(beaconName);
 
     // Regression guard: a `not-prose` ancestor around the Editor page used to
     // suppress all Tailwind Typography styling inside the nested preview

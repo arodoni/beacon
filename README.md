@@ -14,6 +14,14 @@ Beacon is a self-contained static-site generator for docs, tutorials, and produc
 
 ## Getting started
 
+To create a new site from Beacon, run:
+
+```bash
+npm create beacon-docs@latest my-docs
+```
+
+To work on Beacon itself, clone this repository and run:
+
 ```bash
 npm install
 npm run dev
@@ -49,6 +57,7 @@ The page is picked up by the catch-all route, included in search, and added to t
 - `src/components/docs/` - `Sidebar`, `TopBar`, `SearchDialog`, `ThemeToggle`, `Mdx` (the MDX compiler/renderer).
 - `src/components/MarkdownWorkspace.tsx` - the Editor's live preview component.
 - `e2e/` - Playwright end-to-end tests.
+- `packages/create-beacon-docs/` - the `npm create beacon-docs` scaffolder, published to npm separately. It's removed from sites it creates.
 
 ## Testing
 

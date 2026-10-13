@@ -7,4 +7,5 @@ description: Fixes for common build and deployment issues in {{productName}}.
 
 - **Broken nav link fails the build**: `content/nav.config.ts` entries are validated at build time. A `href` that doesn't match `/`, `/dashboard`, `/dashboard/editor`, or a file in `content/docs/` fails the build rather than shipping a 404. Fix the nav entry or add the missing `.mdx` file.
 - **Assets 404 under a subpath**: usually means `NEXT_PUBLIC_BASE_PATH` was set for the app but not consistently across `assetPrefix`; both are derived from the same env var in `next.config.mjs`, so re-check the variable is set at build time, not runtime.
+- **The top bar and page titles show `MyProduct`**: `NEXT_PUBLIC_PRODUCT_NAME` wasn't set at build time. Set it in `.env.local` for local builds, or in your hosting provider's dashboard for production, and rebuild.
 - **Canonical URLs still show `example.com`**: `NEXT_PUBLIC_SITE_URL` wasn't set at build time. Re-run the build with it exported.
