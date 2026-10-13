@@ -2,6 +2,7 @@
   "name": "create-beacon-docs",
   "version": "0.1.0",
   "description": "Create a new Beacon docs site.",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "create-beacon-docs": "index.js"
