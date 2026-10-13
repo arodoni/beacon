@@ -48,10 +48,10 @@ Every `href` must resolve to either `/`, `/dashboard`, `/dashboard/editor`, or a
 
 | Name | Set in | Used for |
 | --- | --- | --- |
-| Product name | `NEXT_PUBLIC_PRODUCT_NAME` environment variable | The top bar, page titles, and the `productName` docs variable. Falls back to `MyProduct` if unset. |
+| Product name | `PRODUCT_NAME` environment variable | The top bar, page titles, and the `productName` docs variable. Falls back to `MyProduct` if unset. |
 | Project name | `projectName` in `src/lib/site.ts` | The `projectName` docs variable, for example in repository URLs. |
 
-For local builds, set `NEXT_PUBLIC_PRODUCT_NAME` in `.env.local`. For
+For local builds, set `PRODUCT_NAME` in `.env.local`. For
 production, set it in your hosting provider's dashboard. See
 [Deployment](/deploy#1-set-environment-variables).
 
@@ -70,8 +70,8 @@ The build fails if a page uses a variable that doesn't exist.
 
 ## Base path
 
-If you deploy under a subpath (for example, `https://example.com/repo-name`), set `NEXT_PUBLIC_BASE_PATH` at build time:
+If you deploy under a subpath (for example, `https://example.com/repo-name`), set `BASE_PATH` at build time:
 
 ```bash
-NEXT_PUBLIC_BASE_PATH=/repo-name npm run build
+BASE_PATH=/repo-name npm run build
 ```

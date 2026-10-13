@@ -13,11 +13,11 @@ Set these before running a production build, not after:
 
 | Variable                 | Required           | Purpose                                                                 |
 | ------------------------ | ------------------- | ------------------------------------------------------------------------ |
-| `NEXT_PUBLIC_PRODUCT_NAME` | Recommended     | Name of the product your docs describe. Shown in the top bar and page titles, and inserted wherever a page uses the `productName` variable. Falls back to `MyProduct` if unset. |
-| `NEXT_PUBLIC_SITE_URL`   | Recommended         | Full public URL of the deployed site. Used for canonical links, Open Graph tags, `sitemap.xml`, `robots.txt`, and `/llms.txt`. Falls back to `https://example.com` if unset. |
-| `NEXT_PUBLIC_BASE_PATH`  | Only for subpaths   | Subpath the site is served from, e.g. `/repo-name`. Leave unset for root-domain hosts like Vercel. |
+| `PRODUCT_NAME` | Recommended     | Name of the product your docs describe. Shown in the top bar and page titles, and inserted wherever a page uses the `productName` variable. Falls back to `MyProduct` if unset. |
+| `SITE_URL`   | Recommended         | Full public URL of the deployed site. Used for canonical links, Open Graph tags, `sitemap.xml`, `robots.txt`, and `/llms.txt`. Falls back to `https://example.com` if unset. |
+| `BASE_PATH`  | Only for subpaths   | Subpath the site is served from, e.g. `/repo-name`. Leave unset for root-domain hosts like Vercel. |
 
-Set `NEXT_PUBLIC_PRODUCT_NAME` and `NEXT_PUBLIC_SITE_URL` in the Vercel dashboard. Values in `.env.local` apply only to local builds, because the file isn't committed. For a list of the variables that you can set, see `.env.example` in the project root.
+Set `PRODUCT_NAME` and `SITE_URL` in the Vercel dashboard. Values in `.env.local` apply only to local builds, because the file isn't committed. For a list of the variables that you can set, see `.env.example` in the project root.
 
 ## 2. Build and verify locally
 
@@ -47,13 +47,13 @@ npm run test:e2e
 
 1. Import the repository in the Vercel dashboard.
 2. Leave the build settings at their defaults; Vercel detects the Next.js static export automatically.
-3. Under Project Settings → Environment Variables, add `NEXT_PUBLIC_PRODUCT_NAME` set to your product name, and `NEXT_PUBLIC_SITE_URL` set to the assigned or custom domain.
+3. Under Project Settings → Environment Variables, add `PRODUCT_NAME` set to your product name, and `SITE_URL` set to the assigned or custom domain.
 4. Deploy. Every push to `main` triggers a new production deployment; other branches get preview deployments.
 
 ## 4. Verify after deploy
 
 - Load the deployed URL and confirm the sidebar, search (`Cmd/Ctrl+K`), and dark mode toggle work.
 - Check `/sitemap.xml`, `/robots.txt`, and `/llms.txt` resolve and reference the correct production domain, not `example.com`.
-- If the site is served from a subpath, click through a few internal links to confirm `NEXT_PUBLIC_BASE_PATH` was applied consistently to both pages and static assets.
+- If the site is served from a subpath, click through a few internal links to confirm `BASE_PATH` was applied consistently to both pages and static assets.
 
 See [Troubleshooting](/troubleshoot) for fixes to common build and deployment issues.

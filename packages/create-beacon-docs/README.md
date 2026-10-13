@@ -13,9 +13,9 @@ The command does the following:
 1. Sets the project name in `src/lib/site.ts`, `package.json`, and
    `package-lock.json`.
 
-1. Creates `.env.local` from `.env.example`, with `NEXT_PUBLIC_PRODUCT_NAME` set
+1. Creates `.env.local` from `.env.example`, with `PRODUCT_NAME` set
    to your product name. The file isn't committed, so also set
-   `NEXT_PUBLIC_PRODUCT_NAME` in your hosting provider's dashboard before you
+   `PRODUCT_NAME` in your hosting provider's dashboard before you
    deploy.
 
 1. Replaces Beacon's own docs with the starter pages in `template/content/`: an

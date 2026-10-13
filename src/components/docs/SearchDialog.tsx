@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { SearchEntry } from "../../lib/content";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const basePath = process.env.BASE_PATH ?? "";
 
 export function SearchDialog() {
   const [open, setOpen] = useState(false);
