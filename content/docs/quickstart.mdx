@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-description: Install Beacon, run the development server, write your first docs page, and deploy the site to Vercel.
+description: Install {{productName}}, run the development server, write your first docs page, and deploy the site to Vercel.
 ---
 
 # Quickstart
@@ -12,15 +12,15 @@ Before you begin, install the following:
 - [Node.js](https://nodejs.org/) 20.9.0 or later, the minimum version that
   Next.js 16 supports
 
-- `npm` (bundled with Node.js)
+- `npm` that is bundled with Node.js
 
-## Install and run Beacon locally for live preview
+## Install and run {{productName}} locally for live preview
 
-1. Clone the Beacon repository and change to the project directory:
+1. Clone the {{productName}} repository and change to the project directory:
 
    ```bash
-   git clone https://github.com/arodoni/beacon.git
-   cd beacon
+   git clone https://github.com/arodoni/{{projectName}}.git
+   cd {{projectName}}
    ```
 
 1. Install the project dependencies:
@@ -47,7 +47,7 @@ Before you begin, install the following:
 1. Create a file under `content/docs/` for the new page, for example
    `content/docs/my-page.mdx`.
 
-1. Add a frontmatter block to the file with a title and description:
+1. In the new page, add a frontmatter block to the file with a title and description:
 
    ```md
    ---
@@ -60,12 +60,12 @@ Before you begin, install the following:
    This is the content for my page.
    ```
 
-   Beacon picks up the file automatically through the catch-all route and adds
+   {{productName}} picks up the file automatically through the catch-all route and adds
    it to the client-side search index. The build also adds it to the sitemap.
 
-1. To add a link to the page in the navigation, add an entry for the new file
-   to a group's `items` array in `content/nav.config.ts`, for example the
-   **User Guide** group:
+1. In `content/nav.config.ts`, add a link to the page in the navigation, add an
+   entry for the new file to a group's `items` array, for example the **User
+   Guide** group:
 
    ```ts
    { title: "My Page", href: "/my-page" }
@@ -75,17 +75,16 @@ Before you begin, install the following:
    [http://localhost:3000/my-page](http://localhost:3000/my-page) to view the
    new page.
 
-## Deploy to Vercel
-
-Deploy the site to Vercel to publish it. Vercel builds the site from a GitHub
-repository, so you first push your copy of Beacon to a repository that you
-own.
+## Push the changes to GitHub 
 
 1. On GitHub, [create a new repository](https://github.com/new). Leave it
-   empty: don't add a README, `.gitignore`, or license.
+   empty.
+   
+   Do not add a README, `.gitignore`, or license.
 
-1. Commit the page that you added, point your local clone at the new
-   repository, and push it:
+1. On your local machine, commit the page that you added and the
+   `content/nav.config.ts` file, point your local clone at the new repository,
+   and push it to the new GitHub repository:
 
    ```bash
    git add .
@@ -96,6 +95,10 @@ own.
 
    Replace `<your-username>` and `<your-repo>` with your GitHub username and
    the name of the repository that you created.
+
+## Deploy to Vercel
+
+Deploy the site to Vercel to publish it. Vercel builds the site from a GitHub repository when you push to the `main` branch. You can also deploy preview builds for other branches.
 
 1. In the Vercel dashboard, [import the repository](https://vercel.com/new).
    Leave the build settings at their defaults. Vercel detects the Next.js

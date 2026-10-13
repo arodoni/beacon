@@ -1,14 +1,15 @@
 import { test, expect } from "@playwright/test";
+import { productName } from "../src/lib/site";
 
 test.describe("Editor page", () => {
   test("renders the default document with typography styling", async ({ page }) => {
-    await page.goto("/editor");
+    await page.goto("/dashboard/editor");
 
     const preview = page.getByTestId("markdown-preview");
     const heading = preview.locator("h1");
     const paragraph = preview.locator("p").first();
 
-    await expect(heading).toHaveText("Beacon");
+    await expect(heading).toHaveText(productName);
 
     // Regression guard: a `not-prose` ancestor around the Editor page used to
     // suppress all Tailwind Typography styling inside the nested preview
@@ -23,7 +24,7 @@ test.describe("Editor page", () => {
   });
 
   test("live preview updates as markdown is typed", async ({ page }) => {
-    await page.goto("/editor");
+    await page.goto("/dashboard/editor");
 
     const textarea = page.getByLabel("Markdown editor");
     await textarea.fill("# Hello Test\n\n- item one\n- item two\n");
