@@ -5,28 +5,82 @@ description: Create a {{productName}} site with npm create beacon-docs, run the 
 
 # Quickstart
 
+This quickstart walks you through creating a documentation site for `MyProduct` integrated with the `my-docs` GitHub repository and deployed to Vercel.
+
 ## Requirements
 
-Before you begin, install the following:
+Before you begin, install and set up the required software and environments.
+
+### Node.js and Node Package Manager
+
+On your local machine, install:
 
 - [Node.js](https://nodejs.org/) 20.9.0 or later, the minimum version that
   Next.js 16 supports
 
-- `npm` that is bundled with Node.js
+- Node Package Manager (`npm`), which is bundled with Node.js
 
-## Install and run {{productName}} locally for live preview
+### GitHub account and repository 
 
-1. Create a new site, replacing `my-docs` with the name of your project
-   directory:
+1. On GitHub, using an existing account or a new account, [create a new
+   repository](https://github.com/new) named `my-docs`.
+
+   Leave the new repository empty. Don't add a README, `.gitignore`, or license.
+
+1. In the repository settings, click **Installed GitHub Apps**, confirm Vercel
+   is installed, and click **Configure**. 
+   
+1. In the Repository access section, select the repository you created,
+   `my-docs`, or allow access to all repositories.
+
+### Vercel account and project
+
+1. In Vercel, using an existing account or a new account, [import
+   the GitHub repository](https://vercel.com/new), `my-docs`, and click **Deploy**.
+   
+   Leave the build settings at their defaults. Vercel detects the Next.js static
+   export automatically.
+
+   You can ignore the warning about the missing branch. 
+
+1. From the Dashboard, click the card for the new project, `my-docs`, and copy
+   the domain that Vercel assigned to it, `<your-vercel-domain>`, from the
+   **Domains** list.
+
+1. Navigate to **Environment Variables**, add the following key and value, and
+   click **Save**:
+
+   - Key: `SITE_URL`
+
+   - Value: your assigned domain, including `https://`, for example,
+     `https://my-docs-black-chi.vercel.app`
+
+   `SITE_URL` doesn't change where the site deploys. {{productName}} uses it to
+   build absolute links in canonical tags, `sitemap.xml`, and `/llms.txt`.
+
+## Install and run {{productName}}
+
+To preview the site locally, install {{productName}} on your local machine and run the development server.
+
+1. Create a new site, `my-docs`.
 
    ```bash
    npm create beacon-docs@latest my-docs
    ```
 
-   When prompted, enter a project name and the name of the product that your
-   docs describe. The command downloads {{productName}}, adds starter pages,
-   saves the product name in `.env.local`, creates a Git repository with an
-   initial commit, and installs the dependencies.
+   When prompted, enter the project name, `my-docs`, and the product name, `MyProduct`. 
+   
+   The command performs the following tasks:
+   
+   1. Downloads {{productName}}.
+
+   1. Adds starter pages.
+
+   1. Saves the product name in `.env.local`.
+
+   1. Creates a local Git repository with an initial commit.
+
+   1. Installs the dependencies.
 
 1. Change to the project directory:
 
@@ -35,7 +89,7 @@ Before you begin, install the following:
    ```
 
 1. Start a local development server to preview your changes as you edit the
-   content:
+   content in the next section:
 
    ```bash
    npm run dev
@@ -43,16 +97,17 @@ Before you begin, install the following:
 
    The development server runs at
    [http://localhost:3000](http://localhost:3000) and renders each page when
-   you request it. It doesn't write the site to the `out/` directory. Changes
-   to `content/nav.config.ts` reload automatically. To see changes to `.mdx`
-   files, refresh the browser.
+   you request it, but doesn't write the site to the `out/` directory. 
+   
+   Changes to `content/nav.config.ts` reload automatically. To see changes to
+   `.mdx` files, refresh the browser.
 
 ## Add a documentation page
 
-1. Create a file under `content/docs/` for the new page, for example
+1. Create a file under `content/docs/` for the new page,
    `content/docs/my-page.mdx`.
 
-1. In the new page, add a frontmatter block to the file with a title and description:
+1. In the new page, add a frontmatter block with a title and description:
 
    ```md
    ---
@@ -62,14 +117,16 @@ Before you begin, install the following:
 
    # My Page
 
-   This is the content for my page.
+   This is the content for MyProduct.
    ```
 
-   {{productName}} picks up the file automatically through the catch-all route and adds
-   it to the client-side search index. The build also adds it to the sitemap.
+   {{productName}} picks up the file automatically and adds it to the client-side
+   search index. 
+   
+   The build also adds it to the sitemap.
 
-1. In `content/nav.config.ts`, add a link to the page in the navigation, add an
-   entry for the new file to a group's `items` array, for example the **Get
+1. To add the page to the navigation, in `content/nav.config.ts`, add an entry
+   for the new file to a group's `items` array, for example, the **Get
    Started** group:
 
    ```ts
@@ -80,48 +137,59 @@ Before you begin, install the following:
    [http://localhost:3000/my-page](http://localhost:3000/my-page) to view the
    new page.
 
+1. Stop the development server with `Ctrl+C`.
+
 ## Push the changes to GitHub
 
-1. On GitHub, [create a new repository](https://github.com/new). Leave it
-   empty.
-
-   Don't add a README, `.gitignore`, or license.
-
-1. On your local machine, commit the page that you added and the
-   `content/nav.config.ts` file, connect your local repository to the new
-   GitHub repository, and push:
+1. On your local machine, commit the page that you added, `my-page.mdx`, and the
+   `content/nav.config.ts` file:
 
    ```bash
    git add .
    git commit -m "Add my page"
-   git remote add origin https://github.com/<your-username>/<your-repo>.git
+   ```
+
+1. Connect your local repository to the new GitHub repository. Replace
+   `<your-github-username>` with your GitHub username:
+   
+   ```bash
+   git remote add origin https://github.com/<your-github-username>/my-docs.git
+   ```
+
+1. Push the changes to the `main` branch:
+
+   ```bash
    git push -u origin main
    ```
 
-   Replace `<your-username>` and `<your-repo>` with your GitHub username and
-   the name of the repository that you created.
+   In a production repository, you typically don't push directly to `main`. The quickstart does this only for simplicity.
+
+   <Callout type="tip">
+     If the push fails with `Password authentication is not supported for Git operations`, GitHub rejected your account password. 
+     
+     - If you've added an SSH key to your GitHub account, switch the remote to SSH by running `git remote set-url origin git@github.com:<your-github-username>/my-docs.git`, and then push again. 
+     
+     - Otherwise, when Git prompts for a password, enter a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead.
+   </Callout>
 
 ## Deploy to Vercel
 
-Deploy the site to Vercel to publish it. Vercel builds the site from a GitHub repository when you push to the `main` branch. You can also deploy preview builds for other branches.
+Deploy the site to Vercel to publish the new documentation. 
 
-1. In the Vercel dashboard, [import the repository](https://vercel.com/new).
-   Leave the build settings at their defaults. Vercel detects the Next.js
-   static export automatically.
+Vercel builds the site from the GitHub repository when you push to the `main` branch. 
 
-1. Under **Environment Variables**, add the following variables:
+1. In the Vercel dashboard, click **Deploy**. After the first deployment, every
+   push to `main` triggers a new production deployment, and pushes to other
+   branches create preview deployments.
 
-   - `PRODUCT_NAME`: the product name from your `.env.local` file.
-     The `.env.local` file isn't committed, so Vercel can't read it.
+1. Open `https://<your-vercel-domain>/my-page` to view the new page.
 
-   - `SITE_URL`: your site's URL, for example
-     `https://my-docs.vercel.app`.
+## Clean up
 
-1. Click **Deploy**. After the first deployment, every push to `main`
-   triggers a new production deployment, and pushes to other branches create
-   preview deployments.
+If you don't want to keep the quickstart project:
 
-1. Open `https://<your-project>.vercel.app/my-page` to view the new page.
+- Delete the GitHub repository, `my-docs`.
 
-To preview the static build locally, see
-[Deployment](/deploy).
+- Remove the Vercel project, `my-docs`.
+
+- Remove the local project directory, `my-docs`, from your machine.
