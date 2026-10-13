@@ -15,7 +15,7 @@ Set these before running a production build, not after:
 | -------------- | ------- |
 | `PRODUCT_NAME` | Name of the product your docs describe. Shown in the top bar and page titles, and inserted wherever a page uses the `productName` variable. Defaults to `MyProduct` if unset.|
 | `SITE_URL`     | Full public URL of the deployed site. Used for canonical links, Open Graph tags, `sitemap.xml`, `robots.txt`, and `/llms.txt`. Defaults to `https://example.com` if unset.|
-| `BASE_PATH`    | Subpath the site is served from, e.g. `/repo-name`. Leave unset for root-domain hosts like Vercel. Required only for subpaths. |
+| `BASE_PATH`    | Subpath the site is served from, for example, `/repo-name`. Leave unset for root-domain hosts like Vercel. Required only for subpaths. |
 
 Set `PRODUCT_NAME` and `SITE_URL` in the Vercel dashboard. Values in `.env.local` apply only to local builds, because the file isn't committed. For a list of the variables that you can set, see `.env.example` in the project root.
 
