@@ -6,9 +6,11 @@ export interface WatchConfig {
   automationEnabled: boolean;
 }
 
+// The repo owner and name have no default: they're empty when unset, and the
+// webhook refuses to run until both are configured.
 const DEFAULTS: WatchConfig = {
-  githubRepoOwner: "arodoni",
-  githubRepoName: "beacon",
+  githubRepoOwner: "",
+  githubRepoName: "",
   watchedDocsFolder: "content/docs",
   watchedNavConfigPath: "content/nav.config.ts",
   automationEnabled: false,

@@ -1,0 +1,36 @@
+---
+title: Get started
+description: Install and set up {{productName}} for the first time.
+---
+
+# Get started
+
+Replace this page with the steps a new user follows to install and set up
+{{productName}}.
+
+## Add a page
+
+To add a page to this site, do the following:
+
+1. Create an `.mdx` file in `content/docs/`, such as `content/docs/my-page.mdx`,
+   with `title` and `description` frontmatter:
+
+   ```md
+   ---
+   title: My page
+   description: A short summary for search results and link previews.
+   ---
+
+   # My page
+
+   Your content here.
+   ```
+
+1. Add the page to the sidebar in `content/nav.config.ts`:
+
+   ```ts
+   { title: "My Page", href: "/my-page" }
+   ```
+
+The build fails if a sidebar link points to a page that doesn't exist, so
+remove a page's sidebar entry when you delete the page.

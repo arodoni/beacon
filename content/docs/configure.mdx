@@ -1,6 +1,6 @@
 ---
 title: Configuration
-description: Frontmatter fields and the nav.config.ts shape.
+description: Frontmatter fields, the nav.config.ts shape, the product and project names, docs variables, and the base path.
 ---
 
 # Configuration
@@ -41,6 +41,32 @@ export const nav: NavGroup[] = [
 Every group requires a `href` in addition to its `items` list. A group's `items` can be empty when the group's `href` alone should serve as its landing page, as with Release Notes above.
 
 Every `href` must resolve to either `/`, `/dashboard`, `/dashboard/editor`, or a slug that matches a file in `content/docs/`. The build checks this and fails loudly if a nav entry points nowhere, rather than shipping a broken link.
+
+## Product and project names
+
+{{productName}} uses two names:
+
+| Name | Set in | Used for |
+| --- | --- | --- |
+| Product name | `NEXT_PUBLIC_PRODUCT_NAME` environment variable | The top bar, page titles, and the `productName` docs variable. Falls back to `MyProduct` if unset. |
+| Project name | `projectName` in `src/lib/site.ts` | The `projectName` docs variable, for example in repository URLs. |
+
+For local builds, set `NEXT_PUBLIC_PRODUCT_NAME` in `.env.local`. For
+production, set it in your hosting provider's dashboard. See
+[Deployment](/deploy#1-set-environment-variables).
+
+## Docs variables
+
+To insert the product name or project name in a page, write the variable name
+inside double curly braces. Variables work in frontmatter and in the page body,
+including inside code blocks.
+
+| Variable | Value |
+| --- | --- |
+| `productName` | The product name |
+| `projectName` | The project name |
+
+The build fails if a page uses a variable that doesn't exist.
 
 ## Base path
 

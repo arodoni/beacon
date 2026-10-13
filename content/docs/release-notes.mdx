@@ -5,6 +5,22 @@ description: A running log of notable features and changes shipped to {{productN
 
 # Release Notes
 
+## 2026-10-13
+
+- Added `create-beacon-docs`, a command-line tool that creates a new
+  {{productName}} site. Run `npm create beacon-docs@latest my-docs` to download
+  {{productName}} with starter pages in place of its own docs, set your product
+  and project names, start a Git repository, and install dependencies in one
+  step. The source is in `packages/create-beacon-docs/`.
+
+- Added a `NEXT_PUBLIC_PRODUCT_NAME` environment variable for the name of the
+  product your docs describe. It sets the top bar, page titles, and the
+  `productName` docs variable, and falls back to `MyProduct` if unset. See
+  [Deploy](/deploy).
+
+- Added an `.env.example` file that lists the environment variables you can
+  set. It doesn't include keys, secrets, or tokens.
+
 ## 2026-08-19
 
 - Update Monitoring on Dashboard now shows a status badge on each suggestion,
