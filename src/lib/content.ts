@@ -2,9 +2,27 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { nav, type NavGroup } from "../../content/nav.config";
+import { productName, projectName } from "./site";
 
 const DOCS_DIR = path.join(process.cwd(), "content", "docs");
 const INTRODUCTION_SLUG = "introduction";
+
+/** Replacement variables available in docs as {{name}}, in frontmatter and body. */
+const DOC_VARIABLES: Record<string, string> = { productName, projectName };
+
+/**
+ * Throws at build time on an unknown variable, so a typo fails the build
+ * instead of silently rendering nothing.
+ */
+function applyDocVariables(raw: string, fileName: string): string {
+  return raw.replace(/\{\{(\w+)\}\}/g, (_match, name: string) => {
+    if (!Object.hasOwn(DOC_VARIABLES, name)) {
+      const known = Object.keys(DOC_VARIABLES).map((key) => `{{${key}}}`).join(", ");
+      throw new Error(`${fileName}: unknown variable "{{${name}}}". Known variables: ${known}.`);
+    }
+    return DOC_VARIABLES[name];
+  });
+}
 
 export type DocFrontmatter = {
   title: string;
@@ -20,7 +38,7 @@ export type Doc = {
 
 function readDoc(slug: string): Doc {
   const filePath = path.join(DOCS_DIR, `${slug}.mdx`);
-  const raw = fs.readFileSync(filePath, "utf8");
+  const raw = applyDocVariables(fs.readFileSync(filePath, "utf8"), `content/docs/${slug}.mdx`);
   const { data, content } = matter(raw);
   return {
     slug,

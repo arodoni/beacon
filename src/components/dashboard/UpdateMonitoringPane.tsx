@@ -129,7 +129,15 @@ export function UpdateMonitoringPane() {
 
         {state.status === "error" && (
           <p className="text-sm text-red-600 dark:text-red-400">
-            Couldn&apos;t load doc-update suggestions. Try refreshing the page.
+            Couldn&apos;t load doc-update suggestions.{" "}
+            {process.env.NODE_ENV === "development" ? (
+              <>
+                The API functions in <code>api/</code> run locally only under <code>vercel dev</code>, not{" "}
+                <code>npm run dev</code>.
+              </>
+            ) : (
+              "Try refreshing the page."
+            )}
           </p>
         )}
 

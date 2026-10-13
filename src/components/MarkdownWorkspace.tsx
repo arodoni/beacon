@@ -3,10 +3,11 @@
 import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { productName } from "../lib/site";
 
-const DEFAULT_DOCUMENT = `# Beacon
+const DEFAULT_DOCUMENT = `# ${productName}
 
-Welcome to Beacon — an open-source writing experience for docs and product content.
+Welcome to ${productName} — an open-source writing experience for docs and product content.
 
 ## What you can do here
 
@@ -14,9 +15,9 @@ Welcome to Beacon — an open-source writing experience for docs and product con
 - Preview formatted docs instantly in the right pane.
 - Use headings, lists, tables, task lists, and code blocks.
 
-## Why Beacon?
+## Why ${productName}?
 
-Beacon is built for fast docs workflows and Vercel deployment. It is designed to feel polished while staying simple and extensible.
+${productName} is built for fast docs workflows and Vercel deployment. It is designed to feel polished while staying simple and extensible.
 
 ### Sample code
 
@@ -25,7 +26,7 @@ function highlight(message: string) {
   return message.toUpperCase();
 }
 
-console.log(highlight("Beacon"));
+console.log(highlight("${productName}"));
 \`\`\`
 
 ### Try it now

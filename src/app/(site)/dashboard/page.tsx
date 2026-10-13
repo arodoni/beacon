@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { UpdateMonitoringPane } from "../../../components/dashboard/UpdateMonitoringPane";
+import { productName } from "../../../lib/site";
 
 export const metadata: Metadata = {
   title: "Dashboard",
-  description: "Tools for working on Beacon docs: the Markdown editor and doc-update monitoring.",
+  description: `Tools for working on ${productName} docs: the Markdown editor and doc-update monitoring.`,
 };
 
 export default function DashboardPage() {

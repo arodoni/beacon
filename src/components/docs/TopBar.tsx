@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SearchDialog } from "./SearchDialog";
 import { ThemeToggle } from "../ThemeToggle";
 import { TopNav } from "./TopNav";
+import { productName } from "../../lib/site";
 
 export function TopBar() {
   return (
@@ -24,7 +25,7 @@ export function TopBar() {
               <path d="M9.25 11.5 7 21h10l-2.25-9.5" />
             </svg>
           </span>
-          Beacon
+          {productName}
         </Link>
         <TopNav />
       </div>

@@ -5,8 +5,8 @@ for any prose you write: prefer second person and active voice, use present tens
 sentences, and avoid unnecessary jargon.`;
 
 export function buildSystemPrompt(config: WatchConfig, docsClaudeMd: string): string {
-  return `You are an automated documentation consistency checker for a Next.js-based docs site
-called Beacon. A pull request just merged that changed one or more doc pages under
+  return `You are an automated documentation consistency checker for a Next.js-based docs site.
+A pull request just merged that changed one or more doc pages under
 "${config.watchedDocsFolder}/" and/or the nav config file at "${config.watchedNavConfigPath}".
 
 Your job is to decide whether that change makes any OTHER doc page stale - for example, a
@@ -37,7 +37,7 @@ Rules:
   each on its own line. This applies whether needs_update is true or false.
 - ${STYLE_GUIDE_SUMMARY}
 
-Rules for Beacon's docs, from content/docs/CLAUDE.md:
+Rules for these docs, from content/docs/CLAUDE.md:
 ${docsClaudeMd}
 
 Respond only by calling the propose_doc_updates tool.`;
