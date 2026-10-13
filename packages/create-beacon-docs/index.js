@@ -99,15 +99,15 @@ function replaceInFile(file, replacements) {
   writeFileSync(file, content);
 }
 
-// The product name is read from NEXT_PUBLIC_PRODUCT_NAME, so start .env.local
+// The product name is read from PRODUCT_NAME, so start .env.local
 // from .env.example with that value filled in. Next.js expands $VAR in env
 // files, so escape $.
 function writeEnvLocal(targetDir, productName) {
   const example = path.join(targetDir, ".env.example");
-  const line = `NEXT_PUBLIC_PRODUCT_NAME=${JSON.stringify(productName).replaceAll("$", "\\$")}`;
+  const line = `PRODUCT_NAME=${JSON.stringify(productName).replaceAll("$", "\\$")}`;
   let content = existsSync(example) ? readFileSync(example, "utf8") : "";
-  content = /^NEXT_PUBLIC_PRODUCT_NAME=.*$/m.test(content)
-    ? content.replace(/^NEXT_PUBLIC_PRODUCT_NAME=.*$/m, () => line)
+  content = /^PRODUCT_NAME=.*$/m.test(content)
+    ? content.replace(/^PRODUCT_NAME=.*$/m, () => line)
     : `${content}${content && !content.endsWith("\n") ? "\n" : ""}${line}\n`;
   writeFileSync(path.join(targetDir, ".env.local"), content);
 }
@@ -217,7 +217,7 @@ async function main() {
     console.log(`  ${pm} run dev\n`);
     console.log(
       `The product name is set in .env.local, which isn't committed. Before you deploy, set\n` +
-        `NEXT_PUBLIC_PRODUCT_NAME=${productName} in your hosting provider's dashboard too.\n`,
+        `PRODUCT_NAME=${productName} in your hosting provider's dashboard too.\n`,
     );
   } finally {
     prompt?.close();
