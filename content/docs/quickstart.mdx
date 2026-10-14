@@ -22,155 +22,196 @@ On your local machine, install:
 
 ### GitHub account and repository 
 
-1. On GitHub, using an existing account or a new account, [create a new
-   repository](https://github.com/new) named `my-docs`.
+<Steps>
+  <Step title="Create the repository">
+    On GitHub, using an existing account or a new account, [create a new
+    repository](https://github.com/new) named `my-docs`.
 
-   Leave the new repository empty. Don't add a README, `.gitignore`, or license.
+    Leave the new repository empty. Don't add a README, `.gitignore`, or license.
+  </Step>
 
-1. In the repository settings, click **Installed GitHub Apps**, confirm Vercel
-   is installed, and click **Configure**. 
-   
-1. In the Repository access section, select the repository you created,
-   `my-docs`, or allow access to all repositories.
+  <Step title="Configure the Vercel app">
+    In the repository settings, click **Installed GitHub Apps**, confirm Vercel
+    is installed, and click **Configure**.
+  </Step>
+
+  <Step title="Grant repository access">
+    In the Repository access section, select the repository you created,
+    `my-docs`, or allow access to all repositories.
+  </Step>
+</Steps>
 
 ### Vercel account and project
 
-1. In Vercel, using an existing account or a new account, [import
-   the GitHub repository](https://vercel.com/new), `my-docs`, and click **Deploy**.
-   
-   Leave the build settings at their defaults. Vercel detects the Next.js static
-   export automatically.
+<Steps>
+  <Step title="Import the repository">
+    In Vercel, using an existing account or a new account, [import
+    the GitHub repository](https://vercel.com/new), `my-docs`, and click **Deploy**.
 
-   You can ignore the warning about the missing branch. 
+    Leave the build settings at their defaults. Vercel detects the Next.js static
+    export automatically.
 
-1. From the Dashboard, click the card for the new project, `my-docs`, and copy
-   the domain that Vercel assigned to it, `<your-vercel-domain>`, from the
-   **Domains** list.
+    You can ignore the warning about the missing branch.
+  </Step>
 
-1. Navigate to **Environment Variables**, add the following key and value, and
-   click **Save**:
+  <Step title="Copy the domain">
+    From the Dashboard, click the card for the new project, `my-docs`, and copy
+    the domain that Vercel assigned to it, `<your-vercel-domain>`, from the
+    **Domains** list.
+  </Step>
 
-   - Key: `SITE_URL`
+  <Step title="Set the site URL">
+    Navigate to **Environment Variables**, add the following key and value, and
+    click **Save**:
 
-   - Value: your assigned domain, including `https://`, for example,
-     `https://my-docs-black-chi.vercel.app`
+    - Key: `SITE_URL`
 
-   `SITE_URL` doesn't change where the site deploys. {{productName}} uses it to
-   build absolute links in canonical tags, `sitemap.xml`, and `/llms.txt`.
+    - Value: your assigned domain, including `https://`, for example,
+      `https://my-docs-black-chi.vercel.app`
+
+    `SITE_URL` doesn't change where the site deploys. {{productName}} uses it to
+    build absolute links in canonical tags, `sitemap.xml`, and `/llms.txt`.
+  </Step>
+</Steps>
 
 ## Install and run {{productName}}
 
 To preview the site locally, install {{productName}} on your local machine and run the development server.
 
-1. Create a new site, `my-docs`.
+<Steps>
+  <Step title="Create the site">
+    Create a new site, `my-docs`:
 
-   ```bash
-   npm create beacon-docs@latest my-docs
-   ```
+    ```bash
+    npm create beacon-docs@latest my-docs
+    ```
 
-   When prompted, enter the project name, `my-docs`, and the product name, `MyProduct`. 
-   
-   The command performs the following tasks:
-   
-   1. Downloads {{productName}}.
+    When prompted, enter the project name, `my-docs`, and the product name, `MyProduct`.
 
-   1. Adds starter pages.
+    The command performs the following tasks:
 
-   1. Saves the product name in `.env.local`.
+    1. Downloads {{productName}}.
 
-   1. Creates a local Git repository with an initial commit.
+    1. Adds starter pages.
 
-   1. Installs the dependencies.
+    1. Saves the product name in `.env.local`.
 
-1. Change to the project directory:
+    1. Creates a local Git repository with an initial commit.
 
-   ```bash
-   cd my-docs
-   ```
+    1. Installs the dependencies.
+  </Step>
 
-1. Start a local development server to preview your changes as you edit the
-   content in the next section:
+  <Step title="Change to the project directory">
+    ```bash
+    cd my-docs
+    ```
+  </Step>
 
-   ```bash
-   npm run dev
-   ```
+  <Step title="Start the development server">
+    Start a local development server to preview your changes as you edit the
+    content in the next section:
 
-   The development server runs at
-   [http://localhost:3000](http://localhost:3000) and renders each page when
-   you request it, but doesn't write the site to the `out/` directory. 
-   
-   Changes to `content/nav.config.ts` reload automatically. To see changes to
-   `.mdx` files, refresh the browser.
+    ```bash
+    npm run dev
+    ```
+
+    The development server runs at
+    [http://localhost:3000](http://localhost:3000) and renders each page when
+    you request it, but doesn't write the site to the `out/` directory.
+
+    Changes to `content/nav.config.ts` reload automatically. To see changes to
+    `.mdx` files, refresh the browser.
+  </Step>
+</Steps>
 
 ## Add a documentation page
 
-1. Create a file under `content/docs/` for the new page,
-   `content/docs/my-page.mdx`.
+<Steps>
+  <Step title="Create the page file">
+    Create a file under `content/docs/` for the new page,
+    `content/docs/my-page.mdx`.
+  </Step>
 
-1. In the new page, add a frontmatter block with a title and description:
+  <Step title="Add frontmatter and content">
+    In the new page, add a frontmatter block with a title and description:
 
-   ```md
-   ---
-   title: My Page
-   description: A short, specific summary of what this page covers.
-   ---
+    ```md
+    ---
+    title: My Page
+    description: A short, specific summary of what this page covers.
+    ---
 
-   # My Page
+    # My Page
 
-   This is the content for MyProduct.
-   ```
+    This is the content for MyProduct.
+    ```
 
-   {{productName}} picks up the file automatically and adds it to the client-side
-   search index. 
-   
-   The build also adds it to the sitemap.
+    {{productName}} picks up the file automatically and adds it to the client-side
+    search index.
 
-1. To add the page to the navigation, in `content/nav.config.ts`, add an entry
-   for the new file to a group's `items` array, for example, the **Get
-   Started** group:
+    The build also adds it to the sitemap.
+  </Step>
 
-   ```ts
-   { title: "My Page", href: "/my-page" }
-   ```
+  <Step title="Add the page to the navigation">
+    In `content/nav.config.ts`, add an entry for the new file to a group's
+    `items` array, for example, the **Get Started** group:
 
-1. With the development server running, open
-   [http://localhost:3000/my-page](http://localhost:3000/my-page) to view the
-   new page.
+    ```ts
+    { title: "My Page", href: "/my-page" }
+    ```
+  </Step>
 
-1. Stop the development server with `Ctrl+C`.
+  <Step title="View the page">
+    With the development server running, open
+    [http://localhost:3000/my-page](http://localhost:3000/my-page) to view the
+    new page.
+  </Step>
+
+  <Step title="Stop the development server">
+    Press `Ctrl+C`.
+  </Step>
+</Steps>
 
 ## Push the changes to GitHub
 
-1. On your local machine, commit the page that you added, `my-page.mdx`, and the
-   `content/nav.config.ts` file:
+<Steps>
+  <Step title="Commit the changes">
+    On your local machine, commit the page that you added, `my-page.mdx`, and the
+    `content/nav.config.ts` file:
 
-   ```bash
-   git add .
-   git commit -m "Add my page"
-   ```
+    ```bash
+    git add .
+    git commit -m "Add my page"
+    ```
+  </Step>
 
-1. Connect your local repository to the new GitHub repository. Replace
-   `<your-github-username>` with your GitHub username:
-   
-   ```bash
-   git remote add origin https://github.com/<your-github-username>/my-docs.git
-   ```
+  <Step title="Connect the remote repository">
+    Connect your local repository to the new GitHub repository. Replace
+    `<your-github-username>` with your GitHub username:
 
-1. Push the changes to the `main` branch:
+    ```bash
+    git remote add origin https://github.com/<your-github-username>/my-docs.git
+    ```
+  </Step>
 
-   ```bash
-   git push -u origin main
-   ```
+  <Step title="Push to main">
+    Push the changes to the `main` branch:
 
-   In a production repository, you typically don't push directly to `main`. The quickstart does this only for simplicity.
+    ```bash
+    git push -u origin main
+    ```
 
-   <Callout type="tip">
-     If the push fails with `Password authentication is not supported for Git operations`, GitHub rejected your account password. 
-     
-     - If you've added an SSH key to your GitHub account, switch the remote to SSH by running `git remote set-url origin git@github.com:<your-github-username>/my-docs.git`, and then push again. 
-     
-     - Otherwise, when Git prompts for a password, enter a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead.
-   </Callout>
+    In a production repository, you typically don't push directly to `main`. The quickstart does this only for simplicity.
+
+    <Callout type="tip">
+      If the push fails with `Password authentication is not supported for Git operations`, GitHub rejected your account password.
+
+      - If you've added an SSH key to your GitHub account, switch the remote to SSH by running `git remote set-url origin git@github.com:<your-github-username>/my-docs.git`, and then push again.
+
+      - Otherwise, when Git prompts for a password, enter a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead.
+    </Callout>
+  </Step>
+</Steps>
 
 ## Deploy to Vercel
 
@@ -178,11 +219,17 @@ Deploy the site to Vercel to publish the new documentation.
 
 Vercel builds the site from the GitHub repository when you push to the `main` branch. 
 
-1. In the Vercel dashboard, click **Deploy**. After the first deployment, every
-   push to `main` triggers a new production deployment, and pushes to other
-   branches create preview deployments.
+<Steps>
+  <Step title="Deploy the site">
+    In the Vercel dashboard, click **Deploy**. After the first deployment, every
+    push to `main` triggers a new production deployment, and pushes to other
+    branches create preview deployments.
+  </Step>
 
-1. Open `https://<your-vercel-domain>/my-page` to view the new page.
+  <Step title="View the live page">
+    Open `https://<your-vercel-domain>/my-page` to view the new page.
+  </Step>
+</Steps>
 
 ## Clean up
 

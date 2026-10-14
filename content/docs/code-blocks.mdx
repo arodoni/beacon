@@ -7,25 +7,37 @@ description: Syntax highlighting and GFM formatting reference.
 
 ## Code syntax highlighting
 
-Code blocks are highlighted at build time with Shiki, so highlighting works even with JavaScript disabled, and it follows the site's dark-mode toggle rather than your OS preference. 
+Code blocks are highlighted at build time, so highlighting works even with JavaScript disabled, and it follows the site's dark-mode toggle rather than your OS preference. 
+
+Inline code like `useState` and `next.config.mjs` renders with a subtle background.
 
 ## GFM formatting
 
-Tables, task lists, and strikethrough all work via `remark-gfm`. The task list below renders checked and unchecked items, and combines a checkbox with strikethrough text on the same line:
+`remark-gfm` is a plugin for remark, the popular JavaScript Markdown processor,
+that adds support for GitHub Flavored Markdown (GFM).
+
+Tables, task lists, and strikethrough all work via `remark-gfm` in Beacon. The task list below renders checked and unchecked items, and combines a checkbox with strikethrough text on the same line:
 
 ```markdown
-- [x] Tables
-- [x] Task lists
-- [ ] ~~Anything else~~ not needed
+
+| Table column1 | Table column2 | Table column3 |
+| --- | --- | --- |
+| Table cell | Table cell | Table cell |
+
+[x] Task lists
+
+~~Anything else~~ not needed
 ```
 
 The above renders as:
 
-- [x] Tables
-- [x] Task lists
-- [ ] ~~Anything else~~ not needed
+| Table column1 | Table column2 | Table column3 |
+| --- | --- | --- |
+| Table cell | Table cell | Table cell |
 
-Inline code like `useState` and `next.config.mjs` renders with a subtle background.
+[x] Task lists
+
+~~Anything else~~ not needed
 
 ## Callouts
 
@@ -54,3 +66,32 @@ Sample renderings:
 <Callout type="warning">
   Always keep your API keys private. Do not share them in public repositories.
 </Callout>
+
+## Steps
+
+Use the `Steps` and `Step` components to show a procedure as a numbered sequence, without an import statement. Each `Step` takes a `title` and numbers itself, so you can add, remove, or reorder steps without renumbering them.
+
+```markdown
+<Steps>
+  <Step title="Install the dependencies">
+    Run `npm install`.
+  </Step>
+  <Step title="Start the development server">
+    Run `npm run dev`.
+  </Step>
+</Steps>
+```
+
+Sample rendering:
+
+<Steps>
+  <Step title="Install the dependencies">
+    Run `npm install`.
+  </Step>
+  <Step title="Start the development server">
+    Run `npm run dev`.
+  </Step>
+  <Step title="Open the site">
+    In a browser, go to `http://localhost:3000`.
+  </Step>
+</Steps>
