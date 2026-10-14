@@ -1,6 +1,6 @@
 ---
 name: merged-to-main
-description: Post-merge cleanup. Use when the user says "merged to main" (or "merged", "PR merged", "it's merged") about the current feature branch. Switches to main, pulls the latest from origin, and deletes the local feature branch. Never deletes the branch on GitHub.
+description: Post-merge cleanup. Use when the user says "merged to main" (or "merged", "PR merged", "it's merged") about the current feature branch. Switches to main, pulls the latest from origin, and deletes the local feature branch, then checks whether create-beacon-docs needs a version bump and hands off to npm-publish if so. Never deletes the branch on GitHub.
 ---
 
 # Merged to main
@@ -50,8 +50,28 @@ by merging the branch into main in memory and comparing trees:
 - Anything else (or a conflict): the branch has work that isn't on main. Don't
   delete it. Show `git log main.."$branch" --oneline` and ask the user.
 
-## 4. Report
+## 4. Check whether create-beacon-docs needs a version bump
+
+List changes to the files the npm package ships since the published version:
+
+```bash
+v=$(npm view create-beacon-docs version)
+last=$(git log -1 --format=%H -S"\"version\": \"$v\"" main -- packages/create-beacon-docs/package.json)
+[ -n "$last" ] && git log --oneline "$last"..main -- packages/create-beacon-docs/{index.js,template,package.json,README.md}
+```
+
+- No commits listed: no bump is needed.
+
+- If `$last` is empty, the published version isn't on main yet, which usually
+  means a bump PR hasn't merged. Mention it and skip the bump.
+
+- Commits listed: a bump is needed. Note it for the report.
+
+## 5. Report
 
 One or two lines: the latest commit on main and whether the local branch was
-deleted (or skipped and why). Don't create a new branch; wait for the user to
-name one.
+deleted (or skipped and why). If step 4 found that a bump is needed, add a
+line saying so with the commits it found, then invoke the `npm-publish` skill.
+That skill asks the user to confirm the bump type and the publish.
+
+Otherwise, don't create a new branch; wait for the user to name one.
