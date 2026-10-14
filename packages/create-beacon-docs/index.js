@@ -14,8 +14,9 @@ import { parseArgs } from "node:util";
 
 const REPO = "arodoni/beacon";
 
-// Files in the Beacon repository that only make sense for Beacon itself.
-const REPO_ONLY_PATHS = ["packages", ".github/CODEOWNERS", ".claude/settings.local.json"];
+// Files in the Beacon repository that only make sense for Beacon itself,
+// including its AI agent rules, skills, and hooks.
+const REPO_ONLY_PATHS = ["packages", ".github/CODEOWNERS", ".claude", "AGENTS.md", "CLAUDE.md"];
 
 const TEMPLATE_DIR = fileURLToPath(new URL("./template", import.meta.url));
 
@@ -117,8 +118,9 @@ function customize(targetDir, { productName, projectName }) {
     rmSync(path.join(targetDir, repoOnly), { recursive: true, force: true });
   }
 
-  // Swap Beacon's docs for the starter pages. Other files in content/docs/,
-  // such as CLAUDE.md, are kept.
+  // Swap Beacon's docs for the starter pages. Other files in content/docs/
+  // are kept, including CLAUDE.md, which the GitHub webhook reads as the
+  // docs rules for AI updates.
   const docsDir = path.join(targetDir, "content/docs");
   for (const file of readdirSync(docsDir)) {
     if (file.endsWith(".mdx")) rmSync(path.join(docsDir, file));
