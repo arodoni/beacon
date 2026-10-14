@@ -89,4 +89,4 @@ Connect the repository and deploy with the default settings - Vercel detects the
 ## Optional environment variables
 
 - `BASE_PATH` - subpath the site is served from (e.g. `/repo-name`). Leave unset for root-domain hosts like Vercel.
-- `SITE_URL` - the site's full public URL, used in `sitemap.xml` and `robots.txt`.
+- `SITE_URL` - the site's full public URL, used for canonical links, Open Graph tags, `sitemap.xml`, `robots.txt`, `/llms.txt`, and `/llms-full.txt`. Defaults to `https://example.com` if unset.
