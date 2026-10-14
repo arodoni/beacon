@@ -31,7 +31,8 @@
 
 ## Git / PR workflow
 
-- Always pull the latest `main` branch, then create a feature branch for changes. Never commit directly to the `main` branch.
+- When updating code or docs, use the current branch. Don't create a new branch, even if the change seems unrelated to the branch's existing work.
+- If the current branch is `main`, pull the latest `main`, then create a new feature branch and make the update there. Never commit directly to the `main` branch.
 - Never push commits directly to GitHub. Always open a pull request instead.
 - Never merge a pull request.
 
