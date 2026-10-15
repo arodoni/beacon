@@ -56,16 +56,12 @@ On your local machine, install:
     From the Dashboard, click the card for the new project `<my-vercel-project>`, and copy the domain that Vercel assigned to it, `<my-vercel-domain>`, from the **Domains** list.
   </Step>
 
-  <Step title="Set the site URL">
-    Navigate to **Environment Variables**, add the following key and value, and
-    click **Save**:
+  <Step title="Set the environment variables">
+    Go to **Environment Variables**, add the following keys and values, and click **Save**:
 
-    - Key: `SITE_URL`
-
-    - Value: your assigned domain, including `https://`, for example,
-      `https://my-docs-black-chi.vercel.app`
-
-    `SITE_URL` doesn't change where the site deploys. {{productName}} uses it to
-    build absolute links in canonical tags, `sitemap.xml` and `/llms.txt`.
+    | Key            | Value                                           | Comment |
+    | -------------- | ----------------------------------------------- | ------- |
+    | `PRODUCT_NAME` | The name of the product that your docs describe | Appears in the top bar and page titles, and replaces the `productName` variable in your pages. If you don't set it, the site shows `MyProduct`. |
+    | `SITE_URL`     | `https://<my-vercel-domain>`                    | {{productName}} uses it to build absolute links in canonical tags, `sitemap.xml`, and `/llms.txt`. It doesn't change where the site deploys. |
   </Step>
 </Steps>
