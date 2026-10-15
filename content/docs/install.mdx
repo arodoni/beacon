@@ -1,0 +1,39 @@
+---
+title: Install {{productName}}
+description: Create a {{productName}} site with npm create beacon-docs, then start the local development server to preview it.
+---
+
+# Install {{productName}} 
+
+Install {{productName}} on your local machine.
+
+<Steps>
+  <Step title="Create the site project">
+    Create a new project, `<my-project>`:
+
+    ```bash
+    npm create beacon-docs@latest <your-project-name>
+    ```
+
+    When prompted, enter the project name, `<my-project>`, and the product name that this documentation is to describe, `<my-product>`.
+    
+    The command performs the following tasks:
+
+    1. Downloads {{productName}}.
+
+    1. Adds starter pages.
+
+    1. Saves the product name in `.env.local`.
+
+    1. Creates a local Git repository with an initial commit.
+
+    1. Installs the dependencies.
+  </Step>
+
+  <Step title="Change to the project directory">
+    ```bash
+    cd <my-project>
+    ```
+  </Step>
+</Steps>
+
