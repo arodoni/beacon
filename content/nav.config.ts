@@ -23,16 +23,17 @@ export const nav: NavGroup[] = [
     href: "/prepare",
     items: [
       { title: "Prepare", href: "/prepare" },
-      { title: "Configure", href: "/configure" },
+      { title: "Install", href: "/install" },
+      { title: "Create Content", href: "/create-content" },
       { title: "Deploy", href: "/deploy" },
-      { title: "Automate Updates", href: "/doc-updates" },
+      { title: "Monitor Updates", href: "/doc-updates" },
       { title: "Troubleshoot", href: "/troubleshoot" },
     ],
   },
   {
     title: "Reference",
-    href: "/code-blocks",
-    items: [{ title: "Code and Content", href: "/code-blocks" }],
+    href: "/format",
+    items: [{ title: "Format Content", href: "/format" }],
   },
   {
     title: "Release Notes",

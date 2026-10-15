@@ -3,57 +3,76 @@ title: Deployment
 description: End-to-end steps for building {{productName}} and shipping it to Vercel.
 ---
 
-# Deployment
+# Deploy the documentation site
 
-{{productName}} builds to a plain static site. There's no server-side runtime to provision: `npm run build` produces an `out/` directory of HTML, CSS, and JS.
+## Push the changes to GitHub
 
-## 1. Set environment variables
+<Steps>
+  <Step title="Commit the changes">
+    On your local machine, commit the page that you added, `my-page.mdx`, and the
+    `content/nav.config.ts` file:
 
-Set these before running a production build, not after:
+    ```bash
+    git add .
+    git commit -m "Add my page"
+    ```
+  </Step>
 
-| Variable       | Purpose |
-| -------------- | ------- |
-| `PRODUCT_NAME` | Name of the product your docs describe. Shown in the top bar and page titles, and inserted wherever a page uses the `productName` variable. Defaults to `MyProduct` if unset.|
-| `SITE_URL`     | Full public URL of the deployed site. Used for canonical links, Open Graph tags, `sitemap.xml`, `robots.txt`, and `/llms.txt`. Defaults to `https://example.com` if unset.|
-| `BASE_PATH`    | Subpath the site is served from, for example, `/repo-name`. Leave unset for root-domain hosts like Vercel. Required only for subpaths. |
+  <Step title="Connect the remote repository">
+    Connect your local repository to the new GitHub repository. Replace
+    `<your-github-username>` with your GitHub username:
 
-Set `PRODUCT_NAME` and `SITE_URL` in the Vercel dashboard. Values in `.env.local` apply only to local builds, because the file isn't committed. For a list of the variables that you can set, see `.env.example` in the project root.
+    ```bash
+    git remote add origin https://github.com/<your-github-username>/my-docs.git
+    ```
+  </Step>
 
-## 2. Build and verify locally
+  <Step title="Push to main">
+    Push the changes to the `<your-branch>` branch:
 
-```bash
-npm install
-npm run build
-```
+    ```bash
+    git push -u origin <your-branch>
+    ```
 
-Preview the exact static output before pushing:
+    <Callout type="tip">
+      If the push fails with `Password authentication is not supported for Git operations`, GitHub rejected your account password.
 
-```bash
-npm run start
-```
+      - If you've added an SSH key to your GitHub account, switch the remote to SSH by running `git remote set-url origin git@github.com:<your-github-username>/my-docs.git`, and then push again.
 
-This serves the `out/` directory as-is with no Next.js server involved, so it's the closest local approximation of production.
+      - Otherwise, when Git prompts for a password, enter a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) instead.
+    </Callout>
+  </Step>
+</Steps>
 
-Optionally run the Playwright suite against the app first:
+## Deploy the site to Vercel
 
-```bash
-npx playwright install chromium   # one-time browser download
-npm run test:e2e
-```
+Deploy the site to Vercel to publish the new documentation. 
 
-## 3. Deploy
+Vercel builds the site from the GitHub repository when you push to the `main` branch. 
 
-### Vercel
+{{productName}} picks up the files automatically and adds them to the client-side search index.
 
-1. Import the repository in the Vercel dashboard.
-2. Leave the build settings at their defaults; Vercel detects the Next.js static export automatically.
-3. Under Project Settings → Environment Variables, add `PRODUCT_NAME` set to your product name, and `SITE_URL` set to the assigned or custom domain.
-4. Deploy. Every push to `main` triggers a new production deployment; other branches get preview deployments.
+The build also adds the new pages to the sitemap.
 
-## 4. Verify after deploy
+<Steps>
+  <Step title="Deploy the site">
+    In the Vercel dashboard, click **Deploy**. After the first deployment, every
+    push to `main` triggers a new production deployment, and pushes to other
+    branches create preview deployments.
+  </Step>
+
+  <Step title="View the live page">
+    Open `https://<your-vercel-domain>/my-page` to view the new page.
+  </Step>
+</Steps>
+
+## Verify the deployment
 
 - Load the deployed URL and confirm the sidebar, search (`Cmd/Ctrl+K`), and dark mode toggle work.
+
 - Check `/sitemap.xml`, `/robots.txt`, and `/llms.txt` resolve and reference the correct production domain, not `example.com`.
-- If the site is served from a subpath, click through a few internal links to confirm `BASE_PATH` was applied consistently to both pages and static assets.
+
+- If the site is served from a subpath, click through a few internal links to confirm `BASE_PATH` was applied consistently to both pages and static assets. This does not apply when you deploy the site on Vercel.
 
 See [Troubleshooting](/troubleshoot) for fixes to common build and deployment issues.
+

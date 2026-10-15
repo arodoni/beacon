@@ -1,9 +1,9 @@
 ---
-title: Doc Update Automation
+title: Monitor Updates
 description: How {{productName}}'s GitHub webhook flags doc pages that go stale when another doc page changes, and where to find its suggestions.
 ---
 
-# Doc Update Automation
+# Monitor Updates
 
 When a pull request merges into `main` and touches a doc page under `content/docs/**/*.mdx` or `content/nav.config.ts`, a GitHub webhook checks whether the change makes any *other* doc page stale - a broken cross-reference, terminology that no longer matches, or a described behavior that now conflicts - and writes a suggested fix for a person to review. It never edits, commits, or opens a pull request itself.
 
@@ -74,4 +74,3 @@ A connected Vercel Blob store provides the remaining credential automatically (v
 
 An earlier design had the automation open its own pull request, which needed a GitHub token with write access to contents, pull requests, and issues. The current design needs none of that: the read-only token can't push a commit, open a PR, or touch anything else in the repository even if it were compromised. The tradeoff is that suggestions are pull-based rather than showing up as a ready-to-merge PR - see [Where to find a suggestion](#where-to-find-a-suggestion) above.
 
-See [Configuration](/configure) for the `content/nav.config.ts` shape the automation reads, and [Troubleshooting](/troubleshoot) for common build and deployment issues unrelated to this feature.

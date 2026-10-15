@@ -47,3 +47,6 @@ next-env.d.ts
 
 # local notes
 /IMPLEMENTATION.md
+
+# editor spell-check dictionary
+/.vscode/ltex.dictionary.*.txt

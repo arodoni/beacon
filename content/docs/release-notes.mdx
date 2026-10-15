@@ -7,12 +7,18 @@ description: A running log of notable features and changes shipped to {{productN
 
 ## 2026-10-14
 
+- Added custom docs variables. Define your own variables as names and string
+  values in `content/variables.json`, and use them in pages the same way as the
+  built-in `productName` and `projectName` variables. To show a variable name
+  as literal text, put a backslash in front of it. See
+  [Format Content](/format#add-your-own-variables).
+
 - Added `Steps` and `Step` components (`src/components/docs/Steps.tsx`) for
   numbered procedures in docs content. Each step shows a numbered badge, a
   title, and a connecting line to the next step, and numbers itself
   automatically. They're registered as global MDX components, so any `.mdx`
   file can use `<Steps>` and `<Step title="...">` without an import statement.
-  See [Code and Content](/code-blocks).
+  See [Format Content](/format).
 
 ## 2026-10-13
 

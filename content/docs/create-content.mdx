@@ -1,0 +1,96 @@
+---
+title: Create Documentation Pages
+description: Frontmatter fields and the nav.config.ts shape.
+---
+
+# Create Documentation Pages
+
+## Add documentation pages
+
+<Steps>
+  <Step title="Create the page files">
+    Create the document files under `content/docs/` for the new pages with the type `.mdx`.
+  </Step>
+
+  <Step title="Add frontmatter and content">
+    In each new page, add a frontmatter block with a title and description:
+
+    ```md
+    ---
+    title: A title for the page
+    description: A short, specific summary of what this page covers.
+    ---
+    ```
+
+  </Step>
+
+  <Step title="Add the page to the navigation">
+    In `content/nav.config.ts`, add an entry for the new page to the `items`
+    array of a group, such as **Get Started**. For example:
+
+    ```ts
+    { title: "My Page", href: "/my-page" }
+    ```
+  </Step>
+
+  <Step title="Frontmatter fields">
+    Every file in `content/docs/` supports the following frontmatter fields:
+
+  | Field         | Type   | Required | Description                                  |
+  | ------------- | ------ | -------- | --------------------------------------------- |
+  | `title`       | string | yes      | Used as the page `<title>` and page heading.  |
+  | `description` | string | yes      | Used for the meta description and search.     |
+  
+  </Step>
+</Steps>
+
+## Update navigation
+
+Add the new pages to `content/nav.config.ts` to update the navigation structure. 
+
+`content/nav.config.ts` exports a list of groups, each with a title and an ordered list of items.
+
+For example: 
+
+```ts
+export const nav: NavGroup[] = [
+  {
+    title: "Get Started",
+    href: "/",
+    items: [
+      { title: "Introduction", href: "/" },
+      { title: "Quickstart", href: "/quickstart" },
+    ],
+  },
+  {
+    title: "Release Notes", href: "/release-notes",
+    items: [],
+  },
+];
+```
+
+## Run the development server
+
+<Steps>
+  <Step title="Start the development server">
+    Start a local development server to preview your changes as you edit your pages:
+
+    ```bash
+    npm run dev
+    ```
+  </Step>
+
+  <Step title="View the content pages">
+    View the new pages at
+    [http://localhost:3000](http://localhost:3000).
+
+    The development server does not write the site to the `out/` directory.
+
+    Changes to `content/nav.config.ts` reload automatically. To see changes to
+    `.mdx` files, refresh the browser.
+  </Step>
+
+  <Step title="Stop the development server">
+    Press `Ctrl+C` to stop the development server.
+  </Step>
+</Steps>

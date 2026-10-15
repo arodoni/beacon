@@ -1,25 +1,67 @@
 ---
-title: Prepare
+title: Prepare for Beacon
 description: Get a local copy of {{productName}} by running npm create beacon-docs, which downloads the project, adds starter pages, and installs dependencies.
 ---
 
-# Prepare
-
-Before you install and configure {{productName}}, get a local copy of the project.
+# Prepare to Deploy
 
 ## Requirements
 
-Before you begin, install the following:
+Before you begin, install and set up the required software and environments.
+
+### Node.js and Node Package Manager
+
+On your local machine, install:
 
 - [Node.js](https://nodejs.org/) 20.9.0 or later, the minimum version that
   Next.js 16 supports
 
-- `npm` that is bundled with Node.js
+- Node Package Manager (`npm`), which is bundled with Node.js
 
-## Create a site with npm create beacon-docs
+### GitHub account and repository 
 
-To start a new docs site, use `npm create beacon-docs`. The command downloads
-{{productName}}, replaces its docs with starter pages, sets your product and
-project names, creates a Git repository, and installs dependencies. For the
-steps, see [Install and run {{productName}} locally for live
-preview](/quickstart#install-and-run-beacon-locally-for-live-preview).
+<Steps>
+  <Step title="Create the repository">
+    On GitHub, using an existing account or a new account, [create a new
+    repository](https://github.com/new) named `<my-repository>`.
+
+    Leave the new repository empty. Do not add a README, `.gitignore`, or license.
+  </Step>
+
+  <Step title="Configure the Vercel app">
+    In the repository settings, click **Installed GitHub Apps**, confirm Vercel
+    is installed, and click **Configure**.
+  </Step>
+
+  <Step title="Grant repository access">
+    In the Repository access section, select the repository you created,
+    `<my-repository>`, or allow access to all repositories.
+  </Step>
+</Steps>
+
+### Vercel account and project
+
+<Steps>
+  <Step title="Import the repository">
+    In Vercel, using an existing account or a new account, [import
+    the GitHub repository](https://vercel.com/new), `<my-vercel-project>`, and click **Deploy**.
+
+    Leave the build settings at their defaults. Vercel detects the Next.js static
+    export automatically.
+
+    You can ignore the warning about the missing branch.
+  </Step>
+
+  <Step title="Copy the domain">
+    From the Dashboard, click the card for the new project `<my-vercel-project>`, and copy the domain that Vercel assigned to it, `<my-vercel-domain>`, from the **Domains** list.
+  </Step>
+
+  <Step title="Set the environment variables">
+    Go to **Environment Variables**, add the following keys and values, and click **Save**:
+
+    | Key            | Value                                           | Comment |
+    | -------------- | ----------------------------------------------- | ------- |
+    | `PRODUCT_NAME` | The name of the product that your docs describe | Appears in the top bar and page titles, and replaces the `productName` variable in your pages. If you don't set it, the site shows `MyProduct`. |
+    | `SITE_URL`     | `https://<my-vercel-domain>`                    | {{productName}} uses it to build absolute links in canonical tags, `sitemap.xml`, and `/llms.txt`. It doesn't change where the site deploys. |
+  </Step>
+</Steps>

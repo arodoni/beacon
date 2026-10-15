@@ -64,17 +64,20 @@ code {
    theme) get a fixed light editor-style background in light mode. In dark
    mode they switch to the same slate-900/90 background as the Editor's
    textarea pane. Token colors switch alongside the background (see below)
-   so text stays readable against each. */
+   so text stays readable against each. The base color matches each theme's
+   default foreground, for blocks without highlighting such as `text`. */
 .prose pre {
   padding: 1rem;
   border-radius: 1rem;
   overflow-x: auto;
   border: 1px solid rgba(59, 130, 246, 0.15);
   background: #f0f3f7;
+  color: #24292e;
 }
 
 .dark .prose pre {
   background: rgba(15, 23, 42, 0.9);
+  color: #e1e4e8;
 }
 
 .prose pre code[data-theme] span {

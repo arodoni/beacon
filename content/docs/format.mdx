@@ -1,0 +1,170 @@
+---
+title: Format Content
+description: Formatting and MDX components reference.
+---
+
+# Format Content
+
+## Table, task list, and strikethrough
+
+Tables, task lists, and strikethrough work via `remark-gfm` in Beacon. 
+
+The examples below specify a table, checked and unchecked items, and a
+strikethrough text:
+
+```markdown
+
+| Table column1 | Table column2 | Table column3 |
+| --- | --- | --- |
+| Table cell | Table cell | Table cell |
+
+- [x] Task list1
+- [ ] Task list2
+
+~~Anything else~~ not needed
+```
+
+The above snippets render as:
+
+| Table column1 | Table column2 | Table column3 |
+| --- | --- | --- |
+| Table cell | Table cell | Table cell |
+
+- [x] Task list1
+- [ ] Task list2
+
+~~Anything else~~ not needed
+
+## Callouts
+
+Use the `Callout` component to highlight notes, tips, important information, and warnings.
+
+For example: 
+
+```markdown
+<Callout type="note">
+  This is a note callout.
+</Callout>
+```
+
+Sample renderings: 
+
+<Callout type="note">
+  This is a note callout.
+</Callout>
+
+<Callout type="tip">
+  This is a tip callout.
+</Callout>
+
+<Callout type="important">
+  This is an important callout.
+</Callout>
+
+<Callout type="warning">
+  Always keep your API keys private. Do not share them in public repositories.
+</Callout>
+
+## Steps
+
+Use the `Steps` and `Step` components to show a procedure as a numbered sequence, without an import statement. Each `Step` takes a `title` and numbers itself, so you can add, remove, or reorder steps without renumbering them.
+
+For example: 
+
+```markdown
+<Steps>
+  <Step title="Install the dependencies">
+    Run `npm install`.
+  </Step>
+  <Step title="Start the development server">
+    Run `npm run dev`.
+  </Step>
+  <Step title="Open the site">
+    In a browser, go to `http://localhost:3000`.
+  </Step>
+</Steps>
+```
+
+The above snippet renders as:
+
+<Steps>
+  <Step title="Install the dependencies">
+    Run `npm install`.
+  </Step>
+  <Step title="Start the development server">
+    Run `npm run dev`.
+  </Step>
+  <Step title="Open the site">
+    In a browser, go to `http://localhost:3000`.
+  </Step>
+</Steps>
+
+## Docs variables
+
+To insert a variable in a page, write its name inside double curly braces.
+Variables work in frontmatter and in the page body, including inside code
+blocks.
+
+{{productName}} has two built-in variables:
+
+| Variable | Value |
+| --- | --- |
+| `productName` | The product name |
+| `projectName` | The project name |
+
+The build fails if a page uses a variable that doesn't exist.
+
+### Add your own variables
+
+To define more variables, add them to `content/variables.json` as names and
+string values:
+
+```json
+{
+  "supportEmail": "support@example.com",
+  "latestVersion": "2.4.0"
+}
+```
+
+Then use the variables in any page:
+
+```mdx
+---
+title: Get help
+description: How to contact support about version \{{latestVersion}}.
+---
+
+# Get help
+
+If you have questions about version \{{latestVersion}}, email
+[\{{supportEmail}}](mailto:\{{supportEmail}}).
+```
+
+The page renders as "If you have questions about version 2.4.0, email
+support@example.com." Restart the development server after you edit
+`content/variables.json`.
+
+Variable names can contain only letters, digits, and underscores, and can't
+reuse a built-in name. The build fails if the file isn't valid JSON or if a
+value isn't a string.
+
+### Show a variable name as literal text
+
+To show a variable's name in curly braces without replacing it, for example in
+a code block, put a backslash in front of it. `\\{{productName}}` renders as
+`\{{productName}}`.
+
+This works in code blocks, inline code, and frontmatter. In regular text, MDX
+treats curly braces as code, so an escaped variable renders as nothing. In
+regular text, put a backslash in front of each opening brace instead. For
+example, this line in a page:
+
+```mdx
+To insert the product name, type \{\{productName}} in your page.
+```
+
+Renders as:
+
+```text
+To insert the product name, type \{{productName}} in your page.
+```
