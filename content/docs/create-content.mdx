@@ -69,6 +69,24 @@ export const nav: NavGroup[] = [
 ];
 ```
 
+## Add your product logo
+
+By default, the top bar shows the Beacon logo next to your product name. To
+show your own logo instead, add an image file named `logo` to the `content/`
+folder, such as `content/logo.svg`. Supported file types are `.svg`, `.png`,
+`.jpg`, `.jpeg`, and `.webp`.
+
+To show a different logo in dark mode, also add a file named `logo-dark`, such
+as `content/logo-dark.svg`. If you don't add one, the site shows your `logo`
+file in both modes.
+
+The top bar displays the logo 24 pixels high and scales the width to match.
+For the sharpest result, use an SVG file. Keep only one `logo` file and one
+`logo-dark` file in `content/`, or the build fails.
+
+The development server reads the logo when it starts, so restart it after you
+add or change the logo.
+
 ## Run the development server
 
 <Steps>
