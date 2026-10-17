@@ -26,11 +26,15 @@ export function resolveMediaSrc(src: string): string {
 
   const relative = src.replace(/^\/?(media\/)?/, "");
   const file = path.join(MEDIA_DIR, relative);
+  if (path.relative(MEDIA_DIR, file).startsWith(`..${path.sep}`)) {
+    throw new Error(`Media file "${src}" must be inside content/media/.`);
+  }
   if (!MEDIA_EXTENSIONS.has(path.extname(file).toLowerCase())) {
     throw new Error(`Media file "${src}" isn't a supported image or video type.`);
   }
   if (!fs.existsSync(file)) {
     throw new Error(`Media file "${src}" not found. Add it to content/media/${relative}.`);
   }
-  return `${basePath}/media/${relative}`;
+  const url = relative.split("/").map(encodeURIComponent).join("/");
+  return `${basePath}/media/${url}`;
 }
