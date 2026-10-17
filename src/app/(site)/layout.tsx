@@ -9,7 +9,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <TopBar />
-      <div className="mx-auto flex max-w-6xl gap-10 px-6 py-10">
+      <div className="flex gap-8 px-6 py-6">
         <Sidebar />
         {children}
       </div>

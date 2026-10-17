@@ -4,12 +4,13 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import { Callout } from "./Callout";
+import { Image, MarkdownImage, Video } from "./Media";
 import { Step, Steps } from "./Steps";
 
 export async function Mdx({ source }: { source: string }) {
   const { content } = await compileMDX({
     source,
-    components: { Callout, Steps, Step },
+    components: { Callout, Steps, Step, Image, Video, img: MarkdownImage },
     options: {
       mdxOptions: {
         remarkPlugins: [remarkGfm],

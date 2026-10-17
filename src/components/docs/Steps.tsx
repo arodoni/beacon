@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 // counter, so authors don't number steps by hand.
 export function Steps({ children }: { children: ReactNode }) {
   return (
-    <div role="list" className="my-8 ml-3.5 [counter-reset:step]">
+    <div role="list" className="my-5 ml-3.5 [counter-reset:step]">
       {children}
     </div>
   );
@@ -21,7 +21,7 @@ export function Step({
   return (
     <div
       role="listitem"
-      className="relative pb-6 pl-8 [counter-increment:step] last:pb-0 last:[&>[data-step-line]]:hidden"
+      className="relative pb-4 pl-8 [counter-increment:step] last:pb-0 last:[&>[data-step-line]]:hidden"
     >
       <div
         data-step-line

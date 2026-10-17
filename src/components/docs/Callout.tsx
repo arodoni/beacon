@@ -63,7 +63,7 @@ export function Callout({
   return (
     <div
       role="note"
-      className={`not-prose my-6 flex gap-3 rounded-xl border px-4 py-3 text-sm leading-relaxed ${STYLES[type]}`}
+      className={`not-prose my-4 flex gap-3 rounded-xl border px-4 py-3 text-sm leading-relaxed ${STYLES[type]}`}
     >
       <div className="mt-0.5 h-5 w-5 shrink-0">{ICONS[type]}</div>
       <div>

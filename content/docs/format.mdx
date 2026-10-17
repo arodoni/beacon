@@ -1,13 +1,21 @@
 ---
-title: Format Content
+title: Authoring Reference
 description: Formatting and MDX components reference.
 ---
 
-# Format Content
+# Authoring Reference in {{productName}}
+
+## Markdown and MDX
+
+{{productName}} uses [MDX](https://mdxjs.com/) to author documentation pages. MDX is Markdown with embedded JSX components.
+
+In {{productName}}, you can use standard Markdown syntax to format text,
+create headings, lists, links, and code blocks. You can also use MDX
+components, described in the following sections.
 
 ## Table, task list, and strikethrough
 
-Tables, task lists, and strikethrough work via `remark-gfm` in Beacon. 
+Tables, task lists, and strikethrough work through `remark-gfm` in {{productName}}.
 
 The examples below specify a table, checked and unchecked items, and a
 strikethrough text:
@@ -99,6 +107,46 @@ The above snippet renders as:
   </Step>
 </Steps>
 
+## Images and videos
+
+To add an image or video to a page, put the file in the `content/media/`
+folder, then insert it with the `Image` or `Video` component. You don't need
+an import statement. Supported file types are `.svg`, `.png`, `.jpg`, `.jpeg`,
+`.gif`, `.webp`, `.avif`, `.mp4`, `.webm`, and `.mov`.
+
+For example, with `content/media/dashboard.png` and
+`content/media/setup-demo.mp4`:
+
+```mdx
+<Image src="dashboard.png" alt="The dashboard with two connected projects" />
+
+<Video src="setup-demo.mp4" title="Connecting a project" caption="Connect a project in under a minute." />
+```
+
+Set `src` to the file's path inside `content/media/`, such as
+`screenshots/dashboard.png` for a file in a subfolder. You can also set `src`
+to a full URL, such as `https://example.com/diagram.png`. The build fails if
+`src` points to a file in `content/media/` that doesn't exist.
+
+Both components take these properties:
+
+| Property | Component | Required | Description |
+| --- | --- | --- | --- |
+| `src` | Both | Yes | The file in `content/media/`, or a full URL. |
+| `alt` | `Image` | Yes | Text that describes the image for screen readers. |
+| `title` | `Video` | Yes | A short name for the video, read by screen readers. |
+| `caption` | Both | No | Text to show below the image or video. |
+| `width` | `Image` | No | The image width in pixels, in quotes, such as `width="320"`. By default, the image is its natural width, up to the width of the page. |
+| `poster` | `Video` | No | An image in `content/media/` to show before the video plays. |
+| `autoPlay` | `Video` | No | Add `autoPlay` with no value to play the video automatically, muted and on a loop, like an animated GIF. |
+
+You can also insert an image with Markdown image syntax, such as
+`![The dashboard](dashboard.png)`. Use the `Image` component when you want a
+caption or a set width.
+
+The development server copies `content/media/` when it starts, so restart it
+after you add or change a file.
+
 ## Docs variables
 
 To insert a variable in a page, write its name inside double curly braces.
@@ -117,7 +165,7 @@ The build fails if a page uses a variable that doesn't exist.
 ### Add your own variables
 
 To define more variables, add them to `content/variables.json` as names and
-string values:
+string values. For example:
 
 ```json
 {
@@ -126,7 +174,7 @@ string values:
 }
 ```
 
-Then use the variables in any page:
+Then reference them in a page:
 
 ```mdx
 ---

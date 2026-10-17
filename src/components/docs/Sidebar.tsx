@@ -14,7 +14,7 @@ export function Sidebar() {
   }
 
   return (
-    <nav className="sticky top-10 w-64 shrink-0 self-start space-y-6 text-sm">
+    <nav className="sticky top-6 w-70 shrink-0 self-start space-y-6 text-sm">
       <div>
         <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
           {activeGroup.title}
