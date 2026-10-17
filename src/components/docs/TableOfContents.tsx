@@ -39,7 +39,7 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
   if (items.length === 0) return null;
 
   return (
-    <nav className="hidden w-56 shrink-0 self-start xl:block sticky top-10 text-sm">
+    <nav className="hidden w-64 shrink-0 self-start xl:block sticky top-6 text-sm">
       <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
         On This Page
       </p>

@@ -50,3 +50,6 @@ next-env.d.ts
 
 # editor spell-check dictionary
 /.vscode/ltex.dictionary.*.txt
+
+# generated from content/media/ by scripts/sync-media.mjs
+/public/media/

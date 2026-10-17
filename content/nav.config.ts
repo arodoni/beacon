@@ -24,7 +24,7 @@ export const nav: NavGroup[] = [
     items: [
       { title: "Prepare", href: "/prepare" },
       { title: "Install", href: "/install" },
-      { title: "Create Content", href: "/create-content" },
+      { title: "Author Content", href: "/create-content" },
       { title: "Deploy", href: "/deploy" },
       { title: "Monitor Updates", href: "/doc-updates" },
       { title: "Troubleshoot", href: "/troubleshoot" },
@@ -33,7 +33,7 @@ export const nav: NavGroup[] = [
   {
     title: "Reference",
     href: "/format",
-    items: [{ title: "Format Content", href: "/format" }],
+    items: [{ title: "Authoring Reference", href: "/format" }],
   },
   {
     title: "Release Notes",

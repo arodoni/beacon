@@ -29,6 +29,16 @@
 - The scaffolder relies on parts of Beacon: the `projectName` line in `src/lib/site.ts`, `.env.example`, `content/docs/*.mdx`, and `content/nav.config.ts`. If a change renames or moves any of these, flag that `packages/create-beacon-docs/index.js` may need updating, followed by a version bump.
 - Changes to the rest of Beacon don't need a version bump, because the scaffolder downloads the latest `main` from GitHub.
 
+## Committing docs changes
+
+A PreToolUse hook blocks `git commit` until the current `.mdx` changes under `content/` have been reviewed and marked:
+
+- Run the `docs-review` skill first. To see which files need a review, run `.claude/hooks/docs-review-gate.sh --list`.
+
+- After the approved fixes are in, mark the review with `.claude/hooks/docs-review-gate.sh --mark`. This saves a fingerprint of the current `.mdx` changes, and any later edit to those files invalidates it, so mark last, right before committing.
+
+- Run `--mark` and `git commit` as two separate commands. The hook checks before a command runs, so `--mark && git commit` in one line still gets blocked.
+
 ## Git / PR workflow
 
 - When updating code or docs, use the current branch. Don't create a new branch, even if the change seems unrelated to the branch's existing work.

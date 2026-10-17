@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/sync-media.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/sync-media.mjs",
     "build": "next build",
     "start": "serve out",
     "lint": "eslint",

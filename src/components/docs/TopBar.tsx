@@ -7,7 +7,7 @@ import { productName } from "../../lib/site";
 
 export function TopBar() {
   return (
-    <header className="flex items-center justify-between gap-4 border-b border-slate-900/10 px-6 py-4 dark:border-white/10">
+    <header className="flex items-center justify-between gap-4 border-b border-slate-900/10 px-6 py-3 dark:border-white/10">
       <div className="flex items-center gap-6">
         <Link href="/" className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
           <Logo />
