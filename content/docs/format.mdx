@@ -5,20 +5,31 @@ description: Formatting and MDX components reference.
 
 # Authoring Reference in {{productName}}
 
-## Markdown and MDX
 
-{{productName}} uses [MDX](https://mdxjs.com/) to author documentation pages. MDX is Markdown with embedded JSX components.
+## Product logo
 
-In {{productName}}, you can use standard Markdown syntax to format text,
-create headings, lists, links, and code blocks. You can also use MDX
-components, described in the following sections.
+To show your product logo on the documentation site, add an image file named
+`logo` to the `content/` folder, such as `content/logo.svg`. Supported file
+types are `.svg`, `.png`, `.jpg`, `.jpeg`, and `.webp`.
+
+To show a different logo in dark mode, also add a file named `logo-dark`, such
+as `content/logo-dark.svg`. If you don't add one, the site shows your `logo`
+file in both modes.
+
+The top bar displays the logo 24 pixels high and scales the width to match.
+For the sharpest result, use an SVG file. Keep only one `logo` file and one
+`logo-dark` file in `content/`, or the build fails.
+
+The local development server reads the logo when it starts, so restart it after
+you add or change the logo.
 
 ## Table, task list, and strikethrough
 
 Tables, task lists, and strikethrough work through `remark-gfm` in {{productName}}.
 
-The examples below specify a table, checked and unchecked items, and a
-strikethrough text:
+The following examples show a table, a task list, and strikethrough text.
+
+A table example:
 
 ```markdown
 
@@ -26,22 +37,36 @@ strikethrough text:
 | --- | --- | --- |
 | Table cell | Table cell | Table cell |
 
-- [x] Task list1
-- [ ] Task list2
-
-~~Anything else~~ not needed
 ```
 
-The above snippets render as:
+The preceding snippet renders as:
 
 | Table column1 | Table column2 | Table column3 |
 | --- | --- | --- |
 | Table cell | Table cell | Table cell |
 
+A task list example:
+
+```markdown
+- [x] Task list1
+- [ ] Task list2
+```
+
+The preceding snippet renders as:
+
 - [x] Task list1
 - [ ] Task list2
 
-~~Anything else~~ not needed
+A strikethrough example:
+
+```markdown
+~~Anything else~~ is not needed
+```
+
+The preceding snippet renders as:
+
+~~Anything else~~ is not needed
+
 
 ## Callouts
 
@@ -75,7 +100,7 @@ Sample renderings:
 
 ## Steps
 
-Use the `Steps` and `Step` components to show a procedure as a numbered sequence, without an import statement. Each `Step` takes a `title` and numbers itself, so you can add, remove, or reorder steps without renumbering them.
+Use the `Steps` and `Step` components to show a procedure as a numbered sequence. Each `Step` takes a `title` and numbers itself, so you can add, remove, or reorder steps without renumbering them.
 
 For example: 
 
@@ -93,7 +118,7 @@ For example:
 </Steps>
 ```
 
-The above snippet renders as:
+The preceding snippet renders as:
 
 <Steps>
   <Step title="Install the dependencies">
@@ -109,43 +134,55 @@ The above snippet renders as:
 
 ## Images and videos
 
-To add an image or video to a page, put the file in the `content/media/`
-folder, then insert it with the `Image` or `Video` component. You don't need
-an import statement. Supported file types are `.svg`, `.png`, `.jpg`, `.jpeg`,
-`.gif`, `.webp`, `.avif`, `.mp4`, `.webm`, and `.mov`.
+To add images and videos to your pages, you can use:
 
-For example, with `content/media/dashboard.png` and
-`content/media/setup-demo.mp4`:
+- The `Image` and `Video` components
 
-```mdx
-<Image src="dashboard.png" alt="The dashboard with two connected projects" />
+- Markdown image syntax, such as `![The dashboard](dashboard.png)`
 
-<Video src="setup-demo.mp4" title="Connecting a project" caption="Connect a project in under a minute." />
-```
+Use the `Image` component when you want a caption or a set width.
 
-Set `src` to the file's path inside `content/media/`, such as
-`screenshots/dashboard.png` for a file in a subfolder. You can also set `src`
-to a full URL, such as `https://example.com/diagram.png`. The build fails if
-`src` points to a file in `content/media/` that doesn't exist.
+To add an image or video to a page with the `Image` or `Video` component:
 
-Both components take these properties:
+<Steps> 
+  <Step title="Place the file in the media folder">
+    Put the file in the `content/media/` folder.
 
-| Property | Component | Required | Description |
-| --- | --- | --- | --- |
-| `src` | Both | Yes | The file in `content/media/`, or a full URL. |
-| `alt` | `Image` | Yes | Text that describes the image for screen readers. |
-| `title` | `Video` | Yes | A short name for the video, read by screen readers. |
-| `caption` | Both | No | Text to show below the image or video. |
-| `width` | `Image` | No | The image width in pixels, in quotes, such as `width="320"`. By default, the image is its natural width, up to the width of the page. |
-| `poster` | `Video` | No | An image in `content/media/` to show before the video plays. |
-| `autoPlay` | `Video` | No | Add `autoPlay` with no value to play the video automatically, muted and on a loop, like an animated GIF. |
+    Supported file types are `.svg`, `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.avif`, `.mp4`, `.webm`, and `.mov`.
+  </Step>
 
-You can also insert an image with Markdown image syntax, such as
-`![The dashboard](dashboard.png)`. Use the `Image` component when you want a
-caption or a set width.
+  <Step title="Insert the component">
+    Insert the `Image` or `Video` component.
 
-The development server copies `content/media/` when it starts, so restart it
-after you add or change a file.
+    For example, with `content/media/dashboard.png` and `content/media/setup-demo.mp4`:
+
+    ```mdx
+    <Image src="dashboard.png" alt="The dashboard with two connected projects" />
+
+    <Video src="setup-demo.mp4" title="Connecting a project" caption="Connect a project in under a minute." />
+    ```
+
+    Set `src` to the file's path inside `content/media/`, such as `screenshots/dashboard.png` for a file in a subfolder. 
+
+    You can also set `src` to a full URL, such as `https://example.com/diagram.png`. 
+
+    Both components take these properties:
+
+    | Property | Component | Required | Description |
+    | --- | --- | --- | --- |
+    | `src` | Both | Yes | The file in `content/media/`, or a full URL. |
+    | `alt` | `Image` | Yes | Text that describes the image for screen readers. |
+    | `title` | `Video` | Yes | A short name for the video, read by screen readers. |
+    | `caption` | Both | No | Text to show below the image or video. |
+    | `width` | `Image` | No | The image width in pixels, in quotes, such as `width="320"`. By default, the image is its natural width, up to the width of the page. |
+    | `poster` | `Video` | No | An image in `content/media/` to show before the video plays. |
+    | `autoPlay` | `Video` | No | Add `autoPlay` with no value to play the video automatically, muted and on a loop, like an animated GIF. |
+
+  </Step>
+</Steps>
+
+When previewing locally, the local development server copies `content/media/`
+when it starts, so restart it after you add or change a file.
 
 ## Docs variables
 
@@ -164,37 +201,48 @@ The build fails if a page uses a variable that doesn't exist.
 
 ### Add your own variables
 
-To define more variables, add them to `content/variables.json` as names and
-string values. For example:
+To define more variables:
 
-```json
-{
-  "supportEmail": "support@example.com",
-  "latestVersion": "2.4.0"
-}
-```
+<Steps>
+  <Step title="Add variables to the JSON file">
+    Add the variables to `content/variables.json` as names and string values. 
 
-Then reference them in a page:
+    Variable names can contain only letters, digits, and underscores, and can't reuse a built-in name. The build fails if the file isn't valid JSON or if a value isn't a string.
 
-```mdx
----
-title: Get help
-description: How to contact support about version \{{latestVersion}}.
----
+    For example:
 
-# Get help
+    ```json
+    {
+      "supportEmail": "support@example.com",
+      "latestVersion": "2.4.0"
+    }
+    ```
 
-If you have questions about version \{{latestVersion}}, email
-[\{{supportEmail}}](mailto:\{{supportEmail}}).
-```
+  </Step>
+  <Step title="Reference the custom variables in a page">
+    Reference the variables in a page:
 
-The page renders as "If you have questions about version 2.4.0, email
-support@example.com." Restart the development server after you edit
-`content/variables.json`.
+    ```mdx
+    ---
+    title: Get help
+    description: How to contact support about version \{{latestVersion}}.
+    ---
 
-Variable names can contain only letters, digits, and underscores, and can't
-reuse a built-in name. The build fails if the file isn't valid JSON or if a
-value isn't a string.
+    # Get help
+
+    If you have questions about version \{{latestVersion}}, email
+    [\{{supportEmail}}](mailto:\{{supportEmail}}).
+    ```
+
+    The page renders as:
+
+    ```text
+    If you have questions about version 2.4.0, email support@example.com.
+    ```
+
+    Restart the development server after you edit `content/variables.json`.
+  </Step>
+</Steps>
 
 ### Show a variable name as literal text
 
