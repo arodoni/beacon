@@ -22,7 +22,7 @@ export const nav: NavGroup[] = [
     title: "Tools",
     href: "/dashboard",
     items: [
-      { title: "Monitor", href: "/dashboard" },
+      { title: "Drift Check", href: "/dashboard" },
       { title: "Editor", href: "/dashboard/editor" },
     ],
   },

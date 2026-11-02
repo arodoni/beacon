@@ -1,11 +1,11 @@
 ---
-title: Monitor Updates
-description: How {{productName}}'s GitHub webhook flags doc pages that go stale when another doc page changes, and where to find its suggestions.
+title: Drift Check
+description: How {{productName}}'s drift check uses a GitHub webhook to flag doc pages that go stale when another doc page changes, and where to find its suggestions.
 ---
 
-# Monitor Updates
+# Drift Check
 
-When a pull request merges into `main` and touches a doc page under `content/docs/**/*.mdx` or `content/nav.config.ts`, a GitHub webhook checks whether the change makes any *other* doc page stale - a broken cross-reference, terminology that no longer matches, or a described behavior that now conflicts - and writes a suggested fix for a person to review. It never edits, commits, or opens a pull request itself.
+The drift check finds doc pages that have gone out of date. When a pull request merges into `main` and touches a doc page under `content/docs/**/*.mdx` or `content/nav.config.ts`, a GitHub webhook checks whether the change makes any *other* doc page stale - a broken cross-reference, terminology that no longer matches, or a described behavior that now conflicts - and writes a suggested fix for a person to review. It never edits, commits, or opens a pull request itself.
 
 ## What it checks for
 
@@ -16,7 +16,7 @@ When a pull request merges into `main` and touches a doc page under `content/doc
 - A `nav.config.ts` restructure that a page's own content no longer reflects
 
 <Callout type="note">
-  The automation only proposes edits to pages that weren't already changed in the triggering pull request.
+  The drift check only proposes edits to pages that weren't already changed in the triggering pull request.
 </Callout>
 
 ## How it works
@@ -57,7 +57,7 @@ The watched repository and folder are read from environment variables:
 
 `GITHUB_REPO_OWNER` and `GITHUB_REPO_NAME` must always be set explicitly - they have no default. `WATCHED_DOCS_FOLDER` and `WATCHED_NAV_CONFIG_PATH` are optional and can be overridden if the target repo's folder layout ever differs from {{productName}}'s own.
 
-The automation is **disabled by default**. Set `DOC_UPDATE_AUTOMATION_ENABLED` to the literal string `true` to turn it on. When disabled, the webhook handler responds immediately without verifying the signature, reading the diff, or calling Claude.
+The drift check is **disabled by default**. Set `DOC_UPDATE_AUTOMATION_ENABLED` to the literal string `true` to turn it on. When disabled, the webhook handler responds immediately without verifying the signature, reading the diff, or calling Claude.
 
 Four secrets are required as Vercel environment variables:
 
@@ -72,5 +72,5 @@ A connected Vercel Blob store provides the remaining credential automatically (v
 
 ## Why it never writes to GitHub
 
-An earlier design had the automation open its own pull request, which needed a GitHub token with write access to contents, pull requests, and issues. The current design needs none of that: the read-only token can't push a commit, open a PR, or touch anything else in the repository even if it were compromised. The tradeoff is that suggestions are pull-based rather than showing up as a ready-to-merge PR - see [Where to find a suggestion](#where-to-find-a-suggestion) above.
+An earlier design had the drift check open its own pull request, which needed a GitHub token with write access to contents, pull requests, and issues. The current design needs none of that: the read-only token can't push a commit, open a PR, or touch anything else in the repository even if it were compromised. The tradeoff is that suggestions are pull-based rather than showing up as a ready-to-merge PR - see [Where to find a suggestion](#where-to-find-a-suggestion) above.
 
