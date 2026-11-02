@@ -1,4 +1,5 @@
 import { getAllDocsMeta, getIntroductionDoc } from "../../lib/content";
+import { mdxToMarkdown } from "../../lib/markdown-mirror";
 import { siteUrl } from "../../lib/site";
 
 export const dynamic = "force-static";
@@ -9,7 +10,7 @@ export async function GET() {
   const allDocs = [intro, ...docs];
 
   const sections = allDocs.map((doc) =>
-    [`URL: ${siteUrl}${doc.href}`, "", doc.content.trim()].join("\n")
+    [`URL: ${siteUrl}${doc.href}`, "", mdxToMarkdown(doc.content).trim()].join("\n")
   );
 
   const lines = [

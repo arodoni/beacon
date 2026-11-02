@@ -11,7 +11,7 @@ description: An open-source, self-hosted static site generator for documentation
 
 {{productName}} supports:
 
-- **Markdown content**: Every page lives in `content/docs/*.mdx` with simple
+- **MDX authoring**: Every page lives in `content/docs/*.mdx` with simple
   frontmatter.
 
 - **Config-driven navigation**: Navigation structure, ordering, and grouping all
@@ -35,3 +35,7 @@ description: An open-source, self-hosted static site generator for documentation
 
 - **Monitor**: A Tools pane that tracks doc-update suggestions, with status
   badges so you can review, accept, or dismiss each one.
+
+- **AI-readable Markdown mirror**: {{productName}} publishes a plain Markdown
+  copy of each page at its URL plus `.md`, such as `/quickstart.md`, and lists
+  these copies in `/llms.txt`.

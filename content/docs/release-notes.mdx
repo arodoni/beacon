@@ -5,6 +5,15 @@ description: A running log of notable features and changes shipped to {{productN
 
 # Release Notes
 
+## 2026-11-02
+
+- Added Markdown mirrors. Beacon now publishes every docs page as plain
+  Markdown at the page URL plus `.md`, such as `/quickstart.md`, with
+  `/index.md` for the home page. The mirrors convert components like
+  `Callout` and `Steps` to standard Markdown and make links absolute. Each page
+  points to its Markdown version with a `<link rel="alternate">` tag, and
+  `/llms.txt` now links to the Markdown versions.
+
 ## 2026-10-15
 
 - Added support for your own product logo. Add an image file named `logo` to

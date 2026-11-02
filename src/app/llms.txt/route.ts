@@ -1,4 +1,5 @@
 import { getAllDocsMeta, getIntroductionDoc } from "../../lib/content";
+import { markdownMirrorHref } from "../../lib/markdown-mirror";
 import { siteUrl } from "../../lib/site";
 
 export const dynamic = "force-static";
@@ -14,10 +15,12 @@ export async function GET() {
     "",
     `Full text of every page: ${siteUrl}/llms-full.txt`,
     "",
+    "Each link points to the page's plain Markdown version. Remove the .md suffix for the HTML page.",
+    "",
     "## Docs",
     "",
     ...docs.map(
-      (doc) => `- [${doc.frontmatter.title}](${siteUrl}${doc.href}): ${doc.frontmatter.description}`
+      (doc) => `- [${doc.frontmatter.title}](${siteUrl}${markdownMirrorHref(doc)}): ${doc.frontmatter.description}`
     ),
     "",
   ];

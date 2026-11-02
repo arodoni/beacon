@@ -53,3 +53,6 @@ next-env.d.ts
 
 # generated from content/media/ by scripts/sync-media.mjs
 /public/media/
+
+# generated from content/docs/ by scripts/sync-markdown-mirror.ts
+/public/*.md

@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "node scripts/sync-media.mjs",
+    "predev": "node scripts/sync-media.mjs && tsx scripts/sync-markdown-mirror.ts",
     "dev": "next dev",
-    "prebuild": "node scripts/sync-media.mjs",
+    "prebuild": "node scripts/sync-media.mjs && tsx scripts/sync-markdown-mirror.ts",
     "build": "next build",
     "start": "serve out",
     "lint": "eslint",
@@ -45,6 +45,7 @@
     "eslint-config-next": "16.2.11",
     "serve": "^14.2.4",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   },
   "overrides": {
