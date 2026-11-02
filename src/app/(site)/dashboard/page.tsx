@@ -4,7 +4,7 @@ import { productName } from "../../../lib/site";
 
 export const metadata: Metadata = {
   title: "Dashboard",
-  description: `Tools for working on ${productName} docs: the Markdown editor and doc-update monitoring.`,
+  description: `Tools for working on ${productName} docs: the Markdown editor and the drift check.`,
 };
 
 export default function DashboardPage() {

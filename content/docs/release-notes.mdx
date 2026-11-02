@@ -7,6 +7,12 @@ description: A running log of notable features and changes shipped to {{productN
 
 ## 2026-11-02
 
+- Renamed the doc update automation to the drift check. The nav items, the
+  dashboard pane, and the docs page now all use the new name. The page URL
+  (`/doc-updates`), the `DOC_UPDATE_AUTOMATION_ENABLED` variable, the API
+  routes, and stored suggestions are unchanged, so existing sites keep working.
+  See [Drift Check](/doc-updates).
+
 - Added Markdown mirrors. Beacon now publishes every docs page as plain
   Markdown at the page URL plus `.md`, such as `/quickstart.md`, with
   `/index.md` for the home page. The mirrors convert components like
@@ -62,8 +68,8 @@ description: A running log of notable features and changes shipped to {{productN
 ## 2026-08-19
 
 - Update Monitoring on Dashboard now shows a status badge on each suggestion,
-  with *Accept* and *Dismiss* buttons for pending suggestions. See [Doc Update
-  Automation](/doc-updates) for details.
+  with *Accept* and *Dismiss* buttons for pending suggestions. See [Drift
+  Check](/doc-updates) for details.
 
 ## 2026-08-12
 
@@ -74,7 +80,7 @@ description: A running log of notable features and changes shipped to {{productN
 
 - Added a `DOC_UPDATE_AUTOMATION_ENABLED` environment variable to gate the doc
   update automation webhook. It's disabled by default; set it to `true` to turn
-  the automation on. See [Doc Update Automation](/doc-updates) for details.
+  the automation on. See [Drift Check](/doc-updates) for details.
 
 ## 2026-08-05
 
@@ -83,4 +89,4 @@ description: A running log of notable features and changes shipped to {{productN
 - Added a GitHub webhook that triggers when a PR merges into `main` touching
   `content/docs/**/*.mdx` or `content/nav.config.ts`. It checks whether other
   doc pages are now stale and writes suggestions to Vercel Blob storage for
-  manual review. See [Doc Update Automation](/doc-updates) for details.
+  manual review. See [Drift Check](/doc-updates) for details.
