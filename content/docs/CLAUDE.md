@@ -9,6 +9,7 @@ Every page under `content/docs/` is statically prerendered and exposed through `
 - Every doc's `title` and `description` frontmatter fields are load-bearing: they drive the `<title>` tag, meta description, canonical URL, Open Graph tags (via `buildDocMetadata` in `src/lib/seo.ts`), the client search index, and the `/llms.txt` listing. Write them as real, specific summaries, not filler.
 - New docs are picked up automatically by `getAllDocSlugs`/`getAllDocsMeta` (`src/lib/content.ts`) as soon as the `.mdx` file exists and has frontmatter, so `/llms.txt` and the sitemap stay in sync without edits.
 - Keep one H1 per page and a real H2/H3 hierarchy underneath it. Headings get slugged IDs and anchor links automatically (`rehype-slug` + `rehype-autolink-headings` in `src/components/docs/Mdx.tsx`), so each section should read as a self-contained chunk, since retrieval systems may quote a single section rather than the whole page.
+- Each page is also published as plain Markdown at its URL plus `.md` (`/index.md` for the introduction), generated into `public/` by `scripts/sync-markdown-mirror.ts` using `src/lib/markdown-mirror.ts`. When you add a new MDX component, add a Markdown conversion for it in `mdxToMarkdown`, or its tags leak into the mirrors and `/llms-full.txt`.
 - The canonical site URL comes from the `SITE_URL` env var (`src/lib/site.ts`); set it at build/deploy time so canonical links, OG tags, the sitemap, and `/llms.txt` don't fall back to `https://example.com`.
 
 ## Formatting conventions
