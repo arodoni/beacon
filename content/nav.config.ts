@@ -26,7 +26,7 @@ export const nav: NavGroup[] = [
       { title: "Install Beacon", href: "/install" },
       { title: "Write Content", href: "/create-content" },
       { title: "Deploy Site", href: "/deploy" },
-      { title: "Drift Check", href: "/doc-updates" },
+      { title: "Check for Drift", href: "/doc-updates" },
       { title: "Troubleshoot", href: "/troubleshoot" },
     ],
   },
