@@ -1,9 +1,9 @@
 ---
-title: Drift Check
+title: Check for Drift in Documentation
 description: How {{productName}}'s drift check uses a GitHub webhook to flag doc pages that go stale when another doc page changes, and where to find its suggestions.
 ---
 
-# Drift Check
+# Check for Drift in Documentation
 
 The drift check finds doc pages that have gone out of date. When a pull request merges into `main` and touches a doc page under `content/docs/**/*.mdx` or `content/nav.config.ts`, a GitHub webhook checks whether the change makes any *other* doc page stale - a broken cross-reference, terminology that no longer matches, or a described behavior that now conflicts - and writes a suggested fix for a person to review. It never edits, commits, or opens a pull request itself.
 

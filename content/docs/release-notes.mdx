@@ -7,17 +7,10 @@ description: A running log of notable features and changes shipped to {{productN
 
 ## 2026-11-02
 
-- Renamed the doc update automation to the drift check. The nav items, the
-  dashboard pane, and the docs page now all use the new name. The page URL
-  (`/doc-updates`), the `DOC_UPDATE_AUTOMATION_ENABLED` variable, the API
-  routes, and stored suggestions are unchanged, so existing sites keep working.
-  See [Drift Check](/doc-updates).
-
 - Added Markdown mirrors. Beacon now publishes every docs page as plain
   Markdown at the page URL plus `.md`, such as `/quickstart.md`, with
   `/index.md` for the home page. The mirrors convert components like
-  `Callout` and `Steps` to standard Markdown and make links absolute. Each page
-  points to its Markdown version with a `<link rel="alternate">` tag, and
+  `Callout` and `Steps` to standard Markdown and make links absolute.
   `/llms.txt` now links to the Markdown versions.
 
 ## 2026-10-15
@@ -51,12 +44,6 @@ description: A running log of notable features and changes shipped to {{productN
 
 ## 2026-10-13
 
-- Added `create-beacon-docs`, a command-line tool that creates a new
-  {{productName}} site. Run `npm create beacon-docs@latest my-docs` to download
-  {{productName}} with starter pages in place of its own docs, set your product
-  and project names, start a Git repository, and install dependencies in one
-  step. The source is in `packages/create-beacon-docs/`.
-
 - Added a `NEXT_PUBLIC_PRODUCT_NAME` environment variable for the name of the
   product your docs describe. It sets the top bar, page titles, and the
   `productName` docs variable, and falls back to `MyProduct` if unset. See
@@ -65,28 +52,16 @@ description: A running log of notable features and changes shipped to {{productN
 - Added an `.env.example` file that lists the environment variables you can
   set. It doesn't include keys, secrets, or tokens.
 
-## 2026-08-19
-
-- Update Monitoring on Dashboard now shows a status badge on each suggestion,
-  with *Accept* and *Dismiss* buttons for pending suggestions. See [Drift
-  Check](/doc-updates) for details.
-
 ## 2026-08-12
 
-- Added a `Callout` component (`src/components/docs/Callout.tsx`) for note, tip,
-  important, and warning admonitions in docs content. It's registered as a
+- Added the `Callout` component (`src/components/docs/Callout.tsx`) for note,
+  tip, important, and warning admonitions in docs content. It's registered as a
   global MDX component, so any `.mdx` file can use `<Callout
   type="warning">...</Callout>` directly without an import statement.
 
-- Added a `DOC_UPDATE_AUTOMATION_ENABLED` environment variable to gate the doc
-  update automation webhook. It's disabled by default; set it to `true` to turn
-  the automation on. See [Drift Check](/doc-updates) for details.
-
 ## 2026-08-05
-
-- Added this Release Notes page to track new features going forward.
 
 - Added a GitHub webhook that triggers when a PR merges into `main` touching
   `content/docs/**/*.mdx` or `content/nav.config.ts`. It checks whether other
   doc pages are now stale and writes suggestions to Vercel Blob storage for
-  manual review. See [Drift Check](/doc-updates) for details.
+  manual review. See [Check for Drift](/doc-updates) for details.
