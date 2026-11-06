@@ -15,3 +15,7 @@ Every page under `content/docs/` is statically prerendered and exposed through `
 ## Formatting conventions
 
 - Always put a blank line between two list items (`-` or numbered) so Markdown renders them as a loose list with spacing between entries, rather than a tight list.
+
+## Word choice
+
+- Don't use "doc" or "docs" in prose. Write "documentation" instead, or reword, such as "page" for "doc page". This applies to page text and headings. It doesn't apply to frontmatter, inline code, code blocks, file paths, URLs, variable names, placeholders, macros, or names that contain the word, such as `create-beacon-docs`.

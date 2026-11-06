@@ -54,6 +54,8 @@ Beacon conventions:
 
 - A blank line between list items (loose lists), per `content/docs/CLAUDE.md`.
 
+- "documentation" instead of "doc" or "docs" in prose, including headings, per `content/docs/CLAUDE.md`. Frontmatter, inline code, code blocks, file paths, URLs, variable names, placeholders, macros, and names such as `create-beacon-docs` are exempt.
+
 - One H1 per page, and meaningful `title` and `description` frontmatter.
 
 Leave alone: content inside code blocks and inline code, frontmatter keys,
