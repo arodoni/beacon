@@ -22,6 +22,7 @@
 - Add new UI components under `src/components/`.
 - Avoid changing the repository layout unless you also update the app entrypoint and README.
 - When you implement a new feature, add a dated entry to `content/docs/release-notes.mdx` describing it.
+- When you implement a new feature, update `IMPLEMENTATION.md` to describe how it works, including the implementation files list and the architecture diagram if they're affected. This file is gitignored, so the update won't appear in the diff or the PR.
 
 ## create-beacon-docs package
 
