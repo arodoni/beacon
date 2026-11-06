@@ -7,11 +7,15 @@ function normalize(path: string): string {
   return path.length > 1 ? path.replace(/\/+$/, "") : path;
 }
 
+/** A nav item, with the section and method that generated API reference links add. */
+export type SiteNavItem = NavGroup["items"][number] & { section?: string; method?: string };
+export type SiteNavGroup = Omit<NavGroup, "items"> & { items: SiteNavItem[] };
+
 export function isNavActive(pathname: string, href: string): boolean {
   return normalize(pathname) === normalize(href);
 }
 
-export function getActiveGroup(pathname: string, groups: NavGroup[]): NavGroup | undefined {
+export function getActiveGroup(pathname: string, groups: SiteNavGroup[]): SiteNavGroup | undefined {
   return groups.find(
     (group) =>
       isNavActive(pathname, group.href) ||

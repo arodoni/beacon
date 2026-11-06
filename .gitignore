@@ -56,3 +56,4 @@ next-env.d.ts
 
 # generated from content/docs/ by scripts/sync-markdown-mirror.ts
 /public/*.md
+/public/api-reference/

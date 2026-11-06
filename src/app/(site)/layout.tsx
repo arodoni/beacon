@@ -1,16 +1,20 @@
 import type { ReactNode } from "react";
 import { Sidebar } from "../../components/docs/Sidebar";
 import { TopBar } from "../../components/docs/TopBar";
+import { nav } from "../../../content/nav.config";
 import { validateNav } from "../../lib/content";
+import { getApiReferenceNavGroup } from "../../lib/openapi";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   validateNav();
+  const apiReference = getApiReferenceNavGroup();
+  const groups = apiReference ? [...nav, apiReference] : nav;
 
   return (
     <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <TopBar />
+      <TopBar groups={groups} />
       <div className="flex gap-8 px-6 py-6">
-        <Sidebar />
+        <Sidebar groups={groups} />
         {children}
       </div>
     </div>
