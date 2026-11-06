@@ -8,9 +8,10 @@
     "dev": "next dev",
     "prebuild": "node scripts/sync-media.mjs && tsx scripts/sync-markdown-mirror.ts",
     "build": "next build",
+    "postbuild": "node scripts/check-api-output.mjs",
     "start": "serve out",
     "lint": "eslint",
-    "test:unit": "node --test api/_lib/*.test.ts",
+    "test:unit": "tsx --test api/_lib/*.test.ts src/lib/*.test.ts",
     "test:e2e": "playwright test"
   },
   "dependencies": {

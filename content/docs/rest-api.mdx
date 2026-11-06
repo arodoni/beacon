@@ -1,0 +1,82 @@
+---
+title: REST API
+description: Read {{productName}} documentation pages and navigation as JSON through read-only, build-time REST API endpoints.
+---
+
+# REST API
+
+{{productName}} publishes its pages and navigation as JSON, so scripts, integrations, and AI tools can read the content without parsing HTML. The API is read-only and doesn't require authentication. {{productName}} generates each response as a static file at build time, so the API works on any static host and reflects the content of the latest deployment.
+
+## Endpoints
+
+All endpoints use the `GET` method. Paths are relative to your site URL.
+
+| Endpoint | Returns |
+| --- | --- |
+| `/api/v1/docs.json` | Metadata for every page |
+| `/api/v1/docs/{slug}.json` | Metadata and the Markdown body for one page |
+| `/api/v1/nav.json` | Navigation groups and their links |
+| `/api/v1/openapi.json` | An OpenAPI 3.1 description of the API |
+
+A page's slug is its file name in `content/docs/` without the `.mdx` extension. The home page's slug is `introduction`. A slug that doesn't exist returns your host's standard 404 response.
+
+## List all pages
+
+The following request returns the metadata for every page, sorted by slug:
+
+```bash
+curl https://example.com/api/v1/docs.json
+```
+
+The response looks like the following:
+
+```json
+{
+  "docs": [
+    {
+      "slug": "quickstart",
+      "title": "Quickstart",
+      "description": "Create a site and deploy it.",
+      "url": "https://example.com/quickstart",
+      "markdownUrl": "https://example.com/quickstart.md",
+      "apiUrl": "https://example.com/api/v1/docs/quickstart.json"
+    }
+  ]
+}
+```
+
+## Get one page
+
+The following request returns one page:
+
+```bash
+curl https://example.com/api/v1/docs/quickstart.json
+```
+
+The response has the same fields as a list entry, plus a `markdown` field that contains the page body. The API converts components such as `Callout` and `Steps` to standard Markdown and makes site links absolute.
+
+## Get the navigation
+
+The `/api/v1/nav.json` endpoint returns a `groups` array. Each group has a `title`, an `href`, a `url`, and an `items` array of links with the same three fields. The `href` value is relative to your site URL, and the `url` value is absolute.
+
+## Set the site URL
+
+The URLs in API responses come from the `SITE_URL` environment variable. Set it when you build the site, or the responses use `https://example.com`. If your site is served from a subpath, include the subpath in `SITE_URL`, and add it to the endpoint paths, such as `/repo-name/api/v1/docs.json`.
+
+## Call the API from a browser
+
+Browser code on another domain can read a response only if the host allows cross-origin requests:
+
+- **Vercel and Netlify:** `vercel.json` and `netlify.toml` set `Access-Control-Allow-Origin: *` for `/api/v1/` paths.
+
+- **GitHub Pages:** GitHub Pages sets this header on its responses, so you don't need to configure anything.
+
+- **Other static hosts:** Set `Access-Control-Allow-Origin: *` for `/api/v1/` paths in your host's settings.
+
+## Limitations
+
+Because responses are static files, the API doesn't support the following:
+
+- Query parameters, such as filtering, pagination, or server-side search.
+
+- Requests that create, update, or delete content. To change a page, edit its file and redeploy the site.
