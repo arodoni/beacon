@@ -7,7 +7,7 @@ description: A running log of notable features and changes shipped to {{productN
 
 ## 2026-11-02
 
-- Added Markdown mirrors. Beacon now publishes every docs page as plain
+- Added Markdown mirrors. Beacon now publishes every documentation page as plain
   Markdown at the page URL plus `.md`, such as `/quickstart.md`, with
   `/index.md` for the home page. The mirrors convert components like
   `Callout` and `Steps` to standard Markdown and make links absolute.
@@ -21,7 +21,7 @@ description: A running log of notable features and changes shipped to {{productN
   logo in dark mode. See
   [Author Documentation Pages](/create-content#add-your-product-logo).
 
-- Added `Image` and `Video` components for adding images and videos to docs
+- Added `Image` and `Video` components for adding images and videos to documentation
   pages. Put the files in `content/media/` and insert them with
   `<Image src="..." alt="..." />` or `<Video src="..." title="..." />`, with an
   optional caption. Markdown image syntax works with `content/media/` files
@@ -29,14 +29,14 @@ description: A running log of notable features and changes shipped to {{productN
 
 ## 2026-10-14
 
-- Added custom docs variables. Define your own variables as names and string
+- Added custom documentation variables. Define your own variables as names and string
   values in `content/variables.json`, and use them in pages the same way as the
   built-in `productName` and `projectName` variables. To show a variable name
   as literal text, put a backslash in front of it. See
   [Authoring Reference](/format#add-your-own-variables).
 
 - Added `Steps` and `Step` components (`src/components/docs/Steps.tsx`) for
-  numbered procedures in docs content. Each step shows a numbered badge, a
+  numbered procedures in documentation content. Each step shows a numbered badge, a
   title, and a connecting line to the next step, and numbers itself
   automatically. They're registered as global MDX components, so any `.mdx`
   file can use `<Steps>` and `<Step title="...">` without an import statement.
@@ -45,8 +45,8 @@ description: A running log of notable features and changes shipped to {{productN
 ## 2026-10-13
 
 - Added a `NEXT_PUBLIC_PRODUCT_NAME` environment variable for the name of the
-  product your docs describe. It sets the top bar, page titles, and the
-  `productName` docs variable, and falls back to `MyProduct` if unset. See
+  product your documentation describes. It sets the top bar, page titles, and the
+  `productName` documentation variable, and falls back to `MyProduct` if unset. See
   [Deploy](/deploy).
 
 - Added an `.env.example` file that lists the environment variables you can
@@ -55,7 +55,7 @@ description: A running log of notable features and changes shipped to {{productN
 ## 2026-08-12
 
 - Added the `Callout` component (`src/components/docs/Callout.tsx`) for note,
-  tip, important, and warning admonitions in docs content. It's registered as a
+  tip, important, and warning admonitions in documentation content. It's registered as a
   global MDX component, so any `.mdx` file can use `<Callout
   type="warning">...</Callout>` directly without an import statement.
 
@@ -63,5 +63,5 @@ description: A running log of notable features and changes shipped to {{productN
 
 - Added a GitHub webhook that triggers when a PR merges into `main` touching
   `content/docs/**/*.mdx` or `content/nav.config.ts`. It checks whether other
-  doc pages are now stale and writes suggestions to Vercel Blob storage for
+  documentation pages are now stale and writes suggestions to Vercel Blob storage for
   manual review. See [Check for Drift](/doc-updates) for details.

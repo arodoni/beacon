@@ -5,7 +5,7 @@ description: How {{productName}}'s drift check uses a GitHub webhook to flag doc
 
 # Check for Drift in Documentation
 
-The drift check finds doc pages that have gone out of date. When a pull request merges into `main` and touches a doc page under `content/docs/**/*.mdx` or `content/nav.config.ts`, a GitHub webhook checks whether the change makes any *other* doc page stale - a broken cross-reference, terminology that no longer matches, or a described behavior that now conflicts - and writes a suggested fix for a person to review. It never edits, commits, or opens a pull request itself.
+The drift check finds documentation pages that have gone out of date. When a pull request merges into `main` and touches a documentation page under `content/docs/**/*.mdx` or `content/nav.config.ts`, a GitHub webhook checks whether the change makes any *other* documentation page stale - a broken cross-reference, terminology that no longer matches, or a described behavior that now conflicts - and writes a suggested fix for a person to review. It never edits, commits, or opens a pull request itself.
 
 <Callout type="warning">
   Don't turn on the drift check for a private repository. The drift check sends your documentation content to the Anthropic API and stores suggested fixes, including full page content, at public URLs that anyone can read without signing in.
@@ -27,7 +27,7 @@ The drift check finds doc pages that have gone out of date. When a pull request 
 
 1. A GitHub webhook (registered on the `{{projectName}}` repository, subscribed to Pull request events) calls a Vercel serverless function at `/api/github-webhook` whenever a pull request merges.
 2. The function verifies the request's signature, then checks whether the merge actually touched a watched path. Anything else is a no-op.
-3. It reads the diff and every other current doc page using a **read-only** GitHub token - it has no permission to write anything back to the repository.
+3. It reads the diff and every other current documentation page using a **read-only** GitHub token - it has no permission to write anything back to the repository.
 4. It asks Claude whether any other page is now stale, using a forced structured response so the output is always well-formed.
 5. If a fix is warranted, it writes a JSON suggestion (a summary plus full proposed file contents) to Vercel Blob storage and logs the URL. If nothing needs to change, it does nothing further.
 
