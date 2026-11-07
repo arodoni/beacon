@@ -16,7 +16,7 @@ const REPO = "arodoni/beacon";
 
 // Files in the Beacon repository that only make sense for Beacon itself,
 // including its AI agent rules, skills, and hooks.
-const REPO_ONLY_PATHS = ["packages", ".github/CODEOWNERS", ".claude", "AGENTS.md", "CLAUDE.md"];
+const REPO_ONLY_PATHS = ["packages", ".github/CODEOWNERS", ".claude", "AGENTS.md", "CLAUDE.md", "content/openapi.yaml"];
 
 const TEMPLATE_DIR = fileURLToPath(new URL("./template", import.meta.url));
 

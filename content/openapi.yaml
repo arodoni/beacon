@@ -1,0 +1,173 @@
+# Describes the read-only REST API under /api/v1/. Beacon builds the pages at
+# /api-reference/ from this file. Keep it in sync with buildOpenApiDocument() in
+# src/lib/api.ts, which serves /api/v1/openapi.json. A unit test compares them.
+openapi: 3.1.0
+info:
+  title: Beacon Documentation API
+  version: 1.0.0
+  description: Read-only access to documentation pages and navigation. Files are generated at build time.
+servers:
+  - url: https://example.com/api/v1
+tags:
+  - name: Pages
+  - name: Navigation
+  - name: Specification
+paths:
+  /docs.json:
+    get:
+      operationId: listDocs
+      tags: [Pages]
+      summary: List all documentation pages
+      description: Returns the metadata for every page, sorted by slug.
+      responses:
+        "200":
+          description: Metadata for every page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocList"
+  /docs/{slug}.json:
+    get:
+      operationId: getDoc
+      tags: [Pages]
+      summary: Get one documentation page
+      description: >-
+        Returns the same fields as a list entry, plus a `markdown` field that
+        contains the page body. The API converts components such as `Callout`
+        and `Steps` to standard Markdown and makes site links absolute.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: >-
+            The page's file name in `content/docs/` without the `.mdx`
+            extension. The home page's slug is `introduction`.
+          schema:
+            type: string
+          example: quickstart
+      responses:
+        "200":
+          description: The page's metadata and Markdown body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Doc"
+        "404":
+          description: No page has this slug
+  /nav.json:
+    get:
+      operationId: getNav
+      tags: [Navigation]
+      summary: Get the navigation tree
+      description: >-
+        Returns the navigation groups and their links. The `href` value is
+        relative to your site URL, and the `url` value is absolute. A link with
+        nested pages also has a `children` array of links.
+      responses:
+        "200":
+          description: Navigation groups and their links
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Nav"
+  /openapi.json:
+    get:
+      operationId: getOpenApi
+      tags: [Specification]
+      summary: Get the OpenAPI description
+      description: Returns an OpenAPI 3.1 description of this API.
+      responses:
+        "200":
+          description: An OpenAPI 3.1 document
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    DocSummary:
+      type: object
+      required: [slug, title, description, url, markdownUrl, apiUrl]
+      properties:
+        slug:
+          type: string
+          example: quickstart
+        title:
+          type: string
+          example: Quickstart
+        description:
+          type: string
+          example: Create a site and deploy it.
+        url:
+          type: string
+          format: uri
+          example: https://example.com/quickstart
+        markdownUrl:
+          type: string
+          format: uri
+          example: https://example.com/quickstart.md
+        apiUrl:
+          type: string
+          format: uri
+          example: https://example.com/api/v1/docs/quickstart.json
+    DocList:
+      type: object
+      required: [docs]
+      properties:
+        docs:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocSummary"
+    Doc:
+      allOf:
+        - $ref: "#/components/schemas/DocSummary"
+        - type: object
+          required: [markdown]
+          properties:
+            markdown:
+              type: string
+              example: "# Quickstart"
+    NavLink:
+      type: object
+      required: [title, href, url]
+      properties:
+        title:
+          type: string
+          example: Quickstart
+        href:
+          type: string
+          example: /quickstart
+        url:
+          type: string
+          format: uri
+          example: https://example.com/quickstart
+        children:
+          type: array
+          items:
+            $ref: "#/components/schemas/NavLink"
+    NavGroup:
+      type: object
+      required: [title, href, url, items]
+      properties:
+        title:
+          type: string
+          example: Get Started
+        href:
+          type: string
+          example: /
+        url:
+          type: string
+          format: uri
+          example: https://example.com/
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/NavLink"
+    Nav:
+      type: object
+      required: [groups]
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: "#/components/schemas/NavGroup"

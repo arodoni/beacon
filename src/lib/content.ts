@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { nav, type NavGroup } from "../../content/nav.config";
+import { nav, type NavGroup, type NavItem } from "../../content/nav.config";
 import { getApiReferenceDocs } from "./openapi";
 import { productName, projectName } from "./site";
 
@@ -133,19 +133,21 @@ export function validateNav(groups: NavGroup[] = nav): void {
 
   const staticRouteList = [...STATIC_ROUTES].map((route) => `"${route}"`).join(", ");
 
-  for (const group of groups) {
-    if (!knownHrefs.has(group.href)) {
+  const checkEntry = (entry: NavGroup | NavItem) => {
+    if (!knownHrefs.has(entry.href)) {
       throw new Error(
-        `nav.config.ts: "${group.title}" points to "${group.href}", which doesn't match ${staticRouteList}, or any file in content/docs/.`
+        `nav.config.ts: "${entry.title}" points to "${entry.href}", which doesn't match ${staticRouteList}, or any file in content/docs/.`
       );
     }
-    for (const item of group.items) {
-      if (!knownHrefs.has(item.href)) {
-        throw new Error(
-          `nav.config.ts: "${item.title}" points to "${item.href}", which doesn't match ${staticRouteList}, or any file in content/docs/.`
-        );
-      }
-    }
+  };
+  const checkItem = (item: NavItem) => {
+    checkEntry(item);
+    item.children?.forEach(checkItem);
+  };
+
+  for (const group of groups) {
+    checkEntry(group);
+    group.items.forEach(checkItem);
   }
 }
 

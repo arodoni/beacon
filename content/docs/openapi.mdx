@@ -23,7 +23,7 @@ The development server reads the file on each request, so refresh the page to se
 
 ## Generated pages
 
-An **API Reference** item appears in the top navigation. The sidebar groups endpoints by their first tag, in the order of the file's `tags` list. Each endpoint gets a page at `/api-reference/` followed by a page name. The page name comes from the endpoint's `operationId`, or from its method and path if it doesn't have one.
+An **API Reference** item appears in the top navigation. The sidebar groups endpoints by their first tag, in the order of the file's `tags` list, and shows each endpoint's HTTP method. Each endpoint gets a page at `/api-reference/` followed by a page name. The page name comes from the endpoint's `operationId`, or from its method and path if it doesn't have one.
 
 Each page shows the following:
 
@@ -39,7 +39,35 @@ Each page shows the following:
 
 - Code samples in cURL, JavaScript, and Python.
 
-Generated pages also appear in site search, the sitemap, and `/llms.txt`, and each one has a Markdown version at its URL plus `.md`. The [REST API](/rest-api) doesn't list them.
+Generated pages also appear in site search, the sitemap, and `/llms.txt`, and each one has a Markdown version at its URL plus `.md`. Responses from the [REST API](/rest-api) don't include them.
+
+## Add an introduction page
+
+To show your own pages above the endpoints, such as an overview of authentication or a list of endpoints, add them to a navigation group titled `API Reference`.
+
+<Steps>
+  <Step title="Create the page">
+    Add a file to `content/docs/`, such as `content/docs/rest-api.mdx`.
+  </Step>
+  <Step title="Add the navigation group">
+    In `content/nav.config.ts`, add a group with the following title and your page as an item:
+
+    ```ts
+    {
+      title: "API Reference",
+      href: "/rest-api",
+      items: [{ title: "REST API", href: "/rest-api" }],
+    }
+    ```
+
+    The title must match exactly. The endpoints appear after your items, and the group's `href` sets the page that opens from the top navigation.
+  </Step>
+  <Step title="Link to the endpoint pages">
+    Optional: Link to an endpoint from your page with its page name. For example, an endpoint with the `operationId` value `listDocs` has a page at `/api-reference/list-docs`.
+  </Step>
+</Steps>
+
+For an example of this layout, see the [REST API](/rest-api) page and its group in the navigation.
 
 ## Improve the generated examples
 

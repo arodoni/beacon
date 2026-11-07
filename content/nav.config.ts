@@ -1,6 +1,7 @@
 export type NavItem = {
   title: string;
   href: string;
+  children?: NavItem[];
 };
 
 export type NavGroup = {
@@ -24,19 +25,24 @@ export const nav: NavGroup[] = [
     items: [
       { title: "Prepare", href: "/prepare" },
       { title: "Install Beacon", href: "/install" },
-      { title: "Write Content", href: "/create-content" },
+      {
+        title: "Write Content",
+        href: "/create-content",
+        children: [
+          { title: "Authoring Components", href: "/format" },
+          { title: "Generate API Reference", href: "/openapi" },
+        ],
+      },
       { title: "Deploy Site", href: "/deploy" },
       { title: "Check for Drift", href: "/doc-updates" },
       { title: "Troubleshoot", href: "/troubleshoot" },
     ],
   },
   {
-    title: "Reference",
-    href: "/format",
+    title: "API Reference",
+    href: "/rest-api",
     items: [
-      { title: "Authoring Reference", href: "/format" },
       { title: "REST API", href: "/rest-api" },
-      { title: "Generate API Reference", href: "/openapi" },
     ],
   },
   {
