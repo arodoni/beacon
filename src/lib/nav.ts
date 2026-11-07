@@ -11,14 +11,33 @@ function normalize(path: string): string {
 export type SiteNavItem = NavGroup["items"][number] & { section?: string; method?: string };
 export type SiteNavGroup = Omit<NavGroup, "items"> & { items: SiteNavItem[] };
 
+/**
+ * Adds the generated API reference group to the nav. Its endpoints join a group
+ * with the same title, so a site can put its own pages above them.
+ */
+export function withApiReference(groups: SiteNavGroup[], apiReference: SiteNavGroup | null): SiteNavGroup[] {
+  if (!apiReference) return groups;
+  if (!groups.some((group) => group.title === apiReference.title)) return [...groups, apiReference];
+  return groups.map((group) =>
+    group.title === apiReference.title ? { ...group, items: [...group.items, ...apiReference.items] } : group
+  );
+}
+
 export function isNavActive(pathname: string, href: string): boolean {
   return normalize(pathname) === normalize(href);
+}
+
+function isItemOrChildActive(pathname: string, item: SiteNavItem): boolean {
+  return (
+    isNavActive(pathname, item.href) ||
+    (item.children ?? []).some((child) => isItemOrChildActive(pathname, child))
+  );
 }
 
 export function getActiveGroup(pathname: string, groups: SiteNavGroup[]): SiteNavGroup | undefined {
   return groups.find(
     (group) =>
       isNavActive(pathname, group.href) ||
-      group.items.some((item) => isNavActive(pathname, item.href))
+      group.items.some((item) => isItemOrChildActive(pathname, item))
   );
 }

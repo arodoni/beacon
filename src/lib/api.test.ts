@@ -1,5 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import { parse as parseYaml } from "yaml";
 import { buildDocResponse, buildDocsResponse, buildNavResponse, buildOpenApiDocument } from "./api.ts";
 import type { Doc } from "./content.ts";
 import { siteUrl } from "./site.ts";
@@ -51,9 +54,47 @@ test("buildNavResponse adds an absolute URL to groups and items", () => {
   ]);
 });
 
+test("buildNavResponse includes nested children with absolute URLs", () => {
+  const { groups } = buildNavResponse([
+    {
+      title: "Guide",
+      href: "/guide",
+      items: [{ title: "Setup", href: "/setup", children: [{ title: "Details", href: "/details" }] }],
+    },
+  ]);
+
+  assert.deepEqual(groups[0].items, [
+    {
+      title: "Setup",
+      href: "/setup",
+      url: `${siteUrl}/setup`,
+      children: [{ title: "Details", href: "/details", url: `${siteUrl}/details` }],
+    },
+  ]);
+});
+
 test("buildOpenApiDocument describes every endpoint under the versioned server URL", () => {
   const document = buildOpenApiDocument();
 
   assert.deepEqual(document.servers, [{ url: `${siteUrl}/api/v1` }]);
-  assert.deepEqual(Object.keys(document.paths), ["/docs.json", "/docs/{slug}.json", "/nav.json"]);
+  assert.deepEqual(Object.keys(document.paths), ["/docs.json", "/docs/{slug}.json", "/nav.json", "/openapi.json"]);
+});
+
+// Scaffolded sites don't ship Beacon's own spec, so there's nothing to compare.
+const specPath = path.join(process.cwd(), "content/openapi.yaml");
+test("content/openapi.yaml matches buildOpenApiDocument", { skip: !fs.existsSync(specPath) }, () => {
+  type Spec = {
+    paths: Record<string, Record<string, { operationId: string; summary: string }>>;
+    components: { schemas: Record<string, unknown> };
+  };
+  const operations = (spec: Spec) =>
+    Object.entries(spec.paths).flatMap(([apiPath, methods]) =>
+      Object.entries(methods).map(([method, { operationId, summary }]) => ({ apiPath, method, operationId, summary }))
+    );
+
+  const file = parseYaml(fs.readFileSync(specPath, "utf8")) as Spec;
+  const built = buildOpenApiDocument() as unknown as Spec;
+
+  assert.deepEqual(operations(file), operations(built));
+  assert.deepEqual(Object.keys(file.components.schemas).sort(), Object.keys(built.components.schemas).sort());
 });

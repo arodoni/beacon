@@ -58,6 +58,16 @@ export const nav: NavGroup[] = [
 ];
 ```
 
+To nest a page under another page in the sidebar, add it to the parent item's `children` array:
+
+```ts
+{
+  title: "My Page",
+  href: "/my-page",
+  children: [{ title: "My Child Page", href: "/my-child-page" }],
+}
+```
+
 ## Page preview
 
 Run the local development server to preview your changes as you edit your pages.

@@ -1,4 +1,4 @@
-import { nav, type NavGroup } from "../../content/nav.config";
+import { nav, type NavGroup, type NavItem } from "../../content/nav.config";
 import { getAllDocsMeta, type Doc } from "./content";
 import { markdownMirrorHref, mdxToMarkdown } from "./markdown-mirror";
 import { productName, siteUrl } from "./site";
@@ -39,17 +39,21 @@ export function buildDocResponse(doc: Doc) {
   return { ...summarizeDoc(doc), markdown: mdxToMarkdown(doc.content) };
 }
 
+type NavLinkResponse = { title: string; href: string; url: string; children?: NavLinkResponse[] };
+
+function buildNavLink(item: NavItem): NavLinkResponse {
+  const link: NavLinkResponse = { title: item.title, href: item.href, url: absoluteUrl(item.href) };
+  if (item.children?.length) link.children = item.children.map(buildNavLink);
+  return link;
+}
+
 export function buildNavResponse(groups: NavGroup[] = nav) {
   return {
     groups: groups.map((group) => ({
       title: group.title,
       href: group.href,
       url: absoluteUrl(group.href),
-      items: group.items.map((item) => ({
-        title: item.title,
-        href: item.href,
-        url: absoluteUrl(item.href),
-      })),
+      items: group.items.map(buildNavLink),
     })),
   };
 }
@@ -108,6 +112,18 @@ export function buildOpenApiDocument() {
           responses: { "200": jsonResponse("Navigation groups and their links", "Nav") },
         },
       },
+      "/openapi.json": {
+        get: {
+          operationId: "getOpenApi",
+          summary: "Get the OpenAPI description",
+          responses: {
+            "200": {
+              description: "An OpenAPI 3.1 document",
+              content: { "application/json": { schema: { type: "object" } } },
+            },
+          },
+        },
+      },
     },
     components: {
       schemas: {
@@ -129,7 +145,10 @@ export function buildOpenApiDocument() {
         NavLink: {
           type: "object",
           required: Object.keys(navLinkProperties),
-          properties: navLinkProperties,
+          properties: {
+            ...navLinkProperties,
+            children: { type: "array", items: { $ref: "#/components/schemas/NavLink" } },
+          },
         },
         NavGroup: {
           type: "object",
