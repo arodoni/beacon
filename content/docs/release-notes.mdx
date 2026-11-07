@@ -5,6 +5,17 @@ description: A running log of notable features and changes shipped to {{productN
 
 # Release Notes
 
+## 2026-11-06
+
+- Added a read-only REST API. Beacon now publishes every documentation page and
+  the navigation as JSON files under `/api/v1/`, generated at build time, along
+  with an OpenAPI description. See [REST API](/rest-api).
+
+- Added generated API reference pages. Add an OpenAPI 3 file to `content/`, and
+  Beacon builds a page for each endpoint with its parameters, responses, and
+  code samples in cURL, JavaScript, and Python. See
+  [Generate an API Reference](/openapi).
+
 ## 2026-11-02
 
 - Added Markdown mirrors. Beacon now publishes every documentation page as plain

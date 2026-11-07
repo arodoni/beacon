@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { nav, type NavGroup } from "../../content/nav.config";
+import { getApiReferenceDocs } from "./openapi";
 import { productName, projectName } from "./site";
 
 const DOCS_DIR = path.join(process.cwd(), "content", "docs");
@@ -127,6 +128,7 @@ export function validateNav(groups: NavGroup[] = nav): void {
   const knownHrefs = new Set([
     ...STATIC_ROUTES,
     ...getAllDocSlugs().map((slug) => `/${slug}`),
+    ...getApiReferenceDocs().map((doc) => doc.href),
   ]);
 
   const staticRouteList = [...STATIC_ROUTES].map((route) => `"${route}"`).join(", ");
@@ -166,7 +168,7 @@ function stripToPlainText(mdx: string): string {
 }
 
 export function buildSearchEntries(): SearchEntry[] {
-  const entries = getAllDocsMeta().map((doc) => ({
+  const entries = [...getAllDocsMeta(), ...getApiReferenceDocs()].map((doc) => ({
     title: doc.frontmatter.title,
     description: doc.frontmatter.description,
     href: doc.href,

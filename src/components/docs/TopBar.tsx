@@ -3,9 +3,10 @@ import { SearchDialog } from "./SearchDialog";
 import { ThemeToggle } from "../ThemeToggle";
 import { TopNav } from "./TopNav";
 import { logo, logoDark } from "../../lib/logo";
+import type { SiteNavGroup } from "../../lib/nav";
 import { productName } from "../../lib/site";
 
-export function TopBar() {
+export function TopBar({ groups }: { groups: SiteNavGroup[] }) {
   return (
     <header className="flex items-center justify-between gap-4 border-b border-slate-900/10 px-6 py-3 dark:border-white/10">
       <div className="flex items-center gap-6">
@@ -13,7 +14,7 @@ export function TopBar() {
           <Logo />
           {productName}
         </Link>
-        <TopNav />
+        <TopNav groups={groups} />
       </div>
       <div className="flex items-center gap-3">
         <SearchDialog />

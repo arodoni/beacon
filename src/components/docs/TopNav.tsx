@@ -2,16 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { nav } from "../../../content/nav.config";
-import { getActiveGroup } from "../../lib/nav";
+import { getActiveGroup, type SiteNavGroup } from "../../lib/nav";
 
-export function TopNav() {
+export function TopNav({ groups }: { groups: SiteNavGroup[] }) {
   const pathname = usePathname();
-  const activeGroup = getActiveGroup(pathname, nav);
+  const activeGroup = getActiveGroup(pathname, groups);
 
   return (
     <nav className="flex items-center gap-1 text-sm">
-      {nav.map((group) => (
+      {groups.map((group) => (
         <Link
           key={group.title}
           href={group.href}

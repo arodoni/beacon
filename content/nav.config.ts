@@ -33,7 +33,11 @@ export const nav: NavGroup[] = [
   {
     title: "Reference",
     href: "/format",
-    items: [{ title: "Authoring Reference", href: "/format" }],
+    items: [
+      { title: "Authoring Reference", href: "/format" },
+      { title: "REST API", href: "/rest-api" },
+      { title: "Generate API Reference", href: "/openapi" },
+    ],
   },
   {
     title: "Release Notes",

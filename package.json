@@ -8,9 +8,10 @@
     "dev": "next dev",
     "prebuild": "node scripts/sync-media.mjs && tsx scripts/sync-markdown-mirror.ts",
     "build": "next build",
+    "postbuild": "node scripts/check-api-output.mjs",
     "start": "serve out",
     "lint": "eslint",
-    "test:unit": "node --test api/_lib/*.test.ts",
+    "test:unit": "tsx --test api/_lib/*.test.ts src/lib/*.test.ts",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -32,7 +33,8 @@
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "unified": "^11.0.5",
-    "unist-util-visit": "^5.1.0"
+    "unist-util-visit": "^5.1.0",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",

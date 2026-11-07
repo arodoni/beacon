@@ -1,5 +1,6 @@
 import { getAllDocsMeta, type Doc } from "./content";
 import { resolveMediaSrc } from "./media";
+import { getApiReferenceDocs } from "./openapi";
 import { siteUrl } from "./site";
 
 /**
@@ -183,6 +184,6 @@ export function docToMarkdown(doc: Doc): string {
 /** Every doc's mirror, keyed by its path relative to the site root, such as "quickstart.md". */
 export function buildMarkdownMirrors(): Map<string, string> {
   return new Map(
-    getAllDocsMeta().map((doc) => [markdownMirrorHref(doc).slice(1), docToMarkdown(doc)])
+    [...getAllDocsMeta(), ...getApiReferenceDocs()].map((doc) => [markdownMirrorHref(doc).slice(1), docToMarkdown(doc)])
   );
 }
