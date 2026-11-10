@@ -461,17 +461,19 @@ function flattenFields(fields: SchemaField[], prefix = ""): SchemaField[] {
   });
 }
 
-function fieldTable(fields: SchemaField[]): string[] {
+/** Response fields leave out the Required column, since the reader doesn't send them. */
+function fieldTable(fields: SchemaField[], showRequired = true): string[] {
   return [
-    "| Name | Type | Required | Description |",
-    "| --- | --- | --- | --- |",
+    showRequired ? "| Name | Type | Required | Description |" : "| Name | Type | Description |",
+    showRequired ? "| --- | --- | --- | --- |" : "| --- | --- | --- |",
     ...flattenFields(fields).map((field) => {
       const extras = [
         field.enumValues.length > 0 ? `Allowed values: ${field.enumValues.join(", ")}.` : "",
         field.defaultValue ? `Default: ${field.defaultValue}.` : "",
       ];
       const description = [field.description, ...extras].filter(Boolean).join(" ");
-      return `| ${inlineCell(field.name)} | ${inlineCell(field.type)} | ${field.required ? "Yes" : "No"} | ${inlineCell(description)} |`;
+      const required = showRequired ? ` ${field.required ? "Yes" : "No"} |` : "";
+      return `| ${inlineCell(field.name)} | ${inlineCell(field.type)} |${required} ${inlineCell(description)} |`;
     }),
   ];
 }
@@ -489,11 +491,11 @@ export function exampleCode(example: unknown): { language: string; code: string 
     : { language: "json", code: JSON.stringify(example, null, 2) };
 }
 
-function payloadMarkdown(payload: ApiPayload): string[] {
+function payloadMarkdown(payload: ApiPayload, showRequired = true): string[] {
   const lines: string[] = [];
   if (payload.description) lines.push(payload.description, "");
   if (payload.mediaType) lines.push(`Content type: \`${payload.mediaType}\``, "");
-  if (payload.fields.length > 0) lines.push(...fieldTable(payload.fields), "");
+  if (payload.fields.length > 0) lines.push(...fieldTable(payload.fields, showRequired), "");
   if (payload.example !== undefined) {
     const { language, code } = exampleCode(payload.example);
     lines.push(fencedCode(language, code), "");
@@ -531,7 +533,7 @@ export function operationToMarkdown(operation: ApiOperation): string {
   if (operation.responses.length > 0) {
     lines.push("## Responses", "");
     for (const response of operation.responses) {
-      lines.push(`### ${response.status}`, "", ...payloadMarkdown(response));
+      lines.push(`### ${response.status}`, "", ...payloadMarkdown(response, false));
     }
   }
   lines.push("## Code samples", "");

@@ -20,13 +20,13 @@ function Description({ text }: { text: string }) {
   return text ? <Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown> : null;
 }
 
-function Field({ field }: { field: SchemaField }) {
+function Field({ field, showRequired }: { field: SchemaField; showRequired: boolean }) {
   return (
     <li className="border-t border-slate-900/10 py-3 first:border-t-0 dark:border-white/10">
       <div className="not-prose flex flex-wrap items-center gap-2 text-sm">
         <code className="font-mono font-semibold text-slate-900 dark:text-white">{field.name}</code>
         <span className="font-mono text-xs text-slate-500 dark:text-slate-400">{field.type}</span>
-        {field.required && (
+        {showRequired && field.required && (
           <span className="rounded bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-400/15 dark:text-red-300">
             Required
           </span>
@@ -56,19 +56,20 @@ function Field({ field }: { field: SchemaField }) {
           <summary className="cursor-pointer py-2 text-sm text-slate-600 dark:text-slate-300">
             Show Child Attributes
           </summary>
-          <FieldList fields={field.children} />
+          <FieldList fields={field.children} showRequired={showRequired} />
         </details>
       )}
     </li>
   );
 }
 
-function FieldList({ fields }: { fields: SchemaField[] }) {
+/** Response fields hide the Required badge, since the reader doesn't send them. */
+function FieldList({ fields, showRequired = true }: { fields: SchemaField[]; showRequired?: boolean }) {
   if (fields.length === 0) return null;
   return (
     <ul className="my-3 list-none p-0 [&>li]:my-0 [&>li]:pl-0">
       {fields.map((field) => (
-        <Field key={field.name} field={field} />
+        <Field key={field.name} field={field} showRequired={showRequired} />
       ))}
     </ul>
   );
@@ -79,7 +80,7 @@ function Example({ value }: { value: unknown }) {
   return <Mdx source={fencedCode(language, code)} />;
 }
 
-function Payload({ payload }: { payload: ApiPayload }) {
+function Payload({ payload, showRequired = true }: { payload: ApiPayload; showRequired?: boolean }) {
   return (
     <>
       <Description text={payload.description} />
@@ -94,7 +95,7 @@ function Payload({ payload }: { payload: ApiPayload }) {
           )}
         </p>
       )}
-      <FieldList fields={payload.fields} />
+      <FieldList fields={payload.fields} showRequired={showRequired} />
       {payload.example !== undefined && <Example value={payload.example} />}
     </>
   );
@@ -175,7 +176,7 @@ export function ApiOperationPage({ operation }: { operation: ApiOperation }) {
         {operation.responses.map((response) => (
           <section key={response.status}>
             <h3 id={statusId(response.status)}>{response.status}</h3>
-            <Payload payload={response} />
+            <Payload payload={response} showRequired={false} />
           </section>
         ))}
 

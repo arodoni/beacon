@@ -59,7 +59,7 @@ Beacon conventions:
 - One H1 per page, and meaningful `title` and `description` frontmatter.
 
 Leave alone: content inside code blocks and inline code, frontmatter keys,
-MDX/JSX component syntax, and URLs.
+MDX/JSX component syntax, URLs, and trailing spaces at the end of lines.
 
 ## 3. Report
 
