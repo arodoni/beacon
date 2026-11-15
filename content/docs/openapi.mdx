@@ -5,13 +5,13 @@ description: Generate API reference pages in {{productName}} from an OpenAPI 3 f
 
 # Generate an API Reference
 
-If you have an OpenAPI file that describes your API, {{productName}} can build a reference page for each endpoint when you build the site. You don't need to write the pages or add them to the navigation.
+If you have an OpenAPI file that describes your API, {{productName}} can
+automatically build a reference page for each endpoint when you build the site.
+You don't need to write the pages or add them to the navigation.
 
 ## Requirements and limitations
 
-{{productName}} checks for the following issues and doesn't validate the whole
-file against the OpenAPI specification. To catch other mistakes, run a separate
-linter, such as [Spectral](https://github.com/stoplightio/spectral).
+{{productName}} checks for the following issues:
 
 - **OpenAPI versions:** The file must use OpenAPI 3.x. To use a Swagger 2.0 file, first convert it with a tool such as [swagger2openapi](https://www.npmjs.com/package/swagger2openapi).
 
@@ -25,52 +25,62 @@ linter, such as [Spectral](https://github.com/stoplightio/spectral).
 - **Beacon variables:** {{productName}} variables don't apply inside the OpenAPI
   file.
 
-## Add your OpenAPI file
+To catch other issues, validate the whole file against the OpenAPI specification
+with a separate linter, such as
+[Spectral](https://github.com/stoplightio/spectral).
 
-Add your file to the `content/` folder with one of the following names:
+## Set up the API reference
 
-- `content/openapi.yaml`
+Each generated page shows the endpoint's parameters, request body, responses, and code samples.
 
-- `content/openapi.yml`
+<Steps>
+  <Step title="Add the OpenAPI file">
+    Add your file to the `content/` folder with one of the following names:
 
-- `content/openapi.json`
+    - `content/openapi.yaml`
 
-Keep only one of these files, or the build fails. To remove the generated pages, delete the file.
+    - `content/openapi.yml`
 
-The development server reads the file on each request, so refresh the page to see your changes. Restart the server to update the `.md` versions of the pages.
+    - `content/openapi.json`
 
-## Generated pages
+    Keep only one of these files, or the build fails.
+  </Step>
+  <Step title="Preview the generated pages">
+    The development server reads the file on each request, so refresh the page to see your changes.
 
-An **API Reference** item appears in the top navigation.
+    An **API Reference** item appears in the top navigation.
 
-The sidebar groups endpoints by their first tag, in the order of the file's `tags` list, and shows each endpoint's HTTP method.
+    The sidebar groups endpoints by their first tag, in the order of the file's `tags` list, and shows each endpoint's HTTP method.
 
-Each endpoint gets a page at `/api-reference/` followed by a page name. The page
-name comes from the endpoint's `operationId`, or from its method and path if it
-doesn't have one.
+    Each endpoint gets a page at `/api-reference/` followed by a page name. The page
+    name comes from the endpoint's `operationId`, or from its method and path if it
+    doesn't have one.
 
-Each page shows the following:
+    Each page shows the following:
 
-- The method, the path, and the first server URL.
+    - The method, the path, and the first server URL.
 
-- The summary as the page title, and the description as the introduction. Descriptions support Markdown.
+    - The summary as the page title, and the description as the introduction. Descriptions support Markdown.
 
-- The authentication that the endpoint uses.
+    - The authentication that the endpoint uses.
 
-- Path, query, header, and cookie parameters.
+    - Path, query, header, and cookie parameters.
 
-- The request body and each response, including nested fields and an example.
+    - The request body and each response, including nested fields and an example.
 
-- Code samples in cURL, JavaScript, and Python.
+    - Code samples in cURL, JavaScript, and Python.
 
-On wide screens, the page uses three columns: the navigation on the left, the
-endpoint details in the center, and the code samples and response examples on
-the right. The right column stays in view as you scroll. On narrower screens,
-the code samples and response examples appear below the endpoint details.
+    On wide screens, the page uses three columns: the navigation on the left, the
+    endpoint details in the center, and the code samples and response examples on
+    the right. The right column stays in view as you scroll. On narrower screens,
+    the code samples and response examples appear below the endpoint details.
 
-Generated pages also appear in site search, the sitemap, and `/llms.txt`, and each one has a Markdown version at its URL plus `.md`. Responses from the [REST API](/rest-api) don't include them.
+    Generated pages also appear in site search, the sitemap, and `/llms.txt`, and each one has a Markdown version at its URL plus `.md`. Responses from the [REST API](/rest-api) don't include them.
 
-## Add an introduction page
+    Restart the server to update the `.md` versions of the pages.
+  </Step>
+
+<Step title="Add an introduction page">
 
 To show your own pages above the endpoints, such as an overview of authentication or a list of endpoints, add them to a navigation group titled `API Reference`.
 
@@ -97,9 +107,14 @@ To show your own pages above the endpoints, such as an overview of authenticatio
 </Steps>
 
 For an example of this layout, see the [REST API](/rest-api) page and its group in the navigation.
+</Step>
 
-## Improve the generated examples
+<Step title="Improve the generated examples">
 
 {{productName}} uses the `example` and `examples` values in your file. If a value has no example, the page uses the schema's `default` value or first `enum` value, or a placeholder for its type, such as `string` or `0`.
 
 Code samples use placeholders such as `YOUR_TOKEN` for credentials and for any required path or query value without an example. To show realistic requests, add examples to your parameters and schemas.
+</Step>
+</Steps>
+
+To remove the generated pages, delete the file.
