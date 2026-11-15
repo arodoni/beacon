@@ -115,6 +115,19 @@ For an example of this layout, see the [REST API](/rest-api) page and its group 
 
 Code samples use placeholders such as `YOUR_TOKEN` for credentials and for any required path or query value without an example. To show realistic requests, add examples to your parameters and schemas.
 </Step>
-</Steps>
 
-To remove the generated pages, delete the file.
+<Step title="Optional: Remove the generated API reference pages">
+
+<Steps>
+  <Step title="Delete the OpenAPI file">
+    Delete your OpenAPI file from the `content/` folder, such as `content/openapi.yaml`.
+  </Step>
+  <Step title="Restart the development server">
+    Restart the development server to remove the `.md` versions of the pages. A production build removes them automatically.
+  </Step>
+  <Step title="Optional: Remove the navigation group">
+    If you added an `API Reference` group to `content/nav.config.ts`, the **API Reference** item stays in the top navigation with your own pages. To remove the item, delete the group.
+  </Step>
+</Steps>
+</Step>
+</Steps>
