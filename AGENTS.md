@@ -14,6 +14,7 @@
 - Follow the [Google developer documentation style guide](https://developers.google.com/style) for prose written in docs content or UI copy.
 - Use Title Case for UI labels (e.g. nav items, buttons, pane titles). Note this overrides the Google style guide's usual sentence-case preference for headings.
 - Use Sentence case for in-page section titles (H2/H3 headings within docs content), matching the Google style guide's usual preference.
+- Write one paragraph per topic or idea, in docs content, the README, UI copy, and responses. When a paragraph starts covering a second idea, split it into its own paragraph.
 - Always ask and get explicit acceptance before applying a suggested fix or change. Don't implement it as part of surfacing the suggestion.
 
 ## When expanding features

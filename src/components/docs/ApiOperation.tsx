@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -8,70 +9,86 @@ import {
   type ApiPayload,
   type SchemaField,
 } from "../../lib/openapi";
-import type { TocItem } from "../../lib/toc";
 import { CodeSamples } from "./CodeSamples";
 import { articleClassName } from "./DocArticle";
 import { Mdx } from "./Mdx";
 import { MethodBadge } from "./MethodBadge";
-import { TableOfContents } from "./TableOfContents";
 
 /** Spec descriptions are CommonMark, so they skip the MDX pipeline: braces and angle brackets in them are plain text. */
 function Description({ text }: { text: string }) {
   return text ? <Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown> : null;
 }
 
-function Field({ field, showRequired }: { field: SchemaField; showRequired: boolean }) {
-  return (
-    <li className="border-t border-slate-900/10 py-3 first:border-t-0 dark:border-white/10">
-      <div className="not-prose flex flex-wrap items-center gap-2 text-sm">
-        <code className="font-mono font-semibold text-slate-900 dark:text-white">{field.name}</code>
-        <span className="font-mono text-xs text-slate-500 dark:text-slate-400">{field.type}</span>
-        {showRequired && field.required && (
-          <span className="rounded bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-400/15 dark:text-red-300">
-            Required
-          </span>
-        )}
-      </div>
-      <div className="mt-1 text-sm [&_p]:my-1">
-        <Description text={field.description} />
-        {field.enumValues.length > 0 && (
-          <p>
-            Allowed values:{" "}
-            {field.enumValues.map((value, i) => (
-              <span key={value}>
-                {i > 0 && ", "}
-                <code>{value}</code>
-              </span>
-            ))}
-          </p>
-        )}
-        {field.defaultValue && (
-          <p>
-            Default: <code>{field.defaultValue}</code>
-          </p>
-        )}
-      </div>
-      {field.children.length > 0 && (
-        <details className="mt-2 rounded-lg border border-slate-900/10 px-3 dark:border-white/10">
-          <summary className="cursor-pointer py-2 text-sm text-slate-600 dark:text-slate-300">
-            Show Child Attributes
-          </summary>
-          <FieldList fields={field.children} showRequired={showRequired} />
-        </details>
-      )}
-    </li>
-  );
+type FieldRow = { field: SchemaField; depth: number; key: string };
+
+/** Flattens nested fields into table rows, keeping each child under its parent. */
+function fieldRows(fields: SchemaField[], depth = 0, prefix = ""): FieldRow[] {
+  return fields.flatMap((field) => {
+    const key = `${prefix}${field.name}`;
+    return [{ field, depth, key }, ...fieldRows(field.children, depth + 1, `${key}.`)];
+  });
 }
 
-/** Response fields hide the Required badge, since the reader doesn't send them. */
-function FieldList({ fields, showRequired = true }: { fields: SchemaField[]; showRequired?: boolean }) {
+/**
+ * A two-column table: the name and type on the left, the description on the right.
+ * Child fields follow their parent, indented one step per level.
+ * Response fields hide the Required label, since the reader doesn't send them.
+ */
+function FieldTable({
+  fields,
+  heading,
+  showRequired = true,
+}: {
+  fields: SchemaField[];
+  heading: string;
+  showRequired?: boolean;
+}) {
   if (fields.length === 0) return null;
   return (
-    <ul className="my-3 list-none p-0 [&>li]:my-0 [&>li]:pl-0">
-      {fields.map((field) => (
-        <Field key={field.name} field={field} showRequired={showRequired} />
-      ))}
-    </ul>
+    <table className="text-sm">
+      <thead>
+        <tr>
+          <th className="w-2/5">{heading}</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {fieldRows(fields).map(({ field, depth, key }) => (
+          <tr key={key}>
+            <td className="align-top" style={{ paddingLeft: `${depth * 1.25}rem` }}>
+              <div className="not-prose flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <code className="font-mono font-semibold text-slate-900 dark:text-white">{field.name}</code>
+                <span className="font-mono text-xs text-slate-500 dark:text-slate-400">{field.type}</span>
+              </div>
+              {showRequired && field.required && (
+                <span className="not-prose mt-1 inline-block text-xs font-medium text-red-700 dark:text-red-300">
+                  Required
+                </span>
+              )}
+            </td>
+            <td className="align-top [&_p]:my-0 [&_p+p]:mt-1">
+              <Description text={field.description} />
+              {field.enumValues.length > 0 && (
+                <p>
+                  Allowed values:{" "}
+                  {field.enumValues.map((value, i) => (
+                    <span key={value}>
+                      {i > 0 && ", "}
+                      <code>{value}</code>
+                    </span>
+                  ))}
+                </p>
+              )}
+              {field.defaultValue && (
+                <p>
+                  Default: <code>{field.defaultValue}</code>
+                </p>
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
@@ -80,24 +97,36 @@ function Example({ value }: { value: unknown }) {
   return <Mdx source={fencedCode(language, code)} />;
 }
 
-function Payload({ payload, showRequired = true }: { payload: ApiPayload; showRequired?: boolean }) {
+/** The content type, plus the payload's type when it has no fields to list. */
+function ContentType({ payload }: { payload: ApiPayload }) {
+  if (!payload.mediaType) return null;
   return (
     <>
-      <Description text={payload.description} />
-      {payload.mediaType && (
-        <p className="text-sm">
-          Content type: <code>{payload.mediaType}</code>
-          {payload.fields.length === 0 && payload.type && payload.type !== "any" && (
-            <>
-              {" "}
-              (<code>{payload.type}</code>)
-            </>
-          )}
-        </p>
+      Content type: <code>{payload.mediaType}</code>
+      {payload.fields.length === 0 && payload.type && payload.type !== "any" && (
+        <>
+          {" "}
+          (<code>{payload.type}</code>)
+        </>
       )}
-      <FieldList fields={payload.fields} showRequired={showRequired} />
-      {payload.example !== undefined && <Example value={payload.example} />}
     </>
+  );
+}
+
+/** A titled card in the right-hand pane, holding tabbed code panels. */
+function SamplePanel({ title, labels, children }: { title: string; labels: string[]; children: ReactNode[] }) {
+  return (
+    <section
+      aria-label={title}
+      className="overflow-hidden rounded-xl border border-slate-900/10 bg-slate-50/60 dark:border-white/10 dark:bg-white/[0.03]"
+    >
+      <p className="px-4 pt-3 text-xs font-semibold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
+        {title}
+      </p>
+      <div className="px-2 pb-1 prose prose-slate max-w-none dark:prose-invert prose-pre:my-2 prose-pre:max-h-[22rem] prose-pre:text-xs">
+        <CodeSamples labels={labels}>{children}</CodeSamples>
+      </div>
+    </section>
   );
 }
 
@@ -112,17 +141,10 @@ export function ApiOperationPage({ operation }: { operation: ApiOperation }) {
     parameters: operation.parameters.filter((parameter) => parameter.location === section.location),
   })).filter((section) => section.parameters.length > 0);
 
-  const toc: TocItem[] = [
-    ...(operation.security.length > 0 ? [{ id: "authentication", text: "Authentication", depth: 2 }] : []),
-    ...parameterSections.map((section) => ({ id: section.id, text: section.heading, depth: 2 })),
-    ...(operation.requestBody ? [{ id: "request-body", text: "Request body", depth: 2 }] : []),
-    ...(operation.responses.length > 0 ? [{ id: "responses", text: "Responses", depth: 2 }] : []),
-    ...operation.responses.map((response) => ({ id: statusId(response.status), text: response.status, depth: 3 })),
-    { id: "code-samples", text: "Code samples", depth: 2 },
-  ];
+  const responseExamples = operation.responses.filter((response) => response.example !== undefined);
 
   return (
-    <div className="flex min-w-0 flex-1 gap-8">
+    <div className="flex min-w-0 flex-1 flex-col gap-8 xl:flex-row">
       <article className={`${articleClassName} min-w-0`}>
         <h1>{operation.title}</h1>
 
@@ -161,33 +183,88 @@ export function ApiOperationPage({ operation }: { operation: ApiOperation }) {
         {parameterSections.map((section) => (
           <section key={section.id}>
             <h2 id={section.id}>{section.heading}</h2>
-            <FieldList fields={section.parameters} />
+            <FieldTable fields={section.parameters} heading="Parameter" />
           </section>
         ))}
 
         {operation.requestBody && (
           <>
             <h2 id="request-body">Request body</h2>
-            <Payload payload={operation.requestBody} />
+            <Description text={operation.requestBody.description} />
+            {operation.requestBody.mediaType && (
+              <p className="text-sm">
+                <ContentType payload={operation.requestBody} />
+              </p>
+            )}
+            <FieldTable fields={operation.requestBody.fields} heading="Field" />
+            {operation.requestBody.example !== undefined && <Example value={operation.requestBody.example} />}
           </>
         )}
 
-        {operation.responses.length > 0 && <h2 id="responses">Responses</h2>}
-        {operation.responses.map((response) => (
-          <section key={response.status}>
-            <h3 id={statusId(response.status)}>{response.status}</h3>
-            <Payload payload={response} showRequired={false} />
-          </section>
-        ))}
+        {operation.responses.length > 0 && (
+          <>
+            <h2 id="responses">Responses</h2>
+            <table className="text-sm">
+              <thead>
+                <tr>
+                  <th className="w-1/5">Code</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {operation.responses.map((response) => (
+                  <tr key={response.status}>
+                    <td className="align-top">
+                      {response.fields.length > 0 ? (
+                        <a href={`#${statusId(response.status)}`}>
+                          <code>{response.status}</code>
+                        </a>
+                      ) : (
+                        <code>{response.status}</code>
+                      )}
+                    </td>
+                    <td className="align-top [&_p]:my-0 [&_p+p]:mt-1">
+                      <Description text={response.description} />
+                      {response.mediaType && (
+                        <p>
+                          <ContentType payload={response} />
+                        </p>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+        {operation.responses
+          .filter((response) => response.fields.length > 0)
+          .map((response) => (
+            <section key={response.status}>
+              <h3 id={statusId(response.status)}>{response.status} response body schema</h3>
+              <FieldTable fields={response.fields} heading="Field" showRequired={false} />
+            </section>
+          ))}
+      </article>
 
-        <h2 id="code-samples">Code samples</h2>
-        <CodeSamples labels={operation.samples.map((sample) => sample.label)}>
+      {/* Right-hand pane: request samples and response examples stay in view while the fields scroll. */}
+      <aside
+        aria-label="Code samples"
+        className="w-full min-w-0 shrink-0 space-y-4 self-start xl:sticky xl:top-6 xl:max-h-[calc(100vh-3rem)] xl:w-[30rem] xl:overflow-y-auto"
+      >
+        <SamplePanel title="Request Example" labels={operation.samples.map((sample) => sample.label)}>
           {operation.samples.map((sample) => (
             <Mdx key={sample.label} source={fencedCode(sample.language, sample.code)} />
           ))}
-        </CodeSamples>
-      </article>
-      <TableOfContents items={toc} />
+        </SamplePanel>
+        {responseExamples.length > 0 && (
+          <SamplePanel title="Response Example" labels={responseExamples.map((response) => response.status)}>
+            {responseExamples.map((response) => (
+              <Example key={response.status} value={response.example} />
+            ))}
+          </SamplePanel>
+        )}
+      </aside>
     </div>
   );
 }

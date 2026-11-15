@@ -58,6 +58,8 @@ Beacon conventions:
 
 - One H1 per page, and meaningful `title` and `description` frontmatter.
 
+- One paragraph per topic or idea, per `AGENTS.md`. Flag a paragraph that covers more than one idea, and suggest where to split it.
+
 Leave alone: content inside code blocks and inline code, frontmatter keys,
 MDX/JSX component syntax, URLs, and trailing spaces at the end of lines.
 
