@@ -5,43 +5,82 @@ description: Generate API reference pages in {{productName}} from an OpenAPI 3 f
 
 # Generate an API Reference
 
-If you have an OpenAPI file that describes your API, {{productName}} can build a reference page for each endpoint when you build the site. You don't need to write the pages or add them to the navigation.
+If you have an OpenAPI file that describes your API, {{productName}} can
+automatically build a reference page for each endpoint when you build the site.
+You don't need to write the pages or add them to the navigation.
 
-## Add your OpenAPI file
+## Requirements and limitations
 
-Add your file to the `content/` folder with one of the following names:
+{{productName}} checks your OpenAPI file for the following issues. If it finds one, the build fails with an error that names the problem:
 
-- `content/openapi.yaml`
+- **OpenAPI versions:** The file must use OpenAPI 3.x. To use a Swagger 2.0 file, first convert it with a tool such as [swagger2openapi](https://www.npmjs.com/package/swagger2openapi).
 
-- `content/openapi.yml`
+- **External references:** Each `$ref` value must point to a location in the same file, such as `#/components/schemas/User`. If your file spans several files, bundle them first.
 
-- `content/openapi.json`
+- **Broken references:** Each `$ref` value and each security scheme that an endpoint uses must exist in the file.
 
-Keep only one of these files, or the build fails. To remove the generated pages, delete the file.
+- **Duplicate page names:** Two endpoints can't produce the same page name. Give
+  them different `operationId` values.
 
-The development server reads the file on each request, so refresh the page to see your changes. Restart the server to update the `.md` versions of the pages.
+- **Beacon variables:** {{productName}} variables don't apply inside the OpenAPI
+  file.
 
-## Generated pages
+To catch other issues, validate your OpenAPI file against the OpenAPI
+specification with a separate linter, such as
+[Spectral](https://github.com/stoplightio/spectral).
 
-An **API Reference** item appears in the top navigation. The sidebar groups endpoints by their first tag, in the order of the file's `tags` list, and shows each endpoint's HTTP method. Each endpoint gets a page at `/api-reference/` followed by a page name. The page name comes from the endpoint's `operationId`, or from its method and path if it doesn't have one.
+## Set up the API reference
 
-Each page shows the following:
+Each generated page shows the endpoint's parameters, request body, responses, and code samples.
 
-- The method, the path, and the first server URL.
+<Steps>
+  <Step title="Add the OpenAPI file">
+    Add your file to the `content/` folder with one of the following names:
 
-- The summary as the page title, and the description as the introduction. Descriptions support Markdown.
+    - `content/openapi.yaml`
 
-- The authentication that the endpoint uses.
+    - `content/openapi.yml`
 
-- Path, query, header, and cookie parameters.
+    - `content/openapi.json`
 
-- The request body and each response, including nested fields and an example.
+    Keep only one of these files, or the build fails.
+  </Step>
+  <Step title="Preview the generated pages">
+    The development server reads the file on each request, so refresh the page to see your changes.
 
-- Code samples in cURL, JavaScript, and Python.
+    An **API Reference** item appears in the top navigation.
 
-Generated pages also appear in site search, the sitemap, and `/llms.txt`, and each one has a Markdown version at its URL plus `.md`. Responses from the [REST API](/rest-api) don't include them.
+    The sidebar groups endpoints by their first tag, in the order of the file's `tags` list, and shows each endpoint's HTTP method.
 
-## Add an introduction page
+    Each endpoint gets a page at `/api-reference/` followed by a page name. The page
+    name comes from the endpoint's `operationId`, or from its method and path if it
+    doesn't have one.
+
+    Each page shows the following:
+
+    - The method, the path, and the first server URL.
+
+    - The summary as the page title, and the description as the introduction. Descriptions support Markdown.
+
+    - The authentication that the endpoint uses.
+
+    - Path, query, header, and cookie parameters.
+
+    - The request body and each response, including nested fields and an example.
+
+    - Code samples in cURL, JavaScript, and Python.
+
+    On wide screens, the page uses three columns: the navigation on the left, the
+    endpoint details in the center, and the code samples and response examples on
+    the right. The right column stays in view as you scroll. On narrower screens,
+    the code samples and response examples appear below the endpoint details.
+
+    Generated pages also appear in site search, the sitemap, and `/llms.txt`, and each one has a Markdown version at its URL plus `.md`. Responses from the [REST API](/rest-api) don't include them.
+
+    Restart the server to update the `.md` versions of the pages.
+  </Step>
+
+<Step title="Add an introduction page">
 
 To show your own pages above the endpoints, such as an overview of authentication or a list of endpoints, add them to a navigation group titled `API Reference`.
 
@@ -68,31 +107,33 @@ To show your own pages above the endpoints, such as an overview of authenticatio
 </Steps>
 
 For an example of this layout, see the [REST API](/rest-api) page and its group in the navigation.
+</Step>
 
-## Improve the generated examples
+<Step title="Improve the generated examples">
 
 {{productName}} uses the `example` and `examples` values in your file. If a value has no example, the page uses the schema's `default` value or first `enum` value, or a placeholder for its type, such as `string` or `0`.
 
 Code samples use placeholders such as `YOUR_TOKEN` for credentials and for any required path or query value without an example. To show realistic requests, add examples to your parameters and schemas.
+</Step>
 
-## File requirements
+<Step title="Optional: Remove the generated API reference pages">
 
-{{productName}} fails the build with an error message if your file has any of the following problems:
+<Steps>
+  <Step title="Delete the OpenAPI file">
+    Delete your OpenAPI file from the `content/` folder, such as `content/openapi.yaml`.
+  </Step>
+  <Step title="Restart the development server">
+    Restart the development server to remove the `.md` versions of the pages. A production build removes them automatically.
+  </Step>
+  <Step title="Remove links to the endpoint pages">
+    In `content/docs/`, search your pages for links that start with `/api-reference/`, and remove or update them. Otherwise, these links lead to missing pages.
 
-- **Unsupported version:** The file must use OpenAPI 3.x. To use a Swagger 2.0 file, first convert it with a tool such as [swagger2openapi](https://www.npmjs.com/package/swagger2openapi).
+    For example, remove a link such as `[List documents](/api-reference/list-docs)`.
+  </Step>
+  <Step title="Optional: Remove the navigation group">
+    If you added an `API Reference` group to `content/nav.config.ts`, the **API Reference** item stays in the top navigation with your own pages. To remove the item, delete the group.
+  </Step>
 
-- **External references:** Each `$ref` value must point to a location in the same file, such as `#/components/schemas/User`. If your file spans several files, bundle them first.
-
-- **Broken references:** Each `$ref` value and each security scheme that an endpoint uses must exist in the file.
-
-- **Duplicate page names:** Two endpoints can't produce the same page name. Give them different `operationId` values.
-
-{{productName}} checks only for these problems and doesn't validate the whole file against the OpenAPI specification. To catch other mistakes, run a separate linter, such as [Spectral](https://github.com/stoplightio/spectral).
-
-## Limitations
-
-- Pages don't include a playground for sending live requests.
-
-- Documentation variables don't apply inside the OpenAPI file.
-
-- Code samples show the first security option for an endpoint that allows several.
+</Steps>
+</Step>
+</Steps>

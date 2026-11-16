@@ -18,7 +18,10 @@ paths:
       operationId: listDocs
       tags: [Pages]
       summary: List all documentation pages
-      description: Returns the metadata for every page, sorted by slug.
+      description: >-
+        Returns the metadata for every documentation page, sorted by slug. The
+        response doesn't include page content. To get a page's Markdown body,
+        send a request to its `apiUrl` value.
       responses:
         "200":
           description: Metadata for every page
@@ -31,10 +34,7 @@ paths:
       operationId: getDoc
       tags: [Pages]
       summary: Get one documentation page
-      description: >-
-        Returns the same fields as a list entry, plus a `markdown` field that
-        contains the page body. The API converts components such as `Callout`
-        and `Steps` to standard Markdown and makes site links absolute.
+      description: Returns the metadata and Markdown body of one page.
       parameters:
         - name: slug
           in: path
@@ -59,10 +59,7 @@ paths:
       operationId: getNav
       tags: [Navigation]
       summary: Get the navigation tree
-      description: >-
-        Returns the navigation groups and their links. The `href` value is
-        relative to your site URL, and the `url` value is absolute. A link with
-        nested pages also has a `children` array of links.
+      description: Returns the navigation groups and their links.
       responses:
         "200":
           description: Navigation groups and their links
@@ -91,24 +88,38 @@ components:
       properties:
         slug:
           type: string
+          description: >-
+            The page's file name in `content/docs/` without the `.mdx`
+            extension. The home page's slug is `introduction`.
           example: quickstart
         title:
           type: string
+          description: The page title, from the `title` field in the page's frontmatter.
           example: Quickstart
         description:
           type: string
+          description: >-
+            A short summary of the page, from the `description` field in the
+            page's frontmatter.
           example: Create a site and deploy it.
         url:
           type: string
           format: uri
+          description: The page's absolute URL on your site.
           example: https://example.com/quickstart
         markdownUrl:
           type: string
           format: uri
+          description: >-
+            The absolute URL of the page's plain Markdown version. The home
+            page's Markdown version is at `/index.md`.
           example: https://example.com/quickstart.md
         apiUrl:
           type: string
           format: uri
+          description: >-
+            The absolute URL that returns this page's metadata and Markdown
+            body. See [Get one documentation page](/api-reference/get-doc).
           example: https://example.com/api/v1/docs/quickstart.json
     DocList:
       type: object
@@ -116,6 +127,7 @@ components:
       properties:
         docs:
           type: array
+          description: One entry for each documentation page, sorted by slug.
           items:
             $ref: "#/components/schemas/DocSummary"
     Doc:
@@ -126,6 +138,9 @@ components:
           properties:
             markdown:
               type: string
+              description: >-
+                The page body. The API converts components such as `Callout`
+                and `Steps` to standard Markdown and makes site links absolute.
               example: "# Quickstart"
     NavLink:
       type: object
@@ -136,13 +151,16 @@ components:
           example: Quickstart
         href:
           type: string
+          description: The link's path, relative to your site URL.
           example: /quickstart
         url:
           type: string
           format: uri
+          description: The link's absolute URL.
           example: https://example.com/quickstart
         children:
           type: array
+          description: Links to nested pages. Only links with nested pages have this field.
           items:
             $ref: "#/components/schemas/NavLink"
     NavGroup:
@@ -154,10 +172,12 @@ components:
           example: Get Started
         href:
           type: string
+          description: The group's path, relative to your site URL.
           example: /
         url:
           type: string
           format: uri
+          description: The group's absolute URL.
           example: https://example.com/
         items:
           type: array

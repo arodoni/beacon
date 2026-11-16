@@ -158,10 +158,18 @@ test("code samples substitute examples and quote safely", () => {
 
 test("Markdown output lists nested fields with dotted names", () => {
   const markdown = operationToMarkdown(find("get-pet"));
-  assert.ok(operationToMarkdown(find("get-owner")).includes("| address.city | string | Yes |"));
+  assert.ok(operationToMarkdown(find("get-owner")).includes("| address.city | string |"));
   assert.ok(markdown.startsWith("# Get a pet\n\n`GET /pets/{petId}`"));
-  assert.ok(markdown.includes("| parent | Pet | No |"));
+  assert.ok(markdown.includes("| parent | Pet |"));
   assert.ok(markdown.includes("Allowed values: good, great."));
+});
+
+test("Markdown output shows Required for parameters but not for response fields", () => {
+  const markdown = operationToMarkdown(find("get-pet"));
+  const [request, responses] = markdown.split("## Responses");
+  assert.ok(request.includes("| Name | Type | Required | Description |"));
+  assert.ok(responses.includes("| Name | Type | Description |"));
+  assert.ok(!responses.includes("Required"));
 });
 
 test("a fence stays longer than backticks inside the code", () => {

@@ -29,7 +29,7 @@ export const nav: NavGroup[] = [
         title: "Write Content",
         href: "/create-content",
         children: [
-          { title: "Authoring Components", href: "/format" },
+          { title: "Use Authoring Components", href: "/format" },
           { title: "Generate API Reference", href: "/openapi" },
         ],
       },
@@ -42,7 +42,7 @@ export const nav: NavGroup[] = [
     title: "API Reference",
     href: "/rest-api",
     items: [
-      { title: "REST API", href: "/rest-api" },
+      { title: "REST API Introduction", href: "/rest-api" },
     ],
   },
   {
