@@ -11,7 +11,7 @@ You don't need to write the pages or add them to the navigation.
 
 ## Requirements and limitations
 
-{{productName}} checks for the following issues:
+{{productName}} checks your OpenAPI file for the following issues. If it finds one, the build fails with an error that names the problem:
 
 - **OpenAPI versions:** The file must use OpenAPI 3.x. To use a Swagger 2.0 file, first convert it with a tool such as [swagger2openapi](https://www.npmjs.com/package/swagger2openapi).
 
@@ -25,8 +25,8 @@ You don't need to write the pages or add them to the navigation.
 - **Beacon variables:** {{productName}} variables don't apply inside the OpenAPI
   file.
 
-To catch other issues, validate the whole file against the OpenAPI specification
-with a separate linter, such as
+To catch other issues, validate your OpenAPI file against the OpenAPI
+specification with a separate linter, such as
 [Spectral](https://github.com/stoplightio/spectral).
 
 ## Set up the API reference
