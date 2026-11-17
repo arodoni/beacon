@@ -22,6 +22,7 @@
 - Keep the live editor and preview tightly integrated in `src/components/MarkdownWorkspace.tsx`.
 - Add new UI components under `src/components/`.
 - Avoid changing the repository layout unless you also update the app entrypoint and README.
+- When you add a component to `src/components/docs/Mdx.tsx`, add a matching conversion to `mdxToMarkdown()` in `src/lib/markdown-mirror.ts`. Without one, the component's raw JSX tags leak into the `.md` mirrors, `/llms-full.txt`, and the REST API's `markdown` field. Convert it to the closest plain Markdown equivalent, the way `Callout` becomes a blockquote, list it in the converter's doc comment, and add a sample for it in `src/lib/markdown-mirror.test.ts`. That test fails if a registered component has no sample or if any mirror contains raw component tags.
 - When you implement a new feature, add a dated entry to `content/docs/release-notes.mdx` describing it.
 - When you implement a new feature, update `IMPLEMENTATION.md` to describe how it works, including the implementation files list and the architecture diagram if they're affected. This file is gitignored, so the update won't appear in the diff or the PR.
 
